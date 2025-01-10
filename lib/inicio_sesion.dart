@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/clases/usuario.dart';
+import 'package:proyecto_final/db_helper.dart';
 import 'estilos.dart';
 
 class InicioSesionApp extends StatefulWidget {
@@ -13,6 +15,27 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final _numTarjeta = TextEditingController();
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
+  DBHelper db = DBHelper();
+
+  // Función para verificar si el número de tarjeta es válido
+  Future<String?> _validarTarjeta(String value) async {
+    if (value.isEmpty) {
+      return "Complete este campo.";
+    }
+
+    // Esperamos la respuesta de la base de datos
+    Usuario? usuario = await db.existeUsuario(value);
+
+    if (usuario == null) {
+      return "El usuario no existe.";
+    }
+
+    if (usuario.compania != companiaSeleccionada) {
+      return "Este usuario no pertenece a la compañía seleccionada.";
+    }
+
+    return null; // Si todo es válido
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +49,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Contenedor de texto "MedConnect"
               Container(
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(color: Colors.white),
@@ -47,9 +71,9 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                       style: Estilos.texto,
                     ),
                   ],
-                )
+                ),
               ),
-              Padding (
+              Padding(
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -57,6 +81,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Padding(padding: EdgeInsets.all(30)),
+                    // Dropdown para seleccionar compañía
                     Container(
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(color: Colors.white),
@@ -70,12 +95,12 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           const Padding(padding: EdgeInsets.all(10)),
                           Expanded(
                             child: DropdownButton<String>(
-                              isExpanded: true,  // Esto hace que el DropdownButton ocupe todo el ancho disponible
+                              isExpanded: true,
                               value: companiaSeleccionada,
                               hint: const Text("Seleccione su compañía"),
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  companiaSeleccionada = newValue!;
+                                  companiaSeleccionada = newValue;
                                 });
                               },
                               items: companias.map((String value) {
@@ -84,12 +109,13 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                                   child: Text(value),
                                 );
                               }).toList(),
-                            )
+                            ),
                           ),
                         ],
-                      )
+                      ),
                     ),
                     const Padding(padding: EdgeInsets.all(30)),
+                    // Campo de número de tarjeta
                     Container(
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(color: Colors.white),
@@ -105,16 +131,36 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Estilos.dorado_oscuro,  // Color del borde cuando está enfocado
+                              color: Estilos.dorado_oscuro,
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ),
                     const Padding(padding: EdgeInsets.all(50)),
+                    // Botón de acceso
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/main_bnb');
+                      onTap: () async {
+                        // Verificamos la validez antes de continuar
+                        String? tarjeta = _numTarjeta.text;
+                        if (tarjeta.isEmpty || companiaSeleccionada == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Complete todos los campos")),
+                          );
+                          return;
+                        }
+
+                        // Realizamos la validación asíncrona
+                        String? mensajeError = await _validarTarjeta(tarjeta);
+                        if (mensajeError != null) {
+                          // Si hay error de validación, mostramos un mensaje
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(mensajeError)),
+                          );
+                        } else {
+                          // Si la validación fue exitosa, navegamos
+                          Navigator.pushNamed(context, '/main_bnb');
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -127,13 +173,13 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                         ),
                       ),
                     ),
-                  ]
-                )
+                  ],
+                ),
               ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }

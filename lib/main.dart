@@ -3,9 +3,21 @@ import 'inicio_sesion.dart';
 import 'main_bnb.dart';
 import 'ver_cita.dart';
 import 'perfil.dart';
+import 'db_helper.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 
-void main() => runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
+  //await DBHelper().eliminarBD();
+
+  await DBHelper().abrirBD();
+    
+  runApp(const MainApp());
+
+} 
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -25,7 +37,7 @@ class _MainAppState extends State<MainApp> {
         '/inicio_sesion': (context) => const InicioSesionApp(),
         '/main_bnb': (context) => const MainBnBApp(),
         '/ver_cita': (context) => const VerCitaApp(),
-        '/perfil': (context) => const PerfilApp(), //MENÚ
+        '/perfil': (context) => const PerfilApp(),
       },
     );
   }

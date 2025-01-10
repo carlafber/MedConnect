@@ -19,13 +19,7 @@ class NuevaCitaApp extends StatefulWidget {
 }
 
 class _NuevaCitaApp extends State<NuevaCitaApp> {//cargar los datos de la bd
-  final List<String> especialidades = ['Cardiología', 'Psiquiatría', 'Pediatría', 'Dermatología', 'Oftalmología', 'Traumatología'];
-  String? especialidadSeleccionada;
-
-  //coger solo los profesionales de la especialidad seleccionada
-  final List<String> profesionales = ['Dr. Luis Martínez', 'Dra. Ana Sánchez', 'Dr. Pedro Díaz', 'Dra. Isabel Pérez', 'Dr. Juan Fernández', 'Dr. Marcos López', 'Dra. Clara Rodríguez', 'Dr. Felipe Pérez', 'Dra. Marta Jiménez', 'Dr. Alberto Torres', 'Dr. Raúl González', 'Dra. Sofía Fernández'];
-  String? profesionalSeleccionado;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
