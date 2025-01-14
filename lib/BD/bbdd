@@ -172,55 +172,58 @@ VALUES
 
 Future<void> insertData(Database db) async {
   // Insertar datos en Usuario
-  await db.insert('Usuario', {'nombre': 'Juan Pérez', 'correo': 'juan.perez@email.com', 'contrasena': '1234', 'numero_tarjeta': '1234567890', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'Carlos Gómez', 'correo': 'carlos.gomez@email.com', 'contrasena': 'Carlitos13', 'numero_tarjeta': '4561230789', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'Laura Fernández', 'correo': 'laura.fernandez@email.com', 'contrasena': 'Laurita', 'numero_tarjeta': '1122334455', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'Jorge Martínez', 'correo': 'jorge.martinez@email.com', 'contrasena': 'JorgeM', 'numero_tarjeta': '9988776655', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'Beatriz González', 'correo': 'beatriz.gonzalez@email.com', 'contrasena': 'Beita69', 'numero_tarjeta': '5566778899', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'Antonio Ruiz', 'correo': 'antonio.ruiz@email.com', 'contrasena': 'Antonito', 'numero_tarjeta': '6677889900', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
-  await db.insert('Usuario', {'nombre': 'Elena Ramírez', 'correo': 'elena.ramirez@email.com', 'contrasena': 'Elena1234', 'numero_tarjeta': '4455667788', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Juan Pérez', 'correo': 'juan.perez@email.com', 'contrasena': '1234', 'numero_tarjeta': '1234567890', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Carlos Gómez', 'correo': 'carlos.gomez@email.com', 'contrasena': 'Carlitos13', 'numero_tarjeta': '4561230789', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Laura Fernández', 'correo': 'laura.fernandez@email.com', 'contrasena': 'Laurita', 'numero_tarjeta': '1122334455', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Jorge Martínez', 'correo': 'jorge.martinez@email.com', 'contrasena': 'JorgeM', 'numero_tarjeta': '9988776655', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Beatriz González', 'correo': 'beatriz.gonzalez@email.com', 'contrasena': 'Beita69', 'numero_tarjeta': '5566778899', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Antonio Ruiz', 'correo': 'antonio.ruiz@email.com', 'contrasena': 'Antonito', 'numero_tarjeta': '6677889900', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+  await db.insert('usuario', {'nombre': 'Elena Ramírez', 'correo': 'elena.ramirez@email.com', 'contrasena': 'Elena1234', 'numero_tarjeta': '4455667788', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
 
   // Insertar datos en Especialidad
-  await db.insert('Especialidad', {'nombre_especialidad': 'Cardiología'});
-  await db.insert('Especialidad', {'nombre_especialidad': 'Psiquiatría'});
-  await db.insert('Especialidad', {'nombre_especialidad': 'Pediatría'});
-  await db.insert('Especialidad', {'nombre_especialidad': 'Dermatología'});
-  await db.insert('Especialidad', {'nombre_especialidad': 'Oftalmología'});
-  await db.insert('Especialidad', {'nombre_especialidad': 'Traumatología'});
+  await db.insert('especialidad', {'nombre_especialidad': 'Cardiología'});
+  await db.insert('especialidad', {'nombre_especialidad': 'Psiquiatría'});
+  await db.insert('especialidad', {'nombre_especialidad': 'Pediatría'});
+  await db.insert('especialidad', {'nombre_especialidad': 'Dermatología'});
+  await db.insert('especialidad', {'nombre_especialidad': 'Oftalmología'});
+  await db.insert('especialidad', {'nombre_especialidad': 'Traumatología'});
 
   // Insertar datos en Profesional
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Luis Martínez', 'id_especialidad': 1});
-  await db.insert('Profesional', {'nombre_profesional': 'Dra. Ana Sánchez', 'id_especialidad': 2});
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Pedro Díaz', 'id_especialidad': 3});
-  await db.insert('Profesional', {'nombre_profesional': 'Dra. Isabel Pérez', 'id_especialidad': 4});
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Juan Fernández', 'id_especialidad': 5});
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Marcos López', 'id_especialidad': 6});
-  await db.insert('Profesional', {'nombre_profesional': 'Dra. Clara Rodríguez', 'id_especialidad': 1});
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Felipe Pérez', 'id_especialidad': 2});
-  await db.insert('Profesional', {'nombre_profesional': 'Dra. Marta Jiménez', 'id_especialidad': 3});
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Alberto Torres', 'id_especialidad': 4});
-  await db.insert('Profesional', {'nombre_profesional': 'Dr. Raúl González', 'id_especialidad': 5});
-  await db.insert('Profesional', {'nombre_profesional': 'Dra. Sofía Fernández', 'id_especialidad': 6});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Luis Martínez', 'id_especialidad': 1});
+  await db.insert('profesional', {'nombre_profesional': 'Dra. Ana Sánchez', 'id_especialidad': 2});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Pedro Díaz', 'id_especialidad': 3});
+  await db.insert('profesional', {'nombre_profesional': 'Dra. Isabel Pérez', 'id_especialidad': 4});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Juan Fernández', 'id_especialidad': 5});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Marcos López', 'id_especialidad': 6});
+  await db.insert('profesional', {'nombre_profesional': 'Dra. Clara Rodríguez', 'id_especialidad': 1});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Felipe Pérez', 'id_especialidad': 2});
+  await db.insert('profesional', {'nombre_profesional': 'Dra. Marta Jiménez', 'id_especialidad': 3});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Alberto Torres', 'id_especialidad': 4});
+  await db.insert('profesional', {'nombre_profesional': 'Dr. Raúl González', 'id_especialidad': 5});
+  await db.insert('profesional', {'nombre_profesional': 'Dra. Sofía Fernández', 'id_especialidad': 6});
 
   // Insertar datos en Centro_Medico
-  await db.insert('Centro_Medico', {'nombre_centro': 'Centro Médico Angustias', 'direccion': 'Calle de las Angustias 17, Valladolid'});
-  await db.insert('Centro_Medico', {'nombre_centro': 'Centro Médico San José', 'direccion': 'Calle Pío del Río Hortega 12, Valladolid'});
-  await db.insert('Centro_Medico', {'nombre_centro': 'Hospital Sagrado Corazón de Jesús', 'direccion': 'Calle Fidel Recio 1, Valladolid'});
-  await db.insert('Centro_Medico', {'nombre_centro': 'LoMás, Dermatología y Medicina Estética Integral', 'direccion': 'Calle de Juan Antonio Morales Pintor 2, Valladolid'});
-  await db.insert('Centro_Medico', {'nombre_centro': 'IOBA', 'direccion': 'Campus Miguel Delibes, Paseo de Belén 17, Valladolid'});
-  await db.insert('Centro_Medico', {'nombre_centro': 'Origen Diagnóstico y Traumatología', 'direccion': 'Calle Paulina Harriet 4-6, Valladolid'});
+  await db.insert('centro_medico', {'nombre_centro': 'Centro Médico Angustias', 'direccion': 'Calle de las Angustias 17, Valladolid'});
+  await db.insert('centro_medico', {'nombre_centro': 'Centro Médico San José', 'direccion': 'Calle Pío del Río Hortega 12, Valladolid'});
+  await db.insert('centro_medico', {'nombre_centro': 'Hospital Sagrado Corazón de Jesús', 'direccion': 'Calle Fidel Recio 1, Valladolid'});
+  await db.insert('centro_medico', {'nombre_centro': 'LoMás, Dermatología y Medicina Estética Integral', 'direccion': 'Calle de Juan Antonio Morales Pintor 2, Valladolid'});
+  await db.insert('centro_medico', {'nombre_centro': 'IOBA', 'direccion': 'Campus Miguel Delibes, Paseo de Belén 17, Valladolid'});
+  await db.insert('centro_medico', {'nombre_centro': 'Origen Diagnóstico y Traumatología', 'direccion': 'Calle Paulina Harriet 4-6, Valladolid'});
 
   // Insertar datos en Cita
-  await db.insert('Cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00:00'});
-  await db.insert('Cita', {'id_usuario': 2, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-03-15', 'hora': '14:30:00'});
-  await db.insert('Cita', {'id_usuario': 3, 'id_profesional': 3, 'id_centro': 3, 'fecha': '2025-04-20', 'hora': '09:00:00'});
-  await db.insert('Cita', {'id_usuario': 4, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-05-12', 'hora': '11:00:00'});
-  await db.insert('Cita', {'id_usuario': 5, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-06-18', 'hora': '15:30:00'});
-  await db.insert('Cita', {'id_usuario': 1, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-07-22', 'hora': '08:30:00'});
-  await db.insert('Cita', {'id_usuario': 4, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-08-01', 'hora': '09:30:00'});
-  await db.insert('Cita', {'id_usuario': 5, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-08-02', 'hora': '13:00:00'});
-  await db.insert('Cita', {'id_usuario': 6, 'id_profesional': 3, 'id_centro': 3, 'fecha': '2025-08-03', 'hora': '11:15:00'});
-  await db.insert('Cita', {'id_usuario': 7, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-08-04', 'hora': '14:45:00'});
-  await db.insert('Cita', {'id_usuario': 8, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-08-05', 'hora': '16:30:00'});
-  await db.insert('Cita', {'id_usuario': 2, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-08-06', 'hora': '17:00:00'});
+  await db.insert('cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00:00'});
+  await db.insert('cita', {'id_usuario': 2, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-03-15', 'hora': '14:30:00'});
+  await db.insert('cita', {'id_usuario': 3, 'id_profesional': 3, 'id_centro': 3, 'fecha': '2025-04-20', 'hora': '09:00:00'});
+  await db.insert('cita', {'id_usuario': 4, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-05-12', 'hora': '11:00:00'});
+  await db.insert('cita', {'id_usuario': 5, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-06-18', 'hora': '15:30:00'});
+  await db.insert('cita', {'id_usuario': 1, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-07-22', 'hora': '08:30:00'});
+  await db.insert('cita', {'id_usuario': 4, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-08-01', 'hora': '09:30:00'});
+  await db.insert('cita', {'id_usuario': 5, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-08-02', 'hora': '13:00:00'});
+  await db.insert('cita', {'id_usuario': 6, 'id_profesional': 3, 'id_centro': 3, 'fecha': '2025-08-03', 'hora': '11:15:00'});
+  await db.insert('cita', {'id_usuario': 7, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-08-04', 'hora': '14:45:00'});
+  await db.insert('cita', {'id_usuario': 8, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-08-05', 'hora': '16:30:00'});
+  await db.insert('cita', {'id_usuario': 2, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-08-06', 'hora': '17:00:00'});
+
+
+  --en centro_medico añadir especialidad

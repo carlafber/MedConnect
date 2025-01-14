@@ -1,19 +1,19 @@
 class Especialidad {
-  int? id;
+  int? idEspecialidad;
   String nombreEspecialidad;
 
-  Especialidad({this.id, required this.nombreEspecialidad});
+  Especialidad({this.idEspecialidad, required this.nombreEspecialidad});
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'id_especialidad': idEspecialidad,
       'nombre_especialidad': nombreEspecialidad,
     };
   }
 
   factory Especialidad.fromMap(Map<String, dynamic> map) {
     return Especialidad(
-      id: map['id'],
+      idEspecialidad: map['id_especialidad'],
       nombreEspecialidad: map['nombre_especialidad'],
     );
   }

@@ -35,9 +35,13 @@ class DBHelper{
         )
       ''');
  
-      int idEspecialidad = await db.insert('especialidad', {'nombre_especialidad': 'Cardiología'});
-      print('ID de la especialidad insertada: $idEspecialidad');
-
+      await db.insert('especialidad', {'nombre_especialidad': 'Cardiología'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Psiquiatría'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Pediatría'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Dermatología'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Oftalmología'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Traumatología'});
+          
 
       //PROFESIONAL
       await db.execute('''
@@ -50,17 +54,35 @@ class DBHelper{
       ''');
 
       await db.insert('profesional', {'nombre_profesional': 'Dr. Luis Martínez', 'id_especialidad': 1});
+      await db.insert('profesional', {'nombre_profesional': 'Dra. Ana Sánchez', 'id_especialidad': 2});
+      await db.insert('profesional', {'nombre_profesional': 'Dr. Pedro Díaz', 'id_especialidad': 3});
+      await db.insert('profesional', {'nombre_profesional': 'Dra. Isabel Pérez', 'id_especialidad': 4});
+      await db.insert('profesional', {'nombre_profesional': 'Dr. Juan Fernández', 'id_especialidad': 5});
+      await db.insert('profesional', {'nombre_profesional': 'Dr. Marcos López', 'id_especialidad': 6});
+      await db.insert('profesional', {'nombre_profesional': 'Dra. Clara Rodríguez', 'id_especialidad': 1});
+      await db.insert('profesional', {'nombre_profesional': 'Dr. Felipe Pérez', 'id_especialidad': 2});
+      await db.insert('profesional', {'nombre_profesional': 'Dra. Marta Jiménez', 'id_especialidad': 3});
+      await db.insert('profesional', {'nombre_profesional': 'Dr. Alberto Torres', 'id_especialidad': 4});
+      await db.insert('profesional', {'nombre_profesional': 'Dr. Raúl González', 'id_especialidad': 5});
+      await db.insert('profesional', {'nombre_profesional': 'Dra. Sofía Fernández', 'id_especialidad': 6});
 
       //CENTRO MÉDICO
       await db.execute('''
         CREATE TABLE centro_medico(
           id_centro INTEGER PRIMARY KEY AUTOINCREMENT,
           nombre_centro TEXT NOT NULL,
-          direccion TEXT
+          direccion TEXT,
+          id_especialidad INTEGER NOT NULL,
+          FOREIGN KEY (id_especialidad) REFERENCES especialidad (id_especialidad) ON DELETE CASCADE
         )
       ''');
 
-      await db.insert('centro_medico', {'nombre_centro': 'Centro Médico Angustias', 'direccion': 'Calle de las Angustias 17, Valladolid'});
+      await db.insert('centro_medico', {'nombre_centro': 'Centro Médico Angustias', 'direccion': 'Calle de las Angustias 17, Valladolid', 'id_especialidad': 1});
+      await db.insert('centro_medico', {'nombre_centro': 'Centro Médico San José', 'direccion': 'Calle Pío del Río Hortega 12, Valladolid', 'id_especialidad': 2});
+      await db.insert('centro_medico', {'nombre_centro': 'Hospital Sagrado Corazón de Jesús', 'direccion': 'Calle Fidel Recio 1, Valladolid', 'id_especialidad': 3});
+      await db.insert('centro_medico', {'nombre_centro': 'LoMás, Dermatología y Medicina Estética Integral', 'direccion': 'Calle de Juan Antonio Morales Pintor 2, Valladolid', 'id_especialidad': 4});
+      await db.insert('centro_medico', {'nombre_centro': 'IOBA', 'direccion': 'Campus Miguel Delibes, Paseo de Belén 17, Valladolid', 'id_especialidad': 5});
+      await db.insert('centro_medico', {'nombre_centro': 'Origen Diagnóstico y Traumatología', 'direccion': 'Calle Paulina Harriet 4-6, Valladolid', 'id_especialidad': 6});
 
       //CITA
       await db.execute('''
@@ -89,61 +111,5 @@ class DBHelper{
  
     await deleteDatabase(path);
     print("Base de datos eliminada");
-  }
-
-
-  Future<List<Usuario>> obtenerUsuarios() async {
-    Database database = await abrirBD();
-    final List<Map<String, dynamic>> mapas = await database.query('usuario');
-    return List.generate(mapas.length, (i){
-      return Usuario.fromMap(mapas[i]);
-    });
-  }
-
-  Future<Usuario?> existeUsuario(String numTarjetaIntroducido) async {
-    //Obtener la lista de usuarios desde la base de datos
-    List<Usuario> usuarios = await obtenerUsuarios();
-
-    for (var usuario in usuarios) {
-      if (usuario.numeroTarjeta == numTarjetaIntroducido) {
-        // Si el número de tarjeta coincide, devuelve el usuario
-        return usuario;
-      }
-    }
-
-    // Si no se encuentra el usuario con el número de tarjeta, devuelve null
-    return null;
-  }
-
-  Future<List<Especialidad>> obtenerEspecialidades() async {
-    Database database = await abrirBD();
-    final List<Map<String, dynamic>> mapas = await database.query('especialidad');
-    return List.generate(mapas.length, (i){
-      return Especialidad.fromMap(mapas[i]);
-    });
-  }
-
-  Future<List<Profesional>> obtenerProfesionales() async {
-    Database database = await abrirBD();
-    final List<Map<String, dynamic>> mapas = await database.query('profesional');
-    return List.generate(mapas.length, (i){
-      return Profesional.fromMap(mapas[i]);
-    });
-  }
-
-  Future<List<Profesional>> obtenerProfesionalesPorEspecialidad(int idEspecialidad) async {
-    Database database = await abrirBD();
-    
-    // Realiza una consulta con filtro por id_especialidad
-    final List<Map<String, dynamic>> mapas = await database.query(
-      'profesional',
-      where: 'id_especialidad = ?', // Filtro por id_especialidad
-      whereArgs: [idEspecialidad],   // Argumento para el filtro
-    );
-    
-    // Convierte el resultado en una lista de objetos Profesional
-    return List.generate(mapas.length, (i) {
-      return Profesional.fromMap(mapas[i]);
-    });
   }
 }

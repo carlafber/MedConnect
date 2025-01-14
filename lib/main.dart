@@ -5,13 +5,15 @@ import 'ver_cita.dart';
 import 'perfil.dart';
 import 'db_helper.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
-  //await DBHelper().eliminarBD();
+  await DBHelper().eliminarBD();
 
   await DBHelper().abrirBD();
     
@@ -31,6 +33,13 @@ class _MainAppState extends State<MainApp> {
  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('es', 'ES'), // Establece el idioma español
+      ],
       debugShowCheckedModeBanner: false,
       initialRoute: '/inicio_sesion', // Establece la ruta inicial
       routes: {

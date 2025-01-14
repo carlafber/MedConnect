@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/DAO/usuarioDAO.dart';
 import 'package:proyecto_final/clases/usuario.dart';
-import 'package:proyecto_final/db_helper.dart';
 import 'estilos.dart';
 
 class InicioSesionApp extends StatefulWidget {
@@ -15,7 +15,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final _numTarjeta = TextEditingController();
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
-  DBHelper db = DBHelper();
+  UsuarioDAO usuarioDAO = UsuarioDAO();
 
   // Función para verificar si el número de tarjeta es válido
   Future<String?> _validarTarjeta(String value) async {
@@ -24,7 +24,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
     }
 
     // Esperamos la respuesta de la base de datos
-    Usuario? usuario = await db.existeUsuario(value);
+    Usuario? usuario = await usuarioDAO.existeUsuario(value);
 
     if (usuario == null) {
       return "El usuario no existe.";
