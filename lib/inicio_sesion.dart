@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_final/DAO/usuarioDAO.dart';
 import 'package:proyecto_final/clases/usuario.dart';
+import 'package:proyecto_final/session.dart';
 import 'estilos.dart';
 
 class InicioSesionApp extends StatefulWidget {
@@ -16,6 +17,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
   UsuarioDAO usuarioDAO = UsuarioDAO();
+  Session session = Session();
 
   // Función para verificar si el número de tarjeta es válido
   Future<String?> _validarTarjeta(String value) async {
@@ -158,7 +160,9 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                             SnackBar(content: Text(mensajeError)),
                           );
                         } else {
-                          // Si la validación fue exitosa, navegamos
+                          // Si la validación fue exitosa, guardamos el usuario y navegamos
+                          Usuario ususario = usuarioDAO.obtenerUsuario(_numTarjeta.text) as Usuario;
+                          session.set(ususario);
                           Navigator.pushNamed(context, '/main_bnb');
                         }
                       },

@@ -27,4 +27,22 @@ class UsuarioDAO {
     // Si no se encuentra el usuario con el número de tarjeta, devuelve null
     return null;
   }
+
+  Future<Usuario?> obtenerUsuario(String numeroTarjeta) async {
+    Database database = await db.abrirBD();
+    
+    final List<Map<String, dynamic>> mapa = await database.query(
+      'usuario',
+      where: 'numero_tarjeta = ?',  // Filtro por numero_tarjeta
+      whereArgs: [numeroTarjeta],   // Argumento para el filtro
+      limit: 1,                     // Limitamos la consulta a un solo resultado
+    );
+
+    if (mapa.isNotEmpty) {
+      return Usuario.fromMap(mapa.first); // Devuelve el primer usuario de la lista
+    } else {
+      return null; // Si no se encuentra ningún usuario, devolvemos null
+    }
+  }
+
 }

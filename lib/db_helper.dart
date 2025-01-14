@@ -100,6 +100,8 @@ class DBHelper{
       ''');
       
       await db.insert('cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00:00'});
+      await db.insert('usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+
 
       }, version: 1
     );

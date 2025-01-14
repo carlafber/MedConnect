@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final/clases/usuario.dart';
+import 'package:proyecto_final/session.dart';
 import 'DAO/centro_medicoDAO.dart';
 import 'DAO/citaDAO.dart';
 import 'DAO/especialidadDAO.dart';
@@ -23,6 +25,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
   ProfesionalDAO profesionalDAO = ProfesionalDAO();
   CentroMedicoDAO centroDAO = CentroMedicoDAO();
   CitaDAO citaDAO = CitaDAO();
+  Session session = Session();
 
 
   List<Especialidad> especialidades = [];
@@ -236,7 +239,8 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
             GestureDetector(
               onTap: () async {
                 //añadir cita
-                Cita cita = Cita(idUsuario: 1, idProfesional: profesionalSeleccionado!.idProfesional as int, idCentro: centroSeleccionado!.idCentro as int, fecha: fechaSeleccionada, hora: horaSeleccionada);
+                Usuario? usuario = session.get();
+                Cita cita = Cita(idUsuario: usuario!.idUsuario as int, idProfesional: profesionalSeleccionado!.idProfesional as int, idCentro: centroSeleccionado!.idCentro as int, fecha: fechaSeleccionada, hora: horaSeleccionada);
                 citaDAO.crearCita(cita);
                 //Navigator.pushNamed(context, '/main_bnb');
               },
