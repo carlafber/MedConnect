@@ -240,7 +240,8 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
               onTap: () async {
                 //añadir cita
                 Usuario? usuario = session.get();
-                Cita cita = Cita(idUsuario: usuario!.idUsuario as int, idProfesional: profesionalSeleccionado!.idProfesional as int, idCentro: centroSeleccionado!.idCentro as int, fecha: fechaSeleccionada, hora: horaSeleccionada);
+                int? id = usuario?.idUsuario;
+                Cita cita = Cita(idUsuario: id as int, idProfesional: profesionalSeleccionado!.idProfesional as int, idCentro: centroSeleccionado!.idCentro as int, fecha: fechaSeleccionada, hora: horaSeleccionada);
                 citaDAO.crearCita(cita);
                 //Navigator.pushNamed(context, '/main_bnb');
               },

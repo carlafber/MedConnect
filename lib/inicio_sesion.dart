@@ -18,6 +18,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   String? companiaSeleccionada;
   UsuarioDAO usuarioDAO = UsuarioDAO();
   Session session = Session();
+  Usuario? usuario;
 
   // Función para verificar si el número de tarjeta es válido
   Future<String?> _validarTarjeta(String value) async {
@@ -26,13 +27,13 @@ class _InicioSesionApp extends State<InicioSesionApp> {
     }
 
     // Esperamos la respuesta de la base de datos
-    Usuario? usuario = await usuarioDAO.existeUsuario(value);
+    usuario = await usuarioDAO.existeUsuario(value);
 
     if (usuario == null) {
       return "El usuario no existe.";
     }
 
-    if (usuario.compania != companiaSeleccionada) {
+    if (usuario?.compania != companiaSeleccionada) {
       return "Este usuario no pertenece a la compañía seleccionada.";
     }
 
@@ -161,8 +162,9 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           );
                         } else {
                           // Si la validación fue exitosa, guardamos el usuario y navegamos
-                          Usuario ususario = usuarioDAO.obtenerUsuario(_numTarjeta.text) as Usuario;
-                          session.set(ususario);
+                          session.set(usuario!);
+                          print(usuario?.idUsuario);
+                          //Session().usuario = usuario;
                           Navigator.pushNamed(context, '/main_bnb');
                         }
                       },
