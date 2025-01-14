@@ -162,8 +162,8 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           );
                         } else {
                           // Si la validación fue exitosa, guardamos el usuario y navegamos
-                          session.set(usuario!);
-                          print(usuario?.idUsuario);
+                          //session.set(usuario!);
+                          //print(usuario?.idUsuario);
                           //Session().usuario = usuario;
                           Navigator.pushNamed(context, '/main_bnb');
                         }

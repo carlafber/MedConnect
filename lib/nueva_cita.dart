@@ -239,9 +239,9 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
             GestureDetector(
               onTap: () async {
                 //añadir cita
-                Usuario? usuario = session.get();
-                int? id = usuario?.idUsuario;
-                Cita cita = Cita(idUsuario: id as int, idProfesional: profesionalSeleccionado!.idProfesional as int, idCentro: centroSeleccionado!.idCentro as int, fecha: fechaSeleccionada, hora: horaSeleccionada);
+                /*Usuario? usuario = session.get();
+                int? id = usuario?.idUsuario;*/
+                Cita cita = Cita(idUsuario: 1, idProfesional: profesionalSeleccionado!.idProfesional as int, idCentro: centroSeleccionado!.idCentro as int, fecha: fechaSeleccionada, hora: horaSeleccionada);
                 citaDAO.crearCita(cita);
                 //Navigator.pushNamed(context, '/main_bnb');
               },
