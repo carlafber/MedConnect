@@ -187,13 +187,13 @@ class _InicioApp extends State<InicioApp> {
               child: Container(
                 color: Estilos.fondo,
                 padding: EdgeInsets.all(10),
-                
                 child: ListView.builder(
                   itemCount: citas.length, // La cantidad de elementos en la lista
                   itemBuilder: (context, index) {
                     Cita cita = citas[index]; // Obtener cada cita de la lista
                     String nombreEspecialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? 'Desconocida'; // Obtener especialidad del mapa
                     String color = especialidades[cita.idProfesional]?.color ?? '0xFFFFFFFF'; // Color predeterminado si no se encuentra
+                    String nombreProfesional = nombresProfesionales[cita.idProfesional] ?? 'Desconocido';
                     return GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
@@ -213,8 +213,9 @@ class _InicioApp extends State<InicioApp> {
                           children: [
                             const Icon(Icons.calendar_today, color: Colors.black),
                             const SizedBox(width: 15),
+                            
                             Text(
-                              'Cita de $nombreEspecialidad con ${nombresProfesionales[cita.idProfesional] ?? 'Desconocido'}. El ${cita.fecha} - ${cita.hora}',
+                              'Cita de $nombreEspecialidad con $nombreProfesional. El ${cita.fecha} - ${cita.hora}',
                               style: TextStyle(color: Colors.black),
                             ),
                           ],

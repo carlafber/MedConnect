@@ -191,9 +191,9 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 children: <Widget>[
                   InkWell(
                     child: Text(
-                        fechaSeleccionada,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black)
+                      fechaSeleccionada,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black)
                     ),
                     onTap: (){
                       _seleccionarFecha(context);
@@ -218,9 +218,9 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 children: <Widget>[
                   InkWell(
                     child: Text(
-                        horaSeleccionada,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black)
+                      horaSeleccionada,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black)
                     ),
                     onTap: (){
                       _seleccionarHora(context);
