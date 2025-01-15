@@ -180,9 +180,8 @@ class _InicioApp extends State<InicioApp> {
                 ],
               ),
             ),
-            const Padding(padding: EdgeInsets.all(10)),
             // Espacio flexible para centrar el texto y separar los botones
-            Text("PRÓXIMAS CITAS", style: Estilos.titulo2,),
+            Text("PRÓXIMAS CITAS", style: Estilos.titulo2),
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(
               child: Container(
