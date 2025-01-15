@@ -7,7 +7,7 @@ class DBHelper{
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'medconnect.db');
 
-    print("Conectado a la base de datos");
+    //print("Conectado a la base de datos");
 
     return openDatabase(path, onCreate: (db, version) async{
       //USUARIO
@@ -23,7 +23,8 @@ class DBHelper{
       ''');
 
       await db.insert('usuario', {'nombre': 'Juan Pérez', 'correo': 'juan.perez@email.com', 'contrasena': '1234', 'numero_tarjeta': '1234567890', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
- 
+      await db.insert('usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace); 
+      
       //ESPECIALIDAD
       await db.execute('''
         CREATE TABLE especialidad(
