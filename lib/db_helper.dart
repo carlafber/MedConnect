@@ -1,9 +1,6 @@
 import 'package:path/path.dart';
-import 'package:proyecto_final/clases/especialidad.dart';
-import 'package:proyecto_final/clases/profesional.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'clases/usuario.dart';
  
 class DBHelper{
   Future<Database> abrirBD() async{
@@ -39,7 +36,7 @@ class DBHelper{
       await db.insert('especialidad', {'nombre_especialidad': 'Psiquiatría'});
       await db.insert('especialidad', {'nombre_especialidad': 'Pediatría'});
       await db.insert('especialidad', {'nombre_especialidad': 'Dermatología'});
-      await db.insert('especialidad', {'nombre_especialidad': 'Oftalmología'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Oftanmología'});
       await db.insert('especialidad', {'nombre_especialidad': 'Traumatología'});
           
 

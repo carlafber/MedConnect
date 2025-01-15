@@ -8,6 +8,19 @@ class Estilos {
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle titulo2 = TextStyle(
+    color: Estilos.dorado_claro,
+    fontSize: 30,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.bold,
+    shadows: [
+      Shadow(
+        offset: Offset(3.0, 3.0), // Desplazamiento de la sombra
+        blurRadius: 5.0, // Difusión de la sombra
+        color: Estilos.dorado_oscuro_sombra, // Color de la sombra
+      ),
+    ],
+  );
   static const TextStyle texto = TextStyle(
     color: Colors.black,
     fontSize: 20,
@@ -26,4 +39,5 @@ class Estilos {
   static const Color dorado = Color.fromARGB(255, 185, 144, 40);
   static const Color dorado_oscuro = Color.fromARGB(255, 157, 118, 18);
   static const Color dorado_claro = Color.fromARGB(255, 219, 187, 106);
+  static const Color dorado_oscuro_sombra = Color.fromARGB(255, 135, 100, 9);
 }

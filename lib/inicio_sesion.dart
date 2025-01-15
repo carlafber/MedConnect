@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_final/DAO/usuarioDAO.dart';
-import 'package:proyecto_final/clases/usuario.dart';
-import 'package:proyecto_final/session.dart';
+import 'DAO/usuarioDAO.dart';
+import 'clases/usuario.dart';
+import 'guardar.dart';
 import 'estilos.dart';
 
 class InicioSesionApp extends StatefulWidget {
@@ -17,7 +17,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
   UsuarioDAO usuarioDAO = UsuarioDAO();
-  Session session = Session();
+  Guardar session = Guardar();
   Usuario? usuario;
 
   // Función para verificar si el número de tarjeta es válido
@@ -165,6 +165,8 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           //session.set(usuario!);
                           //print(usuario?.idUsuario);
                           //Session().usuario = usuario;
+                          session.set(usuario!);
+                          print(session.get());
                           Navigator.pushNamed(context, '/main_bnb');
                         }
                       },

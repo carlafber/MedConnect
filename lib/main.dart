@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
-  await DBHelper().eliminarBD();
+  //await DBHelper().eliminarBD();
 
   await DBHelper().abrirBD();
     

@@ -41,4 +41,14 @@ class UsuarioDAO {
     return Usuario.fromMap(mapa.first); // Devuelve el primer usuario de la lista
   }
 
+  Future<void> eliminarUsuario(int idUsuario) async {
+    Database database = await db.abrirBD();  // Abre la base de datos
+    await database.delete(
+      'usuario',  // El nombre de la tabla
+      where: 'id_usuario = ?',  // Filtro para eliminar el usuario por ID
+      whereArgs: [idUsuario],  // El argumento que contiene el ID del usuario
+    );
+    print('Usuario con id $idUsuario eliminado');
+  }
+
 }
