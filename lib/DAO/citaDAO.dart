@@ -15,4 +15,20 @@ class CitaDAO {
     print("Cita creada con ID: $resultado");
     return resultado;
   }
+
+  Future<List<Cita>> obtenerCitasUsuario(int idUsuario) async {
+    Database database = await db.abrirBD();
+    
+    // Realiza una consulta con filtro por id_especialidad
+    final List<Map<String, dynamic>> mapas = await database.query(
+      'cita',
+      where: 'id_usuario = ?', // Filtro por id_especialidad
+      whereArgs: [idUsuario],   // Argumento para el filtro
+    );
+    print("citas: $mapas");
+    // Convierte el resultado en una lista de objetos Profesional
+    return List.generate(mapas.length, (i) {
+      return Cita.fromMap(mapas[i]);
+    });
+  }
 }

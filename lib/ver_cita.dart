@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'clases/cita.dart';
 import 'estilos.dart';
 
 class VerCitaApp extends StatefulWidget {
@@ -11,6 +12,8 @@ class VerCitaApp extends StatefulWidget {
 class _VerCitaApp extends State<VerCitaApp> {
   @override
   Widget build(BuildContext context) {
+    final Cita cita = ModalRoute.of(context)!.settings.arguments as Cita;
+    
     return Scaffold(
       backgroundColor: Estilos.dorado,
       body: Padding (
@@ -23,7 +26,6 @@ class _VerCitaApp extends State<VerCitaApp> {
                 alignment: Alignment.topLeft,
                 child: FloatingActionButton(
                   onPressed: () {
-                    print("Volver");
                     Navigator.pop(context);
                   },
                   backgroundColor: Estilos.dorado_oscuro,

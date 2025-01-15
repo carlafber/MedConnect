@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:proyecto_final/clases/especialidad.dart';
+import 'package:proyecto_final/clases/profesional.dart';
+import 'DAO/citaDAO.dart';
+import 'DAO/profesionalDAO.dart';
+import 'clases/cita.dart';
+import 'clases/usuario.dart';
 import 'estilos.dart';
+import 'guardar.dart';
 
 class InicioApp extends StatefulWidget {
   const InicioApp({super.key});
@@ -10,6 +17,52 @@ class InicioApp extends StatefulWidget {
 }
 
 class _InicioApp extends State<InicioApp> {
+  ProfesionalDAO profesionalDAO = ProfesionalDAO();
+  CitaDAO citaDAO = CitaDAO();
+  Guardar guardar = Guardar();
+
+  List<Cita> citas = [];
+  Map<int, Especialidad> especialidades = {};
+  Map<int, String> nombresProfesionales = {};
+  String color = "";
+
+  @override
+  void initState() {
+    super.initState();
+    // Llamamos a la función _cargarProfesionales en initState
+    Usuario? usuario = guardar.get();
+    if (usuario != null) {
+      _cargarCitas(usuario.idUsuario as int);
+    }
+  }
+
+  Future<void> _cargarCitas(int idUsuario) async {
+    List<Cita> lista = await citaDAO.obtenerCitasUsuario(idUsuario);
+    setState(() {
+      citas = lista;
+    });
+
+    // Cargar especialidades para cada profesional
+    await Future.forEach(citas, (cita) async {
+      Especialidad? especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
+      Profesional? profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
+      
+      if (especialidad != null) {
+        setState(() {
+          especialidades[cita.idProfesional] = especialidad;
+        });
+      }
+      
+      if (profesional != null) {
+        setState(() {
+          nombresProfesionales[cita.idProfesional] = profesional.nombreProfesional;
+        });
+      }
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,21 +182,47 @@ class _InicioApp extends State<InicioApp> {
             ),
             const Padding(padding: EdgeInsets.all(10)),
             // Espacio flexible para centrar el texto y separar los botones
+            Text("PRÓXIMAS CITAS", style: Estilos.titulo2,),
+            const Padding(padding: EdgeInsets.all(10)),
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/ver_cita');
-                },
-                child: Container(
-                  color: Colors.white, // Aquí asignamos el color al contenedor
-                  padding: const EdgeInsets.all(20),
-                  child: const Center(
-                    child: Text(
-                      'INICIO',
-                      textAlign: TextAlign.center,
-                      style: Estilos.texto,
-                    ),
-                  ),
+              child: Container(
+                color: Estilos.fondo,
+                padding: EdgeInsets.all(10),
+                
+                child: ListView.builder(
+                  itemCount: citas.length, // La cantidad de elementos en la lista
+                  itemBuilder: (context, index) {
+                    Cita cita = citas[index]; // Obtener cada cita de la lista
+                    String nombreEspecialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? 'Desconocida'; // Obtener especialidad del mapa
+                    String color = especialidades[cita.idProfesional]?.color ?? '0xFFFFFFFF'; // Color predeterminado si no se encuentra
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/ver_cita', // Ruta para la página de detalles
+                          arguments: cita, // Pasar la cita como argumento
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Color(int.parse(color)), //color dependiendo de la especialidad
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.calendar_today, color: Colors.black),
+                            const SizedBox(width: 15),
+                            Text(
+                              'Cita de $nombreEspecialidad con ${nombresProfesionales[cita.idProfesional] ?? 'Desconocido'}. El ${cita.fecha} - ${cita.hora}',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
                 ),
               ),
             ),
@@ -153,3 +232,81 @@ class _InicioApp extends State<InicioApp> {
     );
   }
 }
+
+
+/*child: Column(
+  children: [
+    Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Color(0x4DFF5B5B), //color dependiendo de la especialidad
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Text("cardiología"),
+    ),
+    Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Color(0x4DBE5BFF), //color dependiendo de la especialidad
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Text("pediatría"),
+    ),
+    Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Color(0x4D42EA54), //color dependiendo de la especialidad
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Text("dermatología"),
+    ),
+    Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Color(0x4D5BCDFF), //color dependiendo de la especialidad
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Text("oftanmología"),
+    ),
+    Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Color(0x4DFF5BEE), //color dependiendo de la especialidad
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Text("psiquiatría"),
+    ),
+    Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: Color(0x4Dffa35b), //color dependiendo de la especialidad
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Text("traumatología"),
+    ),
+  ],
+)*/
+
+
+/*child: GestureDetector(
+  onTap: () {
+    Navigator.pushNamed(context, '/ver_cita');
+  },
+  child: Container(
+    color: Colors.white, // Aquí asignamos el color al contenedor
+    padding: const EdgeInsets.all(20),
+    child: const Center(
+      child: Text(
+        'INICIO',
+        textAlign: TextAlign.center,
+        style: Estilos.texto,
+      ),
+    ),
+  ),
+),*/

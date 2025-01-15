@@ -16,7 +16,6 @@ class _PerfilApp extends State<PerfilApp> {
   Guardar guardar = Guardar();
   UsuarioDAO usuarioDAO = UsuarioDAO();
   
-  
   @override
   Widget build(BuildContext context) {
     Usuario? usuario = guardar.get();
@@ -139,11 +138,37 @@ class _PerfilApp extends State<PerfilApp> {
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        await usuarioDAO.eliminarUsuario(usuario.idUsuario as int);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Usuario eliminado correctamente")),
+                        //pedir confirmación
+                        bool? confirmacion = await showDialog<bool>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Confirmar eliminación"),
+                              content: Text("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false); // Cancelar
+                                  },
+                                  child: Text("Cancelar", style: Estilos.texto4),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true); // Confirmar
+                                  },
+                                  child: Text("Eliminar", style: Estilos.texto4),
+                                ),
+                              ],
+                            );
+                          },
                         );
-                        await Navigator.pushNamed(context, '/inicio_sesion');
+                        if (confirmacion == true) {
+                          await usuarioDAO.eliminarUsuario(usuario.idUsuario as int);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Usuario eliminado correctamente")),
+                          );
+                          await Navigator.pushNamed(context, '/inicio_sesion');
+                        }
                       },
                       child: Container(
                         height: 75,

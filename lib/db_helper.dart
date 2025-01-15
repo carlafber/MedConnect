@@ -29,16 +29,17 @@ class DBHelper{
       await db.execute('''
         CREATE TABLE especialidad(
           id_especialidad INTEGER PRIMARY KEY AUTOINCREMENT,
-          nombre_especialidad TEXT NOT NULL
+          nombre_especialidad TEXT NOT NULL,
+          color TEXT NOT NULL
         )
       ''');
  
-      await db.insert('especialidad', {'nombre_especialidad': 'Cardiología'});
-      await db.insert('especialidad', {'nombre_especialidad': 'Psiquiatría'});
-      await db.insert('especialidad', {'nombre_especialidad': 'Pediatría'});
-      await db.insert('especialidad', {'nombre_especialidad': 'Dermatología'});
-      await db.insert('especialidad', {'nombre_especialidad': 'Oftanmología'});
-      await db.insert('especialidad', {'nombre_especialidad': 'Traumatología'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Cardiología', 'color': '0x4DFF5B5B'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Psiquiatría', 'color': '0x4DFF5BEE'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Pediatría', 'color': '0x4DBE5BFF'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Dermatología', 'color': '0x4D42EA54'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Oftanmología', 'color': '0x4D5BCDFF'});
+      await db.insert('especialidad', {'nombre_especialidad': 'Traumatología', 'color': '0x4DFFA35B'});
           
 
       //PROFESIONAL
@@ -98,8 +99,9 @@ class DBHelper{
       ''');
       
       await db.insert('cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00:00'});
-      await db.insert('usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
-
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-03-15', 'hora': '14:30:00'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-07-22', 'hora': '08:30:00'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-08-06', 'hora': '17:00:00'});
 
       }, version: 1
     );

@@ -28,7 +28,7 @@ class UsuarioDAO {
     return null;
   }
 
-  Future<Usuario> obtenerUsuario(String numeroTarjeta) async {
+  /*Future<Usuario> obtenerUsuario(String numeroTarjeta) async {
     Database database = await db.abrirBD();
     
     final List<Map<String, dynamic>> mapa = await database.query(
@@ -39,7 +39,7 @@ class UsuarioDAO {
     );
 
     return Usuario.fromMap(mapa.first); // Devuelve el primer usuario de la lista
-  }
+  }*/
 
   Future<void> eliminarUsuario(int idUsuario) async {
     Database database = await db.abrirBD();  // Abre la base de datos
