@@ -24,7 +24,7 @@ class _CalendarioApp extends State<CalendarioApp> {
                   Navigator.pushNamed(context, '/ver_cita');
                 },
                 child: Container(
-                  color: Colors.white,  // Aquí asignamos el color al contenedor
+                  color: Estilos.fondo,  // Aquí asignamos el color al contenedor
                   padding: const EdgeInsets.all(20),
                   child: const Center(
                     child: Text(

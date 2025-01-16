@@ -55,7 +55,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
               // Contenedor de texto "MedConnect"
               Container(
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
                 child: const Column(
                   mainAxisSize: MainAxisSize.min,
@@ -87,7 +87,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                     // Dropdown para seleccionar compañía
                     Container(
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(color: Colors.white),
+                      decoration: const BoxDecoration(color: Estilos.fondo),
                       padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
@@ -121,7 +121,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                     // Campo de número de tarjeta
                     Container(
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(color: Colors.white),
+                      decoration: const BoxDecoration(color: Estilos.fondo),
                       padding: const EdgeInsets.all(10),
                       child: TextFormField(
                         controller: _numTarjeta,

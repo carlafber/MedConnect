@@ -20,7 +20,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
                 child: const Text(
                   'ESTADÍSTICAS',

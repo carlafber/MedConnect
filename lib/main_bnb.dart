@@ -40,6 +40,7 @@ class _MainBnBAppState extends State<MainBnBApp> {
         child: _clases.elementAt(_indiceSeleccionado),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Estilos.fondo,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'DAO/centro_medicoDAO.dart';
+import 'DAO/profesionalDAO.dart';
 import 'clases/cita.dart';
+import 'db_helper.dart';
 import 'estilos.dart';
 
 class VerCitaApp extends StatefulWidget {
@@ -10,6 +13,18 @@ class VerCitaApp extends StatefulWidget {
 }
 
 class _VerCitaApp extends State<VerCitaApp> {
+  final DBHelper dbHelper = DBHelper();
+  final ProfesionalDAO profesionalDAO = ProfesionalDAO();
+  final CentroMedicoDAO centroMedicoDAO = CentroMedicoDAO();
+
+  Future<String> obtenerDetallesCita(Cita cita) async {
+    final especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
+    final profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
+    final centro = await centroMedicoDAO.obtenerCentro(cita.idCentro);
+
+    return 'Especialidad: ${especialidad?.nombreEspecialidad ?? 'Desconocido'}\nProfesional: ${profesional?.nombreProfesional ?? 'Desconocido'}\nCentro Médico: ${centro?.nombreCentro ?? 'Desconocido'}\nFecha: ${cita.fecha}\nHora: ${cita.hora}\n';
+  }
+  
   @override
   Widget build(BuildContext context) {
     final Cita cita = ModalRoute.of(context)!.settings.arguments as Cita;
@@ -36,15 +51,20 @@ class _VerCitaApp extends State<VerCitaApp> {
             Text("DETALLES DE LA CITA", style: Estilos.titulo2),
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(//DETALLES
-              child: Container(
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(color: Estilos.fondo),
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  '\nFecha: ${cita.fecha}\nHora: ${cita.hora}',
-                  textAlign: TextAlign.center,
-                  style: Estilos.texto,
-                ),
+              child: FutureBuilder<String>(
+                future: obtenerDetallesCita(cita),
+                builder: (context, snapshot) {
+                  return Container(
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(color: Estilos.fondo),
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      snapshot.data ?? 'Error al cargar detalles',
+                      textAlign: TextAlign.center,
+                      style: Estilos.texto,
+                    ),
+                  );
+                },
               ),
             ),
             const Padding(padding: EdgeInsets.all(20)),

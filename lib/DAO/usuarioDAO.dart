@@ -28,18 +28,18 @@ class UsuarioDAO {
     return null;
   }
 
-  /*Future<Usuario> obtenerUsuario(String numeroTarjeta) async {
+  Future<Usuario> obtenerUsuario(int idUsuario) async {
     Database database = await db.abrirBD();
     
     final List<Map<String, dynamic>> mapa = await database.query(
       'usuario',
-      where: 'numero_tarjeta = ?',  // Filtro por numero_tarjeta
-      whereArgs: [numeroTarjeta],   // Argumento para el filtro
+      where: 'id_ususario = ?',  // Filtro por numero_tarjeta
+      whereArgs: [idUsuario],   // Argumento para el filtro
       limit: 1,                     // Limitamos la consulta a un solo resultado
     );
 
     return Usuario.fromMap(mapa.first); // Devuelve el primer usuario de la lista
-  }*/
+  }
 
   Future<void> eliminarUsuario(int idUsuario) async {
     Database database = await db.abrirBD();  // Abre la base de datos
