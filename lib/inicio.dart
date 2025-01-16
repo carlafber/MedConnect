@@ -208,15 +208,26 @@ class _InicioApp extends State<InicioApp> {
                           color: Color(int.parse(color)), //color dependiendo de la especialidad
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
                         child: Row(
                           children: [
-                            const Icon(Icons.calendar_today, color: Colors.black),
+                            const Icon(FontAwesomeIcons.calendar, color: Colors.black), //FontAwesomeIcons.stethoscope
                             const SizedBox(width: 15),
-                            
-                            Text(
-                              'Cita de $nombreEspecialidad con $nombreProfesional. El ${cita.fecha} - ${cita.hora}',
-                              style: TextStyle(color: Colors.black),
+                            Expanded(
+                              child: Text(
+                                'Cita de $nombreEspecialidad con $nombreProfesional. El ${cita.fecha} - ${cita.hora}',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context, 
+                                  '/ver_cita', // Ruta para la página de detalles
+                                  arguments: cita, // Pasar la cita como argumento
+                                );
+                              },
+                              icon: const Icon(FontAwesomeIcons.circleInfo, color: Colors.black),
                             ),
                           ],
                         ),
@@ -232,81 +243,3 @@ class _InicioApp extends State<InicioApp> {
     );
   }
 }
-
-
-/*child: Column(
-  children: [
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: Color(0x4DFF5B5B), //color dependiendo de la especialidad
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Text("cardiología"),
-    ),
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: Color(0x4DBE5BFF), //color dependiendo de la especialidad
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Text("pediatría"),
-    ),
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: Color(0x4D42EA54), //color dependiendo de la especialidad
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Text("dermatología"),
-    ),
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: Color(0x4D5BCDFF), //color dependiendo de la especialidad
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Text("oftanmología"),
-    ),
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: Color(0x4DFF5BEE), //color dependiendo de la especialidad
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Text("psiquiatría"),
-    ),
-    Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        color: Color(0x4Dffa35b), //color dependiendo de la especialidad
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.all(15),
-      child: Text("traumatología"),
-    ),
-  ],
-)*/
-
-
-/*child: GestureDetector(
-  onTap: () {
-    Navigator.pushNamed(context, '/ver_cita');
-  },
-  child: Container(
-    color: Colors.white, // Aquí asignamos el color al contenedor
-    padding: const EdgeInsets.all(20),
-    child: const Center(
-      child: Text(
-        'INICIO',
-        textAlign: TextAlign.center,
-        style: Estilos.texto,
-      ),
-    ),
-  ),
-),*/

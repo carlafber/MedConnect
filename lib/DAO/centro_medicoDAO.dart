@@ -29,4 +29,22 @@ class CentroMedicoDAO {
       return CentroMedico.fromMap(mapas[i]);
     });
   }
+
+  Future<CentroMedico?> obtenerCentro(int idCentro) async {
+    Database database = await db.abrirBD();
+
+    // Realiza una consulta con filtro por id_profesional
+    final List<Map<String, dynamic>> mapas = await database.query(
+      'centro_medico',
+      where: 'id_centro = ?',  // Filtro por id_profesional
+      whereArgs: [idCentro],    // Argumento para el filtro
+    );
+
+    // Si no se encuentra el profesional, retornamos null
+    if (mapas.isNotEmpty) {
+      return CentroMedico.fromMap(mapas.first); // Retorna el primer profesional encontrado
+    } else {
+      return null;
+    }
+  }
 }

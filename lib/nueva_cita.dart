@@ -112,7 +112,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
             Container(
               height: 70,
               alignment: Alignment.center,
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: DropdownButton<Especialidad>(
                 isExpanded: true,
@@ -135,11 +135,11 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 }).toList(),
               ),
             ),
-            const Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(15)),
             Container(
               height: 70,
               alignment: Alignment.center,
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: DropdownButton<Profesional>(
                 isExpanded: true,
@@ -158,11 +158,11 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 }).toList(),
               ),
             ),
-            const Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(15)),
             Container(
               height: 70,
               alignment: Alignment.center,
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: DropdownButton<CentroMedico>(
                 isExpanded: true,
@@ -181,11 +181,11 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 }).toList(),
               ),
             ),
-            const Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(15)),
             Container(
               height: 70,
               alignment: Alignment.center,
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: Row(
                 children: <Widget>[
@@ -208,11 +208,11 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 ]
               )
             ),
-            const Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(15)),
             Container(
               height: 70,
               alignment: Alignment.center,
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: Row(
                 children: <Widget>[
@@ -235,7 +235,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 ]
               )
             ),
-            const Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(15)),
             GestureDetector(
               onTap: () async {
                 Usuario? usuario = guardar.get();
@@ -286,8 +286,3 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
     );
   }
 }
-
-
-/*
-cuando se cree la cita limpiar campos
-*/

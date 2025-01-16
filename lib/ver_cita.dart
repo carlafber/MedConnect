@@ -33,58 +33,72 @@ class _VerCitaApp extends State<VerCitaApp> {
                 ),
               ),
             ),
+            Text("DETALLES DE LA CITA", style: Estilos.titulo2),
             const Padding(padding: EdgeInsets.all(10)),
-            Expanded(
+            Expanded(//DETALLES
               child: Container(
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'DETALLES DE LA CITA',
+                child: Text(
+                  '\nFecha: ${cita.fecha}\nHora: ${cita.hora}',
                   textAlign: TextAlign.center,
                   style: Estilos.texto,
                 ),
               ),
             ),
-            const Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(20)),
             Align(
               alignment: Alignment.bottomCenter, // Alinea el botón en parte inferior
-              child: GestureDetector(
-                onTap: () {
-                  print("Actualizar");
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(color: Estilos.dorado_claro),
-                  padding: const EdgeInsets.all(20),
-                  child: const Text(
-                    'Actualizar',
-                    textAlign: TextAlign.center,
-                    style: Estilos.texto2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        print("Actualizar");
+                      },
+                      child: Container(
+                        height: 70,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Estilos.dorado_claro, 
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: const Text(
+                          'Actualizar',
+                          textAlign: TextAlign.center,
+                          style: Estilos.texto3,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                  const Padding(padding: EdgeInsets.all(20)),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        print("Eliminar");
+                      },
+                      child: Container(
+                        height: 70,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Estilos.dorado_claro,
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: const Text(
+                          'Eliminar',
+                          textAlign: TextAlign.center,
+                          style: Estilos.texto3,
+                        ),
+                      ),
+                    ),
+                 ),
+                ],
+              )
             ),
-            const Padding(padding: EdgeInsets.all(30)),
-            Align(
-              alignment: Alignment.bottomCenter, // Alinea el botón en la parte inferior
-              child: GestureDetector(
-                onTap: () {
-                  print("Eliminar");
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(color: Estilos.dorado_claro),
-                  padding: const EdgeInsets.all(20),
-                  child: const Text(
-                    'Eliminar',
-                    textAlign: TextAlign.center,
-                    style: Estilos.texto2,
-                  ),
-                ),
-              ),
-            ),
-            const Padding(padding: EdgeInsets.all(20))
           ],
         ),
       ),

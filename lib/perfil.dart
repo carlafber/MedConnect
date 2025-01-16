@@ -132,7 +132,7 @@ class _PerfilApp extends State<PerfilApp> {
                     )
                   ],
                 ),
-                const Padding(padding: EdgeInsets.all(30)),
+                const Padding(padding: EdgeInsets.all(20)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
