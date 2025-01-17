@@ -31,4 +31,14 @@ class CitaDAO {
       return Cita.fromMap(mapas[i]);
     });
   }
+
+  Future<void> eliminarCita(int idCita) async {
+    Database database = await db.abrirBD();  // Abre la base de datos
+    await database.delete(
+      'cita',  // El nombre de la tabla
+      where: 'id_cita = ?',  // Filtro para eliminar el usuario por ID
+      whereArgs: [idCita],  // El argumento que contiene el ID del usuario
+    );
+    print('CITA con id $idCita eliminado');
+  }
 }

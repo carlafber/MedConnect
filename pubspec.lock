@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.0"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -57,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      sha256: "5276944c6ffc975ae796569a826c38a62d2abcf264e26b88fa6f482e107f4237"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.70.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -160,6 +176,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  pie_chart:
+    dependency: "direct main"
+    description:
+      name: pie_chart
+      sha256: "58e6a46999ac938bfa1c3e5be414d6e149f037647197dca03ba3614324c12c82"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.0"
   platform:
     dependency: transitive
     description:
@@ -277,6 +301,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  syncfusion_flutter_charts:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_charts
+      sha256: "117823c9e2ffcb7fb9868c73263df88751e3bb1f3d81f617cbaf63112f530e9c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "28.1.39"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "794870919ca73e29c6cb25392a097cdfe58da4d6f3f3d3eccc529ecf52f78752"
+      url: "https://pub.dev"
+    source: hosted
+    version: "28.1.39"
   synchronized:
     dependency: transitive
     description:
