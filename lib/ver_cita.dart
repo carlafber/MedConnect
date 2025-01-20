@@ -131,7 +131,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                 alignment: Alignment.topLeft,
                 child: FloatingActionButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/main_bnb');
                   },
                   backgroundColor: Estilos.dorado_oscuro,
                   child: const Icon(Icons.arrow_back, color: Colors.white)
@@ -290,7 +290,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Cita eliminada correctamente")),
                           );
-                          //await Navigator.pushNamed(context, '/inicio');
+                          await Navigator.pushNamed(context, '/inicio');
                         }
                       },
                       child: Container(

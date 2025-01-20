@@ -98,10 +98,10 @@ class DBHelper{
         )
       ''');
       
-      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00:00'});
-      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-03-15', 'hora': '14:30:00'});
-      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-07-22', 'hora': '08:30:00'});
-      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-08-06', 'hora': '17:00:00'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-03-15', 'hora': '14:30'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-07-22', 'hora': '08:30'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-08-06', 'hora': '17:00'});
 
       }, version: 1
     );

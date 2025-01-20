@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:proyecto_final/clases/especialidad.dart';
 import 'package:proyecto_final/clases/profesional.dart';
 import 'DAO/citaDAO.dart';
@@ -40,6 +41,13 @@ class _InicioApp extends State<InicioApp> {
     List<Cita> lista = await citaDAO.obtenerCitasUsuario(idUsuario);
     setState(() {
       citas = lista;
+    });
+
+    // Ordenar las citas por fecha
+    citas.sort((a, b) {
+      DateTime fechaA = DateTime.parse(a.fecha); // Convertir la fecha de la cita 'a' a DateTime
+      DateTime fechaB = DateTime.parse(b.fecha); // Convertir la fecha de la cita 'b' a DateTime
+      return fechaA.compareTo(fechaB); // Ordenar de más antiguo a más reciente
     });
 
     // Cargar especialidades para cada profesional
@@ -194,6 +202,9 @@ class _InicioApp extends State<InicioApp> {
                     String nombreEspecialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? 'Desconocida'; // Obtener especialidad del mapa
                     String color = especialidades[cita.idProfesional]?.color ?? '0xFFFFFFFF'; // Color predeterminado si no se encuentra
                     String nombreProfesional = nombresProfesionales[cita.idProfesional] ?? 'Desconocido';
+                    // Convertir la fecha de la base de datos (yyyy-MM-dd) a dd-MM-yyyy
+                    String fechaFormateada = DateFormat.yMMMMd("es_ES").format(DateFormat('yyyy-MM-dd').parse(cita.fecha));
+                    
                     return GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
@@ -215,7 +226,7 @@ class _InicioApp extends State<InicioApp> {
                             const SizedBox(width: 15),
                             Expanded(
                               child: Text(
-                                'Cita de $nombreEspecialidad con $nombreProfesional. El ${cita.fecha} - ${cita.hora}',
+                                'Cita de $nombreEspecialidad con $nombreProfesional. El $fechaFormateada - ${cita.hora}',
                                 style: TextStyle(color: Colors.black),
                               ),
                             ),
