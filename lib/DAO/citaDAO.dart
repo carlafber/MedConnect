@@ -7,9 +7,19 @@ class CitaDAO {
 
   Future<int> crearCita(Cita cita) async {
     Database database = await db.abrirBD();
+    
+    // Convertir el objeto Cita a mapa
+    Map<String, dynamic> citaMap = cita.toMap();
+
+    // Imprimir la sentencia SQL
+    /*String columnas = citaMap.keys.join(', ');
+    String valores = citaMap.values.map((e) => "'$e'").join(', '); // Escapar las comillas si es necesario
+
+    print('INSERT INTO cita ($columnas) VALUES ($valores);');*/
+
     int resultado = await database.insert(
       'cita', // Nombre de la tabla
-      cita.toMap(), // Mapa de la cita que se insertará
+      citaMap, // Mapa de la cita que se insertará
       conflictAlgorithm: ConflictAlgorithm.replace, // Si ya existe, reemplaza
     );
     print("Cita creada con ID: $resultado");

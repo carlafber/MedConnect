@@ -17,7 +17,6 @@ void main() async {
   await DBHelper().abrirBD();
     
   runApp(const MainApp());
-
 } 
 
 class MainApp extends StatefulWidget {

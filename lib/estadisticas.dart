@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_final/clases/especialidad.dart';
-import 'package:proyecto_final/clases/profesional.dart';
-import 'package:proyecto_final/clases/usuario.dart';
-import 'package:proyecto_final/estilos.dart';
-import 'package:proyecto_final/DAO/citaDAO.dart';
-import 'package:proyecto_final/DAO/profesionalDAO.dart';
-import 'package:proyecto_final/clases/cita.dart';
-import 'package:proyecto_final/guardar.dart';
+import 'clases/especialidad.dart';
+import 'clases/profesional.dart';
+import 'clases/usuario.dart';
+import 'estilos.dart';
+import 'DAO/citaDAO.dart';
+import 'DAO/profesionalDAO.dart';
+import 'clases/cita.dart';
+import 'guardar.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class EstadisticasApp extends StatefulWidget {
@@ -184,14 +184,14 @@ class _EstadisticasApp extends State<EstadisticasApp> {
   }
 }
 /*import 'package:flutter/material.dart';
-import 'package:proyecto_final/clases/especialidad.dart';
-import 'package:proyecto_final/clases/profesional.dart';
-import 'package:proyecto_final/clases/usuario.dart';
-import 'package:proyecto_final/estilos.dart';
-import 'package:proyecto_final/DAO/citaDAO.dart';
-import 'package:proyecto_final/DAO/profesionalDAO.dart';
-import 'package:proyecto_final/clases/cita.dart';
-import 'package:proyecto_final/guardar.dart';
+import 'clases/especialidad.dart';
+import 'clases/profesional.dart';
+import 'clases/usuario.dart';
+import 'estilos.dart';
+import 'DAO/citaDAO.dart';
+import 'DAO/profesionalDAO.dart';
+import 'clases/cita.dart';
+import 'guardar.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class EstadisticasApp extends StatefulWidget {

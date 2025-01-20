@@ -23,8 +23,14 @@ class DBHelper{
       ''');
 
       await db.insert('usuario', {'nombre': 'Juan Pérez', 'correo': 'juan.perez@email.com', 'contrasena': '1234', 'numero_tarjeta': '1234567890', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
-      await db.insert('usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace); 
-      
+      await db.insert('usuario', {'nombre': 'María López', 'correo': 'maria.lopez@email.com', 'contrasena': 'Maria', 'numero_tarjeta': '0987654321', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+      await db.insert('usuario', {'nombre': 'Carlos Gómez', 'correo': 'carlos.gomez@email.com', 'contrasena': 'Carlitos13', 'numero_tarjeta': '4561230789', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+      await db.insert('usuario', {'nombre': 'Laura Fernández', 'correo': 'laura.fernandez@email.com', 'contrasena': 'Laurita', 'numero_tarjeta': '1122334455', 'compania': 'Asisa'}, conflictAlgorithm: ConflictAlgorithm.replace);
+      await db.insert('usuario', {'nombre': 'Jorge Martínez', 'correo': 'jorge.martinez@email.com', 'contrasena': 'JorgeM', 'numero_tarjeta': '9988776655', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+      await db.insert('usuario', {'nombre': 'Beatriz González', 'correo': 'beatriz.gonzalez@email.com', 'contrasena': 'Beita69', 'numero_tarjeta': '5566778899', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+      await db.insert('usuario', {'nombre': 'Antonio Ruiz', 'correo': 'antonio.ruiz@email.com', 'contrasena': 'Antonito', 'numero_tarjeta': '6677889900', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
+      await db.insert('usuario', {'nombre': 'Elena Ramírez', 'correo': 'elena.ramirez@email.com', 'contrasena': 'Elena1234', 'numero_tarjeta': '4455667788', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+
       //ESPECIALIDAD
       await db.execute('''
         CREATE TABLE especialidad(
@@ -100,8 +106,26 @@ class DBHelper{
       
       await db.insert('cita', {'id_usuario': 1, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-02-10', 'hora': '10:00'});
       await db.insert('cita', {'id_usuario': 2, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-03-15', 'hora': '14:30'});
+      await db.insert('cita', {'id_usuario': 3, 'id_profesional': 3, 'id_centro': 3, 'fecha': '2025-04-20', 'hora': '09:00'});
+      await db.insert('cita', {'id_usuario': 4, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-05-12', 'hora': '11:00'});
+      await db.insert('cita', {'id_usuario': 5, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-06-18', 'hora': '15:30'});
       await db.insert('cita', {'id_usuario': 1, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-07-22', 'hora': '08:30'});
+      await db.insert('cita', {'id_usuario': 4, 'id_profesional': 1, 'id_centro': 1, 'fecha': '2025-08-01', 'hora': '09:30'});
+      await db.insert('cita', {'id_usuario': 5, 'id_profesional': 2, 'id_centro': 2, 'fecha': '2025-08-02', 'hora': '13:00'});
+      await db.insert('cita', {'id_usuario': 6, 'id_profesional': 3, 'id_centro': 3, 'fecha': '2025-08-03', 'hora': '11:15'});
+      await db.insert('cita', {'id_usuario': 7, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-08-04', 'hora': '14:45'});
+      await db.insert('cita', {'id_usuario': 8, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-08-05', 'hora': '16:30'});
       await db.insert('cita', {'id_usuario': 2, 'id_profesional': 6, 'id_centro': 6, 'fecha': '2025-08-06', 'hora': '17:00'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 8, 'id_centro': 2, 'fecha': '2025-01-23', 'hora': '12:00'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 9, 'id_centro': 3, 'fecha': '2025-04-14', 'hora': '17:30'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 5, 'id_centro': 5, 'fecha': '2025-03-05', 'hora': '12:40'});
+      await db.insert('cita', {'id_usuario': 1, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-02-03', 'hora': '19:30'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 7, 'id_centro': 1, 'fecha': '2025-01-09', 'hora': '13:15'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 7, 'id_centro': 1, 'fecha': '2025-03-10', 'hora': '17:20'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 4, 'id_centro': 4, 'fecha': '2025-02-11', 'hora': '20:15'});
+      await db.insert('cita', {'id_usuario': 2, 'id_profesional': 11, 'id_centro': 5, 'fecha': '2025-01-30', 'hora': '18:30'});
+
+
 
       }, version: 1
     );
