@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:proyecto_final/DAO/citaDAO.dart';
 import 'DAO/centro_medicoDAO.dart';
 import 'DAO/especialidadDAO.dart';
@@ -28,13 +29,11 @@ class _VerCitaApp extends State<VerCitaApp> {
     return 'Fecha: ${cita.fecha}\nHora: ${cita.hora}';
   }
 
-  List<Especialidad> especialidades = [];
-  List<Profesional> profesionales = [];
-  List<CentroMedico> centros = [];
-
-  Especialidad? especialidadSeleccionada;
-  Profesional? profesionalSeleccionado;
-  CentroMedico? centroSeleccionado;
+  Especialidad? especialidadCita;
+  Profesional? profesionalCita;
+  CentroMedico? centroCita;
+  late String fechaCita;
+  late String horaCita;
   
 
   @override
@@ -42,47 +41,67 @@ class _VerCitaApp extends State<VerCitaApp> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       final Cita cita = ModalRoute.of(context)!.settings.arguments as Cita;
-      await _cargarEspecialidadDeCita(cita);
-      await _cargarProfesionalDeCita(cita);
-      await _cargarCentroDeCita(cita);
+      await _cargarDatosDeCita(cita);
+      fechaCita = cita.fecha;
+      horaCita = cita.hora;
     });
+  }
+
+  Future<void> _cargarDatosDeCita(Cita cita) async {
+    // Cargar solo la especialidad, profesional y centro relacionados con esta cita.
+    await _cargarEspecialidadDeCita(cita);
+    await _cargarProfesionalDeCita(cita);
+    await _cargarCentroDeCita(cita);
+    setState(() {});  // Para actualizar la UI después de cargar los datos.
   }
 
   Future<void> _cargarEspecialidadDeCita(Cita cita) async {
     final especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
-    if (especialidad != null) {
-      setState(() {
-        // Busca en la lista la especialidad que coincida con el ID
-        especialidadSeleccionada = especialidades.firstWhere(
-          (e) => e.idEspecialidad == especialidad.idEspecialidad,
-          orElse: () => especialidad, // Usa la especialidad obtenida si no está en la lista
-        );
-      });
-    }
+    setState(() {
+      especialidadCita = especialidad;
+    });
   }
 
   Future<void> _cargarProfesionalDeCita(Cita cita) async {
     final profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
-    if (profesional != null) {
-      setState(() {
-        // Busca en la lista la especialidad que coincida con el ID
-        profesionalSeleccionado = profesionales.firstWhere(
-          (e) => e.idProfesional == profesional.idProfesional,
-          orElse: () => profesional, // Usa la especialidad obtenida si no está en la lista
-        );
-      });
-    }
+    setState(() {
+      profesionalCita = profesional;
+    });
   }
 
   Future<void> _cargarCentroDeCita(Cita cita) async {
     final centro = await centroDAO.obtenerCentro(cita.idCentro);
-    if (centro != null) {
+    setState(() {
+      centroCita = centro;
+    });
+  }
+
+  Future<void> _seleccionarFecha(BuildContext context) async {
+    final DateTime? d = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2025),
+      lastDate: DateTime(2030),
+      locale: Locale('es', 'ES'), // Establece el idioma del DatePicker a español
+    );
+    if (d != null) {
       setState(() {
-        // Busca en la lista la especialidad que coincida con el ID
-        centroSeleccionado = centros.firstWhere(
-          (e) => e.idCentro == centro.idCentro,
-          orElse: () => centro, // Usa la especialidad obtenida si no está en la lista
-        );
+        fechaCita = DateFormat('yyyy-MM-dd').format(d); // Formato de fecha en español  
+      });
+    }
+  }
+
+  Future<void> _seleccionarHora(BuildContext context) async {
+    // Muestra el TimePicker
+    final TimeOfDay? t = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (t != null) {
+      // Convierte la hora seleccionada a formato de 24 horas (si lo necesitas)
+      final String formattedTime = t.format(context);  // 24h or 12h based on locale
+      setState(() {
+        horaCita = formattedTime;
       });
     }
   }
@@ -92,6 +111,7 @@ class _VerCitaApp extends State<VerCitaApp> {
   @override
   Widget build(BuildContext context) {
     final Cita cita = ModalRoute.of(context)!.settings.arguments as Cita;
+    String fechaFormateada = DateFormat.yMMMMd("es_ES").format(DateFormat('yyyy-MM-dd').parse(fechaCita));
     
     return Scaffold(
       backgroundColor: Estilos.dorado,
@@ -115,56 +135,92 @@ class _VerCitaApp extends State<VerCitaApp> {
             Text("DETALLES DE LA CITA", style: Estilos.titulo2),
             const Padding(padding: EdgeInsets.all(10)),
             Container(
-              height: 70,
+              height: 60,
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Especialidad: ${especialidadSeleccionada!.nombreEspecialidad}",
+                "Especialidad: ${especialidadCita!.nombreEspecialidad}",
                 style: Estilos.texto6,
               ),
             ),
-            const Padding(padding: EdgeInsets.all(10)),
+            const Padding(padding: EdgeInsets.all(13)),
             Container(
-              height: 70,
+              height: 60,
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Profesional: ${profesionalSeleccionado!.nombreProfesional}",
+                "Profesional: ${profesionalCita!.nombreProfesional}",
                 style: Estilos.texto6,
               ),
             ),
-            const Padding(padding: EdgeInsets.all(10)),
+            const Padding(padding: EdgeInsets.all(13)),
             Container(
-              height: 70,
+              height: 60,
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Centro médico: ${centroSeleccionado!.nombreCentro}",
+                "Centro médico: ${centroCita!.nombreCentro}",
                 style: Estilos.texto6,
               ),
             ),
-            const Padding(padding: EdgeInsets.all(10)),
-            Expanded(//DETALLES
-              child: FutureBuilder<String>(
-                future: obtenerDetallesCita(cita),
-                builder: (context, snapshot) {
-                  return Container(
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(color: Estilos.fondo),
-                    padding: const EdgeInsets.all(10),
+            const Padding(padding: EdgeInsets.all(13)),
+            Container(
+              height: 60,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(color: Estilos.fondo),
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  InkWell(
                     child: Text(
-                      snapshot.data ?? 'Error al cargar detalles',
+                      'Fecha: $fechaFormateada',
                       textAlign: TextAlign.center,
-                      style: Estilos.texto,
+                      style: Estilos.texto6,
                     ),
-                  );
-                },
+                    onTap: () {
+                      _seleccionarFecha(context);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () {
+                      _seleccionarFecha(context);
+                    },
+                  ),
+                ]
               ),
             ),
-            const Padding(padding: EdgeInsets.all(10)),
+            const Padding(padding: EdgeInsets.all(13)),
+            Container(
+              height: 60,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(color: Estilos.fondo),
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  InkWell(
+                    child: Text(
+                      'Hora: $horaCita',
+                      textAlign: TextAlign.center,
+                      style: Estilos.texto6,
+                    ),
+                    onTap: () {
+                      _seleccionarHora(context);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.access_time),
+                    onPressed: () {
+                      _seleccionarHora(context);
+                    },
+                  ),
+                ]
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(13)),
             Align(
               alignment: Alignment.bottomCenter, // Alinea el botón en parte inferior
               child: Row(
@@ -173,16 +229,16 @@ class _VerCitaApp extends State<VerCitaApp> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
+                        //actualizar fecha y hora de cita
                         print("Actualizar");
                       },
                       child: Container(
-                        height: 70,
+                        height: 60,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Estilos.dorado_claro, 
-                          //borderRadius: BorderRadius.circular(15)
                         ),
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
                         child: const Text(
                           'Actualizar',
                           textAlign: TextAlign.center,
@@ -228,13 +284,12 @@ class _VerCitaApp extends State<VerCitaApp> {
                         }
                       },
                       child: Container(
-                        height: 70,
+                        height: 60,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Estilos.dorado_claro,
-                          //borderRadius: BorderRadius.circular(15)
                         ),
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
                         child: const Text(
                           'Eliminar',
                           textAlign: TextAlign.center,

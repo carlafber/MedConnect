@@ -49,7 +49,7 @@ class Estilos {
   );
   static const TextStyle texto6 = TextStyle(
     color: Colors.black,
-    fontSize: 17,
+    fontSize: 18,
     fontFamily: 'Roboto',
   );
   static const Color dorado = Color.fromARGB(255, 185, 144, 40);
