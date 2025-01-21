@@ -222,11 +222,11 @@ class _InicioApp extends State<InicioApp> {
                         padding: const EdgeInsets.all(10),
                         child: Row(
                           children: [
-                            const Icon(FontAwesomeIcons.calendar, color: Colors.black), //FontAwesomeIcons.stethoscope
+                            const Icon(FontAwesomeIcons.stethoscope, color: Colors.black), //FontAwesomeIcons.calendar
                             const SizedBox(width: 15),
                             Expanded(
                               child: Text(
-                                'Cita de $nombreEspecialidad con $nombreProfesional. El $fechaFormateada - ${cita.hora}',
+                                'Cita de $nombreEspecialidad con $nombreProfesional. El $fechaFormateada a las ${cita.hora}',
                                 style: TextStyle(color: Colors.black),
                               ),
                             ),
