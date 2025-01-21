@@ -35,7 +35,6 @@ class _PerfilApp extends State<PerfilApp> {
                       alignment: Alignment.topLeft,
                       child: FloatingActionButton(
                         onPressed: () {
-                          print("Volver");
                           Navigator.pop(context);
                         },
                         backgroundColor: Estilos.dorado_oscuro,
@@ -189,7 +188,9 @@ class _PerfilApp extends State<PerfilApp> {
                       const Padding(padding: EdgeInsets.all(30)),
                       GestureDetector(
                         onTap: () async {
-                          //
+                          //funcion que abra un dialogo en el que tiene que meter la contraseña actual y dos veces la nueva, 
+                          //si la actual esta bien y las nuevas coinciden -> se cambia la contraseña
+                          _actualizarContrasena(context, usuario, usuarioDAO);
                         },
                         child: Container(
                           height: 75,
@@ -214,6 +215,120 @@ class _PerfilApp extends State<PerfilApp> {
           ),
         ),
       )
+    );
+  }
+
+
+  void _actualizarContrasena(BuildContext context, Usuario usuario, UsuarioDAO usuarioDAO) {
+    final formulario = GlobalKey<FormState>();
+    final TextEditingController contrasenaActual = TextEditingController();
+    final TextEditingController contrasenaNueva1 = TextEditingController();
+    final TextEditingController contrasenaNueva2 = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Actualiza la contraseña", style: Estilos.texto5),
+          backgroundColor: Estilos.fondo,
+          content: SizedBox(
+            width: 400,
+            child: Form(
+              key: formulario,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Padding(padding: EdgeInsets.all(5)),
+                  TextFormField(
+                    controller: contrasenaActual,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "Contraseña actual",
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Estilos.dorado_oscuro,
+                        ),
+                      ),
+                    ),
+                    validator: (value){
+                      if (value == null || value.isEmpty) {
+                        return "Campo obligatorio";
+                      }
+                      if(usuario.contrasena != value){
+                        return "Contraseña incorrecta";
+                      }
+                      return null; 
+                    }
+                  ),
+                  const Padding(padding: EdgeInsets.all(10)),
+                  TextFormField(
+                    controller: contrasenaNueva1,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "Nueva contraseña",
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Estilos.dorado_oscuro,
+                        ),
+                      ),
+                    ),
+                    validator: (value){
+                      if (value == null || value.isEmpty) {
+                        return "Campo obligatorio";
+                      } else if (value.length < 6) {
+                        return "Debe tener al menos 6 caracteres";
+                      }
+                      return null; 
+                    }
+                  ),
+                  const Padding(padding: EdgeInsets.all(10)),
+                  TextFormField(
+                    controller: contrasenaNueva2,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "Confirmar contraseña",
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Estilos.dorado_oscuro,
+                        ),
+                      ),
+                    ),
+                    validator: (value){
+                      if (value == null || value.isEmpty) {
+                        return "Campo obligatorio";
+                      } else if (value.length < 6) {
+                        return "Debe tener al menos 6 caracteres";
+                      }
+                      if(contrasenaNueva1 != contrasenaNueva2){
+                        return "Las contraseñas no coinciden";
+                      }
+                      return null; 
+                    }
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Cancelar", style: Estilos.texto4),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (formulario.currentState!.validate()) {
+                  usuarioDAO.actualizarContrasena(usuario.idUsuario, contrasenaNueva1);
+                  Navigator.pop(context);
+                }
+              },
+              child: Text("Guardar", style: Estilos.texto4),
+            ),
+          ],
+        );
+      },
     );
   }
 }

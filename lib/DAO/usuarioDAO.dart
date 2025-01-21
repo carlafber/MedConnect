@@ -1,3 +1,4 @@
+import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:proyecto_final/clases/usuario.dart';
 import 'package:proyecto_final/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,7 +24,6 @@ class UsuarioDAO {
         return usuario;
       }
     }
-
     // Si no se encuentra el usuario con el número de tarjeta, devuelve null
     return null;
   }
@@ -33,9 +33,9 @@ class UsuarioDAO {
     
     final List<Map<String, dynamic>> mapa = await database.query(
       'usuario',
-      where: 'id_ususario = ?',  // Filtro por numero_tarjeta
-      whereArgs: [idUsuario],   // Argumento para el filtro
-      limit: 1,                     // Limitamos la consulta a un solo resultado
+      where: 'id_ususario = ?', // Filtro por numero_tarjeta
+      whereArgs: [idUsuario], // Argumento para el filtro
+      limit: 1, // Limitamos la consulta a un solo resultado
     );
 
     return Usuario.fromMap(mapa.first); // Devuelve el primer usuario de la lista
@@ -49,6 +49,17 @@ class UsuarioDAO {
       whereArgs: [idUsuario],  // El argumento que contiene el ID del usuario
     );
     print('Usuario con id $idUsuario eliminado');
+  }
+
+  Future<void> actualizarContrasena(int? idUsuario, TextEditingController contrasenaNueva) async {
+    Database database = await db.abrirBD();  // Abre la base de datos
+    await database.update(
+      'usuario',  // Nombre de la tabla
+      {'contrasena': contrasenaNueva},  // Campo a actualizar
+      where: 'id_usuario = ?',  // Filtro para encontrar el usuario
+      whereArgs: [idUsuario],  // Argumento con el ID del usuario
+    );
+    print('Contraseña del usuario con id $idUsuario actualizada');
   }
 
 }
