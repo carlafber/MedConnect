@@ -42,33 +42,9 @@ class _VerCitaApp extends State<VerCitaApp> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       final Cita cita = ModalRoute.of(context)!.settings.arguments as Cita;
-      await _cargarEspecialidades();
       await _cargarEspecialidadDeCita(cita);
       await _cargarProfesionalDeCita(cita);
       await _cargarCentroDeCita(cita);
-    });
-  }
-
-  Future<void> _cargarEspecialidades() async {
-    List<Especialidad> lista = await especialidadDAO.obtenerEspecialidades();
-    setState(() {
-      especialidades = lista;
-    });
-  }
-
-  Future<void> _cargarProfesionales(int idEspecialidad) async {
-    List<Profesional> lista = await profesionalDAO.obtenerProfesionalesPorEspecialidad(idEspecialidad);
-    setState(() {
-      profesionales = lista;
-      profesionalSeleccionado = null; // Reinicia selección al cambiar la especialidad
-    });
-  }
-
-
-  Future<void> _cargarCentros(int idEspecialidad) async {
-    List<CentroMedico> lista = await centroDAO.obtenerCentrosPorEspecialidad(idEspecialidad);
-    setState(() {
-      centros = lista;
     });
   }
 
@@ -88,7 +64,6 @@ class _VerCitaApp extends State<VerCitaApp> {
   Future<void> _cargarProfesionalDeCita(Cita cita) async {
     final profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
     if (profesional != null) {
-      await _cargarProfesionales(profesional.idEspecialidad);
       setState(() {
         // Busca en la lista la especialidad que coincida con el ID
         profesionalSeleccionado = profesionales.firstWhere(
@@ -102,7 +77,6 @@ class _VerCitaApp extends State<VerCitaApp> {
   Future<void> _cargarCentroDeCita(Cita cita) async {
     final centro = await centroDAO.obtenerCentro(cita.idCentro);
     if (centro != null) {
-      await _cargarCentros(centro.idEspecialidad);
       setState(() {
         // Busca en la lista la especialidad que coincida con el ID
         centroSeleccionado = centros.firstWhere(
@@ -142,74 +116,34 @@ class _VerCitaApp extends State<VerCitaApp> {
             const Padding(padding: EdgeInsets.all(10)),
             Container(
               height: 70,
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
-              child: DropdownButton<Especialidad>(
-                isExpanded: true,
-                value: especialidadSeleccionada,
-                hint: const Text("Selecciona una Especialidad"),
-                onChanged: (Especialidad? nuevaEspecialidad) {
-                  setState(() {
-                    especialidadSeleccionada = nuevaEspecialidad;
-                  });
-                  if (nuevaEspecialidad != null) {
-                    _cargarProfesionales(nuevaEspecialidad.idEspecialidad as int);
-                    _cargarCentros(nuevaEspecialidad.idEspecialidad as int);
-                  }
-                },
-                items: especialidades.map((Especialidad especialidad) {
-                  return DropdownMenuItem<Especialidad>(
-                    value: especialidad,
-                    child: Text(especialidad.nombreEspecialidad),
-                  );
-                }).toList(),
-              )
-            ),
-            const Padding(padding: EdgeInsets.all(10)),
-            Container(
-              height: 70,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(color: Estilos.fondo),
-              padding: const EdgeInsets.all(10),
-              child: DropdownButton<Profesional>(
-                isExpanded: true,
-                value: profesionalSeleccionado,
-                hint: const Text("Selecciona un Profesional"),
-                onChanged: (Profesional? nuevoProfesional) {
-                  setState(() {
-                    profesionalSeleccionado = nuevoProfesional;
-                  });
-                },
-                items: profesionales.map((Profesional profesional) {
-                  return DropdownMenuItem<Profesional>(
-                    value: profesional,
-                    child: Text(profesional.nombreProfesional),
-                  );
-                }).toList(),
+              child: Text(
+                "Especialidad: ${especialidadSeleccionada!.nombreEspecialidad}",
+                style: Estilos.texto6,
               ),
             ),
             const Padding(padding: EdgeInsets.all(10)),
             Container(
               height: 70,
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(color: Estilos.fondo),
               padding: const EdgeInsets.all(10),
-              child: DropdownButton<CentroMedico>(
-                isExpanded: true,
-                value: centroSeleccionado,
-                hint: const Text("Selecciona un Centro Médico"),
-                onChanged: (CentroMedico? nuevoCentro) {
-                  setState(() {
-                    centroSeleccionado = nuevoCentro;
-                  });
-                },
-                items: centros.map((CentroMedico centro) {
-                  return DropdownMenuItem<CentroMedico>(
-                    value: centro,
-                    child: Text(centro.nombreCentro),
-                  );
-                }).toList(),
+              child: Text(
+                "Profesional: ${profesionalSeleccionado!.nombreProfesional}",
+                style: Estilos.texto6,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(10)),
+            Container(
+              height: 70,
+              alignment: Alignment.centerLeft,
+              decoration: const BoxDecoration(color: Estilos.fondo),
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                "Centro médico: ${centroSeleccionado!.nombreCentro}",
+                style: Estilos.texto6,
               ),
             ),
             const Padding(padding: EdgeInsets.all(10)),

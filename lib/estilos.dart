@@ -47,6 +47,11 @@ class Estilos {
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle texto6 = TextStyle(
+    color: Colors.black,
+    fontSize: 17,
+    fontFamily: 'Roboto',
+  );
   static const Color dorado = Color.fromARGB(255, 185, 144, 40);
   static const Color dorado_oscuro = Color.fromARGB(255, 157, 118, 18);
   static const Color dorado_claro = Color.fromARGB(255, 219, 187, 106);
