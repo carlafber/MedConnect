@@ -49,6 +49,20 @@ class CitaDAO {
       where: 'id_cita = ?',  // Filtro para eliminar el usuario por ID
       whereArgs: [idCita],  // El argumento que contiene el ID del usuario
     );
-    print('CITA con id $idCita eliminado');
+    print('CITA con id $idCita eliminada');
+  }
+
+  Future<void> actualizarCita(int? idCita, String fecha, String hora) async {
+    Database database = await db.abrirBD();  // Abre la base de datos
+    await database.update(
+      'cita',  // Nombre de la tabla
+      {  // Campos a actualizar (en un solo mapa)
+        'fecha': fecha,
+        'hora': hora,
+      },
+      where: 'id_cita = ?',  // Filtro para encontrar el usuario
+      whereArgs: [idCita],  // Argumento con el ID del usuario
+    );
+    print('CITA con id $idCita actualizada');
   }
 }

@@ -32,8 +32,10 @@ class _VerCitaApp extends State<VerCitaApp> {
   Especialidad? especialidadCita;
   Profesional? profesionalCita;
   CentroMedico? centroCita;
-  late String fechaCita;
-  late String horaCita;
+  String fechaCita = "";
+  String horaCita = "";
+
+  bool _cargando = true;
   
 
   @override
@@ -48,11 +50,16 @@ class _VerCitaApp extends State<VerCitaApp> {
   }
 
   Future<void> _cargarDatosDeCita(Cita cita) async {
+    setState(() {
+      _cargando = true; // Iniciar carga
+    });
     // Cargar solo la especialidad, profesional y centro relacionados con esta cita.
     await _cargarEspecialidadDeCita(cita);
     await _cargarProfesionalDeCita(cita);
     await _cargarCentroDeCita(cita);
-    setState(() {});  // Para actualizar la UI después de cargar los datos.
+    setState(() {
+      _cargando = false; // Finalizar carga
+    });  // Para actualizar la UI después de cargar los datos.
   }
 
   Future<void> _cargarEspecialidadDeCita(Cita cita) async {
@@ -117,7 +124,11 @@ class _VerCitaApp extends State<VerCitaApp> {
       backgroundColor: Estilos.dorado,
       body: Padding (
         padding: const EdgeInsets.all(25),
-        child: Column(
+        child: /*_cargando  // Verifica si está cargando
+          ? Center(
+              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Estilos.dorado),),  // Mostrar el cargando
+            )
+          : */Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 5),
@@ -228,9 +239,15 @@ class _VerCitaApp extends State<VerCitaApp> {
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         //actualizar fecha y hora de cita
-                        print("Actualizar");
+                        await citaDAO.actualizarCita(cita.idCita, fechaCita, horaCita);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Cita actualizada exitosamente")),
+                        );
+                        // Esperar 3 segundos antes de volver
+                        await Future.delayed(const Duration(seconds: 2));
+                        Navigator.of(context).pop();
                       },
                       child: Container(
                         height: 60,
