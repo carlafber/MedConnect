@@ -105,10 +105,8 @@ class _VerCitaApp extends State<VerCitaApp> {
       initialTime: TimeOfDay.now(),
     );
     if (t != null) {
-      // Convierte la hora seleccionada a formato de 24 horas (si lo necesitas)
-      final String formattedTime = t.format(context);  // 24h or 12h based on locale
       setState(() {
-        horaCita = formattedTime;
+        horaCita = t.format(context);
       });
     }
   }
