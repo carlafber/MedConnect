@@ -109,8 +109,10 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
           padding: const EdgeInsets.all(25),
           child: Column(
             children: [
+              Text("NUEVA CITA", style: Estilos.titulo2),
+              const Padding(padding: EdgeInsets.all(10)),
               Container(
-                height: 70,
+                height: 60,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
@@ -137,7 +139,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
               ),
               const Padding(padding: EdgeInsets.all(15)),
               Container(
-                height: 70,
+                height: 60,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
@@ -160,7 +162,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
               ),
               const Padding(padding: EdgeInsets.all(15)),
               Container(
-                height: 70,
+                height: 60,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
@@ -183,7 +185,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
               ),
               const Padding(padding: EdgeInsets.all(15)),
               Container(
-                height: 70,
+                height: 60,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
@@ -210,7 +212,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
               ),
               const Padding(padding: EdgeInsets.all(15)),
               Container(
-                height: 70,
+                height: 60,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(color: Estilos.fondo),
                 padding: const EdgeInsets.all(10),
@@ -271,7 +273,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   }
                 },
                 child: Container(
-                  height: 70,
+                  height: 60,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(color: Estilos.dorado_claro),
                   child: const Text(
