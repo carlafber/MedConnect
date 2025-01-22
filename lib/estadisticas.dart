@@ -84,9 +84,9 @@ class _EstadisticasApp extends State<EstadisticasApp> {
 
       return PieChartSectionData(
         value: entry.value.toDouble(),
-        title: "${percentage.toStringAsFixed(1)}%", // Solo mostrar el porcentaje
-        radius: 200, // Aumentar el radio para hacer el gráfico más grande
-        color: Color(int.parse(colorHex)).withOpacity(0.5), // Asegurarse de que el color sea opaco
+        title: "${percentage.toStringAsFixed(1)}%", // Mostrar el porcentaje
+        radius: 200, // Tamaño del gráfico
+        color: Color(int.parse(colorHex)).withOpacity(0.5), // Hacer el color sea opaco
         titleStyle: TextStyle(
           fontSize: 14,
           color: Colors.black,
@@ -140,22 +140,18 @@ class _EstadisticasApp extends State<EstadisticasApp> {
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Centrar los elementos verticalmente
-          crossAxisAlignment: CrossAxisAlignment.center, // Centrar los elementos horizontalmente
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Título centrado
             Text("ESTADÍSTICAS", style: Estilos.titulo2),
-
             const Padding(padding: EdgeInsets.all(10)),
-
-            // Contenedor blanco que incluye tanto el gráfico como la leyenda
+            // Contenedor con el gráfico y la leyenda
             Expanded(
               child: Container(
-                color: Estilos.fondo, // Establecer el color de fondo del contenedor como blanco
+                color: Estilos.fondo,
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    // PieChart más grande
                     Expanded(
                       child: Container(
                         alignment: Alignment.center,
@@ -169,9 +165,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
                         ),
                       ),
                     ),
-
-                    // Leyenda dentro del contenedor blanco
-                    const SizedBox(height: 20),
+                    const Padding(padding: EdgeInsets.all(10)),
                     _buildLegend(), // Mostrar leyenda con colores y especialidades
                   ],
                 ),

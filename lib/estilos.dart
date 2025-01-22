@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Clase para estilos de texto reutilizables
+// Clase para estilos de texto reutilizables en todo el proyecto
 class Estilos {
   static const TextStyle titulo = TextStyle(
     color: Estilos.dorado_claro,

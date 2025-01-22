@@ -93,8 +93,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
       initialTime: TimeOfDay.now(),
     );
     if (t != null) {
-      // Convierte la hora seleccionada a formato de 24 horas (si lo necesitas)
-      final String formattedTime = t.format(context);  // 24h or 12h based on locale
+      final String formattedTime = t.format(context);
       setState(() {
         horaSeleccionada = formattedTime;
       });
@@ -286,7 +285,6 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
           ),
         ),
       )
-      
     );
   }
 }

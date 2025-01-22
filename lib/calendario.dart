@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:proyecto_final/DAO/citaDAO.dart';  // Importar tu DAO de citas
-import 'clases/cita.dart';  // Importar la clase Cita
+import 'DAO/citaDAO.dart';
+import 'clases/cita.dart';
 import 'clases/usuario.dart';
 import 'estilos.dart';
 import 'guardar.dart';

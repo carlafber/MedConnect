@@ -25,9 +25,6 @@ class _VerCitaApp extends State<VerCitaApp> {
   final CentroMedicoDAO centroDAO = CentroMedicoDAO();
   final CitaDAO citaDAO = CitaDAO();
 
-  Future<String> obtenerDetallesCita(Cita cita) async {
-    return 'Fecha: ${cita.fecha}\nHora: ${cita.hora}';
-  }
 
   Especialidad? especialidadCita;
   Profesional? profesionalCita;
@@ -62,6 +59,7 @@ class _VerCitaApp extends State<VerCitaApp> {
     });  // Para actualizar la UI después de cargar los datos.
   }
 
+  // Cargar especialidades para cada cita
   Future<void> _cargarEspecialidadDeCita(Cita cita) async {
     final especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
     setState(() {
@@ -69,6 +67,7 @@ class _VerCitaApp extends State<VerCitaApp> {
     });
   }
 
+  // Cargar profesionales para cada cita
   Future<void> _cargarProfesionalDeCita(Cita cita) async {
     final profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
     setState(() {
@@ -76,6 +75,7 @@ class _VerCitaApp extends State<VerCitaApp> {
     });
   }
 
+  // Cargar centros para cada cita
   Future<void> _cargarCentroDeCita(Cita cita) async {
     final centro = await centroDAO.obtenerCentro(cita.idCentro);
     setState(() {
@@ -266,7 +266,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () async {
-                        //pedir confirmación
+                        // Pedir confirmación
                         bool? confirmacion = await showDialog<bool>(
                           context: context,
                           builder: (BuildContext context) {

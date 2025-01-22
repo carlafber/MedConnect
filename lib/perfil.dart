@@ -138,7 +138,7 @@ class _PerfilApp extends State<PerfilApp> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          //pedir confirmación
+                          // Pedir confirmación
                           bool? confirmacion = await showDialog<bool>(
                             context: context,
                             builder: (BuildContext context) {
@@ -188,8 +188,6 @@ class _PerfilApp extends State<PerfilApp> {
                       const Padding(padding: EdgeInsets.all(30)),
                       GestureDetector(
                         onTap: () async {
-                          //funcion que abra un dialogo en el que tiene que meter la contraseña actual y dos veces la nueva, 
-                          //si la actual esta bien y las nuevas coinciden -> se cambia la contraseña
                           _actualizarContrasena(context, usuario, usuarioDAO);
                         },
                         child: Container(
@@ -219,6 +217,7 @@ class _PerfilApp extends State<PerfilApp> {
   }
 
 
+  // Función que abre un diálogo actualizar la contraseña
   void _actualizarContrasena(BuildContext context, Usuario usuario, UsuarioDAO usuarioDAO) {
     final formulario = GlobalKey<FormState>();
     final TextEditingController contrasenaActual = TextEditingController();
@@ -239,6 +238,7 @@ class _PerfilApp extends State<PerfilApp> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Padding(padding: EdgeInsets.all(5)),
+                  // Introducir la contraseña actual
                   TextFormField(
                     controller: contrasenaActual,
                     obscureText: true,
@@ -255,6 +255,7 @@ class _PerfilApp extends State<PerfilApp> {
                       if (value == null || value.isEmpty) {
                         return "Campo obligatorio";
                       }
+                      // Comprobar que la contraseña introducida coincide con la almacenada en la base de datos
                       if(usuario.contrasena != value){
                         return "Contraseña incorrecta";
                       }
@@ -262,6 +263,7 @@ class _PerfilApp extends State<PerfilApp> {
                     }
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
+                  // Introducir la nueva contraseña dos veces
                   TextFormField(
                     controller: contrasenaNueva1,
                     obscureText: true,
@@ -302,6 +304,7 @@ class _PerfilApp extends State<PerfilApp> {
                       } else if (value.length < 6) {
                         return "Debe tener al menos 6 caracteres";
                       }
+                      // Comprobar que las dos contraseñas nuevas introducidas coinciden
                       if(contrasenaNueva1 != contrasenaNueva2){
                         return "Las contraseñas no coinciden";
                       }
@@ -319,6 +322,7 @@ class _PerfilApp extends State<PerfilApp> {
             ),
             ElevatedButton(
               onPressed: () {
+                // Si todas las validaciones son corectas, se actualiza la contraseña en la base de datos
                 if (formulario.currentState!.validate()) {
                   usuarioDAO.actualizarContrasena(usuario.idUsuario, contrasenaNueva1);
                   Navigator.pop(context);

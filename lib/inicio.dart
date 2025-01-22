@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:proyecto_final/clases/especialidad.dart';
-import 'package:proyecto_final/clases/profesional.dart';
+import 'clases/especialidad.dart';
+import 'clases/profesional.dart';
 import 'DAO/citaDAO.dart';
 import 'DAO/profesionalDAO.dart';
 import 'clases/cita.dart';
@@ -30,7 +30,6 @@ class _InicioApp extends State<InicioApp> {
   @override
   void initState() {
     super.initState();
-    // Llamamos a la función _cargarProfesionales en initState
     Usuario? usuario = guardar.get();
     if (usuario != null) {
       _cargarCitas(usuario.idUsuario as int);
@@ -77,14 +76,14 @@ class _InicioApp extends State<InicioApp> {
       backgroundColor: Estilos.dorado,
       endDrawer: Drawer(
         child: Container(
-          color: Estilos.dorado_oscuro, // Color de fondo del ListView
+          color: Estilos.dorado_oscuro,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               Padding (padding: const EdgeInsets.all(40)),
               GestureDetector(
                 onTap: () {
-                  // Navega hacia la pantalla de PerfilApp
+                  // Navega hacia la pantalla de perfil
                   Navigator.pushNamed(context, '/perfil');
                 },
                 child: Container(
@@ -99,7 +98,7 @@ class _InicioApp extends State<InicioApp> {
                       const Padding(padding: EdgeInsets.only(right: 75)),
                       const Text(
                         'Perfil',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        style: Estilos.texto3,
                       ),
                     ],
                   ),
@@ -122,7 +121,7 @@ class _InicioApp extends State<InicioApp> {
                       const Padding(padding: EdgeInsets.only(right: 30)),
                       const Text(
                         'Cuadro médico',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        style: Estilos.texto3,
                       ),
                     ],
                   ),
@@ -145,7 +144,7 @@ class _InicioApp extends State<InicioApp> {
                       const Padding(padding: EdgeInsets.only(right: 50)),
                       const Text(
                         'Apariencia',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        style: Estilos.texto3,
                       ),
                     ],
                   ),
@@ -163,7 +162,7 @@ class _InicioApp extends State<InicioApp> {
             Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distribuye los botones de manera adecuada
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Distribuir los botones de manera adecuada
                 children: [
                   FloatingActionButton(
                     onPressed: () {
@@ -172,12 +171,12 @@ class _InicioApp extends State<InicioApp> {
                     backgroundColor: Estilos.dorado_oscuro,
                     child: const Icon(Icons.close, color: Colors.white),
                   ),
-                  // Usa el Builder para obtener el contexto adecuado
+                  // Usa el Builder para obtener el contexto
                   Builder(
                     builder: (BuildContext context) {
                       return FloatingActionButton(
                         onPressed: () {
-                          // Abre el Drawer desde el lado derecho usando el contexto adecuado
+                          // Abrir el Drawer desde el lado derecho con el contexto
                           Scaffold.of(context).openEndDrawer();
                         },
                         backgroundColor: Estilos.dorado_oscuro,
@@ -188,7 +187,6 @@ class _InicioApp extends State<InicioApp> {
                 ],
               ),
             ),
-            // Espacio flexible para centrar el texto y separar los botones
             Text("PRÓXIMAS CITAS", style: Estilos.titulo2),
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(
@@ -198,6 +196,7 @@ class _InicioApp extends State<InicioApp> {
                 child: ListView.builder(
                   itemCount: citas.length, // La cantidad de elementos en la lista
                   itemBuilder: (context, index) {
+
                     Cita cita = citas[index]; // Obtener cada cita de la lista
                     String nombreEspecialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? 'Desconocida'; // Obtener especialidad del mapa
                     String color = especialidades[cita.idProfesional]?.color ?? '0xFFFFFFFF'; // Color predeterminado si no se encuentra
@@ -216,7 +215,7 @@ class _InicioApp extends State<InicioApp> {
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: Color(int.parse(color)), //color dependiendo de la especialidad
+                          color: Color(int.parse(color)), // Color dependiendo de la especialidad
                           borderRadius: BorderRadius.circular(10),
                         ),
                         padding: const EdgeInsets.all(10),

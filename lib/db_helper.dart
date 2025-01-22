@@ -7,9 +7,9 @@ class DBHelper{
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'medconnect.db');
 
-    //print("Conectado a la base de datos");
 
     return openDatabase(path, onCreate: (db, version) async{
+      
       //USUARIO
       await db.execute('''
         CREATE TABLE usuario (
@@ -30,6 +30,7 @@ class DBHelper{
       await db.insert('usuario', {'nombre': 'Beatriz González', 'correo': 'beatriz.gonzalez@email.com', 'contrasena': 'Beita69', 'numero_tarjeta': '5566778899', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
       await db.insert('usuario', {'nombre': 'Antonio Ruiz', 'correo': 'antonio.ruiz@email.com', 'contrasena': 'Antonito', 'numero_tarjeta': '6677889900', 'compania': 'Adeslas'}, conflictAlgorithm: ConflictAlgorithm.replace);
       await db.insert('usuario', {'nombre': 'Elena Ramírez', 'correo': 'elena.ramirez@email.com', 'contrasena': 'Elena1234', 'numero_tarjeta': '4455667788', 'compania': 'Caser'}, conflictAlgorithm: ConflictAlgorithm.replace);
+
 
       //ESPECIALIDAD
       await db.execute('''
@@ -71,6 +72,7 @@ class DBHelper{
       await db.insert('profesional', {'nombre_profesional': 'Dr. Raúl González', 'id_especialidad': 5});
       await db.insert('profesional', {'nombre_profesional': 'Dra. Sofía Fernández', 'id_especialidad': 6});
 
+
       //CENTRO MÉDICO
       await db.execute('''
         CREATE TABLE centro_medico(
@@ -88,6 +90,7 @@ class DBHelper{
       await db.insert('centro_medico', {'nombre_centro': 'LoMás, Dermatología y Medicina Estética Integral', 'direccion': 'Calle de Juan Antonio Morales Pintor 2, Valladolid', 'id_especialidad': 4});
       await db.insert('centro_medico', {'nombre_centro': 'IOBA', 'direccion': 'Campus Miguel Delibes, Paseo de Belén 17, Valladolid', 'id_especialidad': 5});
       await db.insert('centro_medico', {'nombre_centro': 'Origen Diagnóstico y Traumatología', 'direccion': 'Calle Paulina Harriet 4-6, Valladolid', 'id_especialidad': 6});
+
 
       //CITA
       await db.execute('''

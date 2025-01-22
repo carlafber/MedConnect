@@ -17,7 +17,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
   UsuarioDAO usuarioDAO = UsuarioDAO();
-  Guardar session = Guardar();
+  Guardar guardar = Guardar();
   Usuario? usuario;
 
   // Función para verificar si el número de tarjeta es válido
@@ -53,7 +53,6 @@ class _InicioSesionApp extends State<InicioSesionApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Contenedor de texto "MedConnect"
                 Container(
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(color: Estilos.fondo),
@@ -85,7 +84,6 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Padding(padding: EdgeInsets.all(30)),
-                      // Dropdown para seleccionar compañía
                       Container(
                         alignment: Alignment.center,
                         decoration: const BoxDecoration(color: Estilos.fondo),
@@ -119,7 +117,6 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                         ),
                       ),
                       const Padding(padding: EdgeInsets.all(30)),
-                      // Campo de número de tarjeta
                       Container(
                         alignment: Alignment.center,
                         decoration: const BoxDecoration(color: Estilos.fondo),
@@ -142,10 +139,9 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                         ),
                       ),
                       const Padding(padding: EdgeInsets.all(50)),
-                      // Botón de acceso
                       GestureDetector(
                         onTap: () async {
-                          // Verificamos la validez antes de continuar
+                          // Verificar la validez antes de continuar
                           String? tarjeta = _numTarjeta.text;
                           if (tarjeta.isEmpty || companiaSeleccionada == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -153,21 +149,16 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                             );
                             return;
                           }
-
-                          // Realizamos la validación asíncrona
+                          // Validación asíncrona
                           String? mensajeError = await _validarTarjeta(tarjeta);
                           if (mensajeError != null) {
-                            // Si hay error de validación, mostramos un mensaje
+                            // Si hay error de validación, mostrar un mensaje
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(mensajeError)),
                             );
                           } else {
-                            // Si la validación fue exitosa, guardamos el usuario y navegamos
-                            //session.set(usuario!);
-                            //print(usuario?.idUsuario);
-                            //Session().usuario = usuario;
-                            session.set(usuario!);
-                            print(session.get());
+                            // Si la validación fue exitosa, guardar el usuario y navegamos
+                            guardar.set(usuario!);
                             Navigator.pushNamed(context, '/main_bnb');
                           }
                         },

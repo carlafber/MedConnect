@@ -10,12 +10,12 @@ class Guardar {
 
   Guardar._internal();
 
+  // Función para guardar el usuario
   void set(Usuario nuevoUsuario) {
     _usuario = nuevoUsuario;
-    print(_usuario);
-    print("nombre: ${_usuario!.nombre}, id: ${_usuario!.idUsuario}");
   }
 
+  // Función para obtener el usuario
   Usuario? get() {
     return _usuario;
   }

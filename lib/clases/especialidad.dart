@@ -3,7 +3,11 @@ class Especialidad {
   String nombreEspecialidad;
   String color;
 
-  Especialidad({this.idEspecialidad, required this.nombreEspecialidad, required this.color});
+  Especialidad({
+    this.idEspecialidad, 
+    required this.nombreEspecialidad, 
+    required this.color
+  });
 
   Map<String, dynamic> toMap() {
     return {
