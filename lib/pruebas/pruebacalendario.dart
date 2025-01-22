@@ -1,4 +1,3 @@
-//flutter pub get
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -32,29 +31,12 @@ class _PantallaCalendarioState extends State<PantallaCalendario> {
       DateTime.utc(2025, 1, 15): ['Evento especial'],
       DateTime.utc(2025, 1, 20): ['Revisión de proyecto'],
       DateTime.utc(2025, 1, 25): ['Navidad'],
-      // Más eventos predefinidos
     };
   }
 
-  // Cargar los eventos de cada día como rectángulos debajo de las fechas
-  List<Widget> _getEventosDelDia(DateTime date) {
-    List<String> eventos = _eventos[DateTime.utc(date.year, date.month, date.day)] ?? [];
-    return eventos.map((evento) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2.0),
-        child: Container(
-          height: 30.0,  // Alto del rectángulo
-          color: Colors.primaries[eventos.indexOf(evento) % Colors.primaries.length], // Color dinámico
-          child: Center(
-            child: Text(
-              evento.length > 15 ? evento.substring(0, 15) + '...' : evento,  // Recortar el nombre
-              style: TextStyle(color: Colors.white, fontSize: 10),
-              overflow: TextOverflow.ellipsis,  // Evitar que el texto se desborde
-            ),
-          ),
-        ),
-      );
-    }).toList();
+  // Obtener los eventos de un día específico
+  List<String> _getEventosDelDia(DateTime date) {
+    return _eventos[DateTime.utc(date.year, date.month, date.day)] ?? [];
   }
 
   void _agregarEvento() {
@@ -74,7 +56,6 @@ class _PantallaCalendarioState extends State<PantallaCalendario> {
               onPressed: () {
                 if (_controller.text.isNotEmpty && _selectedDay != null) {
                   setState(() {
-                    // Agregar el evento a la fecha seleccionada
                     if (_eventos[_selectedDay] == null) {
                       _eventos[_selectedDay!] = [];
                     }
@@ -105,7 +86,7 @@ class _PantallaCalendarioState extends State<PantallaCalendario> {
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: _agregarEvento, // Botón para agregar eventos
+            onPressed: _agregarEvento,
           ),
         ],
       ),
@@ -117,12 +98,21 @@ class _PantallaCalendarioState extends State<PantallaCalendario> {
             focusedDay: _focusedDay,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             calendarFormat: CalendarFormat.month,
-            eventLoader: _getEventosDelDia, // Cargar eventos personalizados como rectángulos
+            eventLoader: _getEventosDelDia, 
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
               });
+
+              // Verificar si hay eventos en la fecha seleccionada
+              List<String> eventos = _getEventosDelDia(selectedDay);
+              if (eventos.isNotEmpty) {
+                print("Eventos del ${selectedDay.toLocal()}:");
+                for (var evento in eventos) {
+                  print("- $evento");
+                }
+              }
             },
             calendarStyle: CalendarStyle(
               todayDecoration: BoxDecoration(
@@ -139,10 +129,10 @@ class _PantallaCalendarioState extends State<PantallaCalendario> {
             headerStyle: HeaderStyle(
               formatButtonVisible: false,
             ),
-            startingDayOfWeek: StartingDayOfWeek.monday,
+            daysOfWeekHeight: 30,
+            startingDayOfWeek: StartingDayOfWeek.monday, // Establecer inicio de semana en lunes
           ),
           const SizedBox(height: 8.0),
-          // Eliminamos la sección de lista de eventos
         ],
       ),
     );

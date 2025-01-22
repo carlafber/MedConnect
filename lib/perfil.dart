@@ -175,7 +175,7 @@ class _PerfilApp extends State<PerfilApp> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Estilos.dorado_claro,
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           padding: const EdgeInsets.all(15),
                           child: const Text(
@@ -195,7 +195,7 @@ class _PerfilApp extends State<PerfilApp> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Estilos.dorado_claro,
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           padding: const EdgeInsets.all(15),
                           child: const Text(

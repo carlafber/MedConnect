@@ -134,7 +134,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                 alignment: Alignment.topLeft,
                 child: FloatingActionButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/main_bnb');
+                    Navigator.of(context).pop();
                   },
                   backgroundColor: Estilos.dorado_oscuro,
                   child: const Icon(Icons.arrow_back, color: Colors.white)
