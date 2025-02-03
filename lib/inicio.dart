@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-import 'clases/especialidad.dart';
-import 'clases/profesional.dart';
-import 'DAO/citaDAO.dart';
-import 'DAO/profesionalDAO.dart';
-import 'clases/cita.dart';
-import 'clases/usuario.dart';
+import 'model/especialidad.dart';
+import 'model/profesional.dart';
+import 'viewmodel/CRUD/citaCRUD.dart';
+import 'viewmodel/CRUD/profesionalCRUD.dart';
+import 'model/cita.dart';
+import 'model/usuario.dart';
 import 'estilos.dart';
 import 'guardar.dart';
+import 'viewmodel/provider_idioma.dart';
 
 class InicioApp extends StatefulWidget {
   const InicioApp({super.key});
@@ -18,14 +22,20 @@ class InicioApp extends StatefulWidget {
 }
 
 class _InicioApp extends State<InicioApp> {
-  ProfesionalDAO profesionalDAO = ProfesionalDAO();
-  CitaDAO citaDAO = CitaDAO();
+  ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
+  CitaCRUD citaCRUD = CitaCRUD();
   Guardar guardar = Guardar();
 
   List<Cita> citas = [];
   Map<int, Especialidad> especialidades = {};
   Map<int, String> nombresProfesionales = {};
   String color = "";
+
+  Map<String, String> cuadrosMedicos = {
+    'Asisa': 'https://www.asisa.es/empresas/icava/Cuadro_Medico_Valladolid_2011.pdf',
+    'Adeslas': 'https://adeslas.numero1salud.es/wp-content/uploads/2024/04/Valladolid-Cuadro-Medico-General.pdf',
+    'Caser': 'https://cuadromedico.de/web/viewer.html?file=/Cuadro%20m%C3%A9dico%20Caser%20Valladolid.pdf',
+  };
 
   @override
   void initState() {
@@ -37,7 +47,7 @@ class _InicioApp extends State<InicioApp> {
   }
 
   Future<void> _cargarCitas(int idUsuario) async {
-    List<Cita> lista = await citaDAO.obtenerCitasUsuario(idUsuario);
+    List<Cita> lista = await citaCRUD.obtenerCitasUsuario(idUsuario);
     setState(() {
       citas = lista;
     });
@@ -51,8 +61,8 @@ class _InicioApp extends State<InicioApp> {
 
     // Cargar especialidades para cada profesional
     await Future.forEach(citas, (cita) async {
-      Especialidad? especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
-      Profesional? profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
+      Especialidad? especialidad = await profesionalCRUD.obtenerEspecialidadDeProfesional(cita.idProfesional);
+      Profesional? profesional = await profesionalCRUD.obtenerProfesional(cita.idProfesional);
       
       if (especialidad != null) {
         setState(() {
@@ -68,10 +78,22 @@ class _InicioApp extends State<InicioApp> {
     });
   }
 
+  //Abrir el pdf
+  void abrirPDF(String compania) async{
+    String? url = cuadrosMedicos[compania];
 
+    if (url != null && await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('No se pudo abrir el PDF para $compania');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final idiomaProvider = Provider.of<ProviderIdioma>(context);
+    final List<String> idiomas = ['es', 'en'];
+
     return Scaffold(
       backgroundColor: Estilos.dorado,
       endDrawer: Drawer(
@@ -83,7 +105,6 @@ class _InicioApp extends State<InicioApp> {
               Padding (padding: const EdgeInsets.all(40)),
               GestureDetector(
                 onTap: () {
-                  // Navega hacia la pantalla de perfil
                   Navigator.pushNamed(context, '/perfil');
                 },
                 child: Container(
@@ -93,34 +114,10 @@ class _InicioApp extends State<InicioApp> {
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Row(
                     children: [
-                      const Padding(padding: EdgeInsets.only(left: 20)),
                       const Icon(Icons.person, color: Colors.white, size: 30),
-                      const Padding(padding: EdgeInsets.only(right: 75)),
-                      const Text(
-                        'Perfil',
-                        style: Estilos.texto3,
-                      ),
-                    ],
-                  ),
-                )
-              ),
-              Padding (padding: const EdgeInsets.all(60)),
-              GestureDetector(
-                onTap: () {
-                  print("PDF");
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(color: Estilos.dorado_claro),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Row(
-                    children: [
-                      const Padding(padding: EdgeInsets.only(left: 20)),
-                      const Icon(FontAwesomeIcons.bookOpen, color: Colors.white),
-                      const Padding(padding: EdgeInsets.only(right: 30)),
-                      const Text(
-                        'Cuadro médico',
+                      const Padding(padding: EdgeInsets.only(right: 20)),
+                      Text(
+                        AppLocalizations.of(context)!.perfil, 
                         style: Estilos.texto3,
                       ),
                     ],
@@ -130,7 +127,8 @@ class _InicioApp extends State<InicioApp> {
               Padding (padding: const EdgeInsets.all(60)),
               GestureDetector(
                 onTap: () {
-                  print("CAMBIO");
+                  Usuario? u = guardar.get();
+                  abrirPDF(u!.compania);
                 },
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -139,15 +137,47 @@ class _InicioApp extends State<InicioApp> {
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Row(
                     children: [
+                      const Icon(FontAwesomeIcons.bookOpen, color: Colors.white),
                       const Padding(padding: EdgeInsets.only(left: 20)),
-                      const Icon(Icons.light_mode_outlined, color: Colors.white, size: 30),
-                      const Padding(padding: EdgeInsets.only(right: 50)),
-                      const Text(
-                        'Apariencia',
+                      Text(
+                        AppLocalizations.of(context)!.cuadroMedico, 
                         style: Estilos.texto3,
                       ),
                     ],
                   ),
+                ),
+              ),
+              Padding (padding: const EdgeInsets.all(60)),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(color: Estilos.dorado_claro),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Row(
+                  children: [
+                    const Icon(FontAwesomeIcons.globe, color: Colors.white),
+                    const Padding(padding: EdgeInsets.only(right: 20)),
+                    DropdownButton<String>(
+                      value: idiomaProvider.idioma.languageCode,
+                      items: idiomas.map((String idioma) {
+                        return DropdownMenuItem(
+                          value: idioma,
+                          child: Text(idioma == 'es' ? 'Español' : 'English'),
+                        );
+                      }).toList(),
+                      onChanged: (String? nuevoIdioma) {
+                        if (nuevoIdioma != null) {
+                          idiomaProvider.cambiarIdioma(nuevoIdioma);
+                        }
+                      },
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                      ),
+                      dropdownColor: Estilos.dorado_oscuro,  // Fondo del Dropdown
+                      style: Estilos.texto3,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -171,7 +201,6 @@ class _InicioApp extends State<InicioApp> {
                     backgroundColor: Estilos.dorado_oscuro,
                     child: const Icon(Icons.close, color: Colors.white),
                   ),
-                  // Usa el Builder para obtener el contexto
                   Builder(
                     builder: (BuildContext context) {
                       return FloatingActionButton(
@@ -187,54 +216,56 @@ class _InicioApp extends State<InicioApp> {
                 ],
               ),
             ),
-            Text("PRÓXIMAS CITAS", style: Estilos.titulo2),
+            Text(
+              AppLocalizations.of(context)!.proximasCitas, 
+              style: Estilos.titulo2,
+            ),
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(
               child: Container(
                 color: Estilos.fondo,
                 padding: EdgeInsets.all(10),
                 child: ListView.builder(
-                  itemCount: citas.length, // La cantidad de elementos en la lista
+                  itemCount: citas.length,
                   itemBuilder: (context, index) {
 
-                    Cita cita = citas[index]; // Obtener cada cita de la lista
-                    String nombreEspecialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? 'Desconocida'; // Obtener especialidad del mapa
-                    String color = especialidades[cita.idProfesional]?.color ?? '0xFFFFFFFF'; // Color predeterminado si no se encuentra
+                    Cita cita = citas[index];
+                    String nombreEspecialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? 'Desconocida';
+                    String color = especialidades[cita.idProfesional]?.color ?? '0xFFFFFFFF';
                     String nombreProfesional = nombresProfesionales[cita.idProfesional] ?? 'Desconocido';
-                    // Convertir la fecha de la base de datos (yyyy-MM-dd) a dd-MM-yyyy
                     String fechaFormateada = DateFormat.yMMMMd("es_ES").format(DateFormat('yyyy-MM-dd').parse(cita.fecha));
                     
                     return GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          '/ver_cita', // Ruta para la página de detalles
-                          arguments: cita, // Pasar la cita como argumento
+                          '/ver_cita',
+                          arguments: cita,
                         );
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: Color(int.parse(color)), // Color dependiendo de la especialidad
+                          color: Color(int.parse(color)),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         padding: const EdgeInsets.all(10),
                         child: Row(
                           children: [
-                            const Icon(FontAwesomeIcons.stethoscope, color: Colors.black), //FontAwesomeIcons.calendar
+                            const Icon(FontAwesomeIcons.stethoscope, color: Colors.black),
                             const SizedBox(width: 15),
                             Expanded(
                               child: Text(
-                                'Cita de $nombreEspecialidad con $nombreProfesional. El $fechaFormateada a las ${cita.hora}',
+                                '${AppLocalizations.of(context)!.citaDe} $nombreEspecialidad ${AppLocalizations.of(context)!.con} $nombreProfesional. ${AppLocalizations.of(context)!.el} $fechaFormateada ${AppLocalizations.of(context)!.aLas} ${cita.hora}',
                                 style: TextStyle(color: Colors.black),
                               ),
                             ),
                             IconButton(
                               onPressed: () {
                                 Navigator.pushNamed(
-                                  context, 
-                                  '/ver_cita', // Ruta para la página de detalles
-                                  arguments: cita, // Pasar la cita como argumento
+                                  context,
+                                  '/ver_cita',
+                                  arguments: cita,
                                 );
                               },
                               icon: const Icon(FontAwesomeIcons.circleInfo, color: Colors.black),

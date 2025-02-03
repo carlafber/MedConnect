@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'clases/especialidad.dart';
-import 'clases/profesional.dart';
-import 'clases/usuario.dart';
+import 'model/especialidad.dart';
+import 'model/profesional.dart';
+import 'model/usuario.dart';
 import 'estilos.dart';
-import 'DAO/citaDAO.dart';
-import 'DAO/profesionalDAO.dart';
-import 'clases/cita.dart';
+import 'viewmodel/CRUD/citaCRUD.dart';
+import 'viewmodel/CRUD/profesionalCRUD.dart';
+import 'model/cita.dart';
 import 'guardar.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -17,8 +17,8 @@ class EstadisticasApp extends StatefulWidget {
 }
 
 class _EstadisticasApp extends State<EstadisticasApp> {
-  ProfesionalDAO profesionalDAO = ProfesionalDAO();
-  CitaDAO citaDAO = CitaDAO();
+  ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
+  CitaCRUD citaCRUD = CitaCRUD();
   Guardar guardar = Guardar();
 
   List<Cita> citas = [];
@@ -36,15 +36,15 @@ class _EstadisticasApp extends State<EstadisticasApp> {
 
   // Función para cargar las citas y asociarlas con las especialidades
   Future<void> _cargarCitas(int idUsuario) async {
-    List<Cita> lista = await citaDAO.obtenerCitasUsuario(idUsuario);
+    List<Cita> lista = await citaCRUD.obtenerCitasUsuario(idUsuario);
     setState(() {
       citas = lista;
     });
 
     // Cargar especialidades para cada profesional
     await Future.forEach(citas, (cita) async {
-      Especialidad? especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
-      Profesional? profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
+      Especialidad? especialidad = await profesionalCRUD.obtenerEspecialidadDeProfesional(cita.idProfesional);
+      Profesional? profesional = await profesionalCRUD.obtenerProfesional(cita.idProfesional);
       
       if (especialidad != null) {
         setState(() {
@@ -182,8 +182,8 @@ import 'clases/especialidad.dart';
 import 'clases/profesional.dart';
 import 'clases/usuario.dart';
 import 'estilos.dart';
-import 'DAO/citaDAO.dart';
-import 'DAO/profesionalDAO.dart';
+import 'CRUD/citaCRUD.dart';
+import 'CRUD/profesionalCRUD.dart';
 import 'clases/cita.dart';
 import 'guardar.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -196,8 +196,8 @@ class EstadisticasApp extends StatefulWidget {
 }
 
 class _EstadisticasApp extends State<EstadisticasApp> {
-  ProfesionalDAO profesionalDAO = ProfesionalDAO();
-  CitaDAO citaDAO = CitaDAO();
+  ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
+  CitaCRUD citaCRUD = CitaCRUD();
   Guardar guardar = Guardar();
 
   List<Cita> citas = [];
@@ -215,15 +215,15 @@ class _EstadisticasApp extends State<EstadisticasApp> {
 
   // Función para cargar las citas y asociarlas con las especialidades
   Future<void> _cargarCitas(int idUsuario) async {
-    List<Cita> lista = await citaDAO.obtenerCitasUsuario(idUsuario);
+    List<Cita> lista = await citaCRUD.obtenerCitasUsuario(idUsuario);
     setState(() {
       citas = lista;
     });
 
     // Cargar especialidades para cada profesional
     await Future.forEach(citas, (cita) async {
-      Especialidad? especialidad = await profesionalDAO.obtenerEspecialidadDeProfesional(cita.idProfesional);
-      Profesional? profesional = await profesionalDAO.obtenerProfesional(cita.idProfesional);
+      Especialidad? especialidad = await profesionalCRUD.obtenerEspecialidadDeProfesional(cita.idProfesional);
+      Profesional? profesional = await profesionalCRUD.obtenerProfesional(cita.idProfesional);
       
       if (especialidad != null) {
         setState(() {

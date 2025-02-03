@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'DAO/usuarioDAO.dart';
-import 'clases/usuario.dart';
+import 'viewmodel/CRUD/usuarioCRUD.dart';
+import 'model/usuario.dart';
 import 'guardar.dart';
 import 'estilos.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InicioSesionApp extends StatefulWidget {
   const InicioSesionApp({super.key});
@@ -16,25 +17,25 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final _numTarjeta = TextEditingController();
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
-  UsuarioDAO usuarioDAO = UsuarioDAO();
+  UsuarioCRUD usuarioCRUD = UsuarioCRUD();
   Guardar guardar = Guardar();
   Usuario? usuario;
 
   // Función para verificar si el número de tarjeta es válido
   Future<String?> _validarTarjeta(String value) async {
     if (value.isEmpty) {
-      return "Complete este campo.";
+      return AppLocalizations.of(context)!.completeCampos; // Usar la clave de traducción
     }
 
     // Esperamos la respuesta de la base de datos
-    usuario = await usuarioDAO.existeUsuario(value);
+    usuario = await usuarioCRUD.existeUsuario(value);
 
     if (usuario == null) {
-      return "El usuario no existe.";
+      return AppLocalizations.of(context)!.usuarioNoExiste; // Usar la clave de traducción
     }
 
     if (usuario?.compania != companiaSeleccionada) {
-      return "Este usuario no pertenece a la compañía seleccionada.";
+      return AppLocalizations.of(context)!.companiaInvalida; // Usar la clave de traducción
     }
 
     return null; // Si todo es válido
@@ -99,7 +100,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                               child: DropdownButton<String>(
                                 isExpanded: true,
                                 value: companiaSeleccionada,
-                                hint: const Text("Seleccione su compañía"),
+                                hint: Text(AppLocalizations.of(context)!.seleccioneCompania), // Usar la clave de traducción
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     companiaSeleccionada = newValue;
@@ -123,14 +124,14 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                         padding: const EdgeInsets.all(10),
                         child: TextFormField(
                           controller: _numTarjeta,
-                          decoration: const InputDecoration(
-                            icon: Icon(
+                          decoration: InputDecoration(
+                            icon: const Icon(
                               Icons.credit_card,
                               color: Estilos.dorado_oscuro,
                             ),
-                            hintText: 'Número de la tarjeta',
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
+                            hintText: AppLocalizations.of(context)!.numeroTarjeta, // Usar la clave de traducción
+                            border: const OutlineInputBorder(),
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Estilos.dorado_oscuro,
                               ),
@@ -145,7 +146,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           String? tarjeta = _numTarjeta.text;
                           if (tarjeta.isEmpty || companiaSeleccionada == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Complete todos los campos")),
+                              SnackBar(content: Text(AppLocalizations.of(context)!.completeCampos)), // Usar la clave de traducción
                             );
                             return;
                           }
@@ -166,8 +167,8 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(color: Estilos.dorado_claro),
                           padding: const EdgeInsets.all(20),
-                          child: const Text(
-                            'Acceder',
+                          child: Text(
+                            AppLocalizations.of(context)!.acceder, // Usar la clave de traducción
                             textAlign: TextAlign.center,
                             style: Estilos.texto2,
                           ),
@@ -180,7 +181,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

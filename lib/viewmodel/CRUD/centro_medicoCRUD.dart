@@ -1,11 +1,11 @@
-import 'package:proyecto_final/clases/centro_medico.dart';
-import 'package:proyecto_final/db_helper.dart';
+import 'package:proyecto_final/model/centro_medico.dart';
+import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CentroMedicoDAO {
+class CentroMedicoCRUD {
   DBHelper db = DBHelper();
 
-  Future<List<CentroMedico>> obtenerCentrosMeidcos() async {
+  Future<List<CentroMedico>> obtenerCentrosMedicos() async {
     Database database = await db.abrirBD();
     final List<Map<String, dynamic>> mapas = await database.query('centro_medico');
     print("centros_medicos: $mapas");

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'DAO/citaDAO.dart';
-import 'clases/cita.dart';
-import 'clases/usuario.dart';
+import 'viewmodel/CRUD/citaCRUD.dart';
+import 'model/cita.dart';
+import 'model/usuario.dart';
 import 'estilos.dart';
 import 'guardar.dart';
 
@@ -15,7 +15,7 @@ class CalendarioApp extends StatefulWidget {
 }
 
 class _CalendarioApp extends State<CalendarioApp> {
-  final CitaDAO citaDAO = CitaDAO();
+  final CitaCRUD citaCRUD = CitaCRUD();
   late Map<DateTime, List<Cita>> _citas;
   late DateTime _selectedDate;
   late CalendarFormat _calendarFormat;
@@ -34,7 +34,7 @@ class _CalendarioApp extends State<CalendarioApp> {
   }
 
   Future<void> _cargarCitas(int idUsuario) async {
-    final citas = await citaDAO.obtenerCitasUsuario(idUsuario);
+    final citas = await citaCRUD.obtenerCitasUsuario(idUsuario);
     setState(() {
       _citas = {};
       for (var cita in citas) {

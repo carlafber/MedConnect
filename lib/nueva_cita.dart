@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_final/clases/usuario.dart';
+import 'package:proyecto_final/model/usuario.dart';
 import 'guardar.dart';
-import 'DAO/centro_medicoDAO.dart';
-import 'DAO/citaDAO.dart';
-import 'DAO/especialidadDAO.dart';
-import 'DAO/profesionalDAO.dart';
-import 'clases/centro_medico.dart';
-import 'clases/cita.dart';
+import 'viewmodel/CRUD/centro_medicoCRUD.dart';
+import 'viewmodel/CRUD/citaCRUD.dart';
+import 'viewmodel/CRUD/especialidadCRUD.dart';
+import 'viewmodel/CRUD/profesionalCRUD.dart';
+import 'model/centro_medico.dart';
+import 'model/cita.dart';
 import 'estilos.dart';
-import 'clases/especialidad.dart';
-import 'clases/profesional.dart';
+import 'model/especialidad.dart';
+import 'model/profesional.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Agregado para la localización
 
 class NuevaCitaApp extends StatefulWidget {
   const NuevaCitaApp({super.key});
@@ -21,12 +21,11 @@ class NuevaCitaApp extends StatefulWidget {
 }
 
 class _NuevaCitaApp extends State<NuevaCitaApp> {
-  EspecialidadDAO especialidadDAO = EspecialidadDAO();
-  ProfesionalDAO profesionalDAO = ProfesionalDAO();
-  CentroMedicoDAO centroDAO = CentroMedicoDAO();
-  CitaDAO citaDAO = CitaDAO();
+  EspecialidadCRUD especialidadCRUD = EspecialidadCRUD();
+  ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
+  CentroMedicoCRUD centroCRUD = CentroMedicoCRUD();
+  CitaCRUD citaCRUD = CitaCRUD();
   Guardar guardar = Guardar();
-
 
   List<Especialidad> especialidades = [];
   List<Profesional> profesionales = [];
@@ -35,9 +34,9 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
   Especialidad? especialidadSeleccionada;
   Profesional? profesionalSeleccionado;
   CentroMedico? centroSeleccionado;
-  
-  String fechaSeleccionada = 'Selecciona una fecha ';
-  String horaSeleccionada = 'Selecciona una hora ';
+
+  String fechaSeleccionada = '';
+  String horaSeleccionada = '';
 
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
 
   // Cargar especialidades desde la base de datos
   Future<void> _cargarEspecialidades() async {
-    List<Especialidad> lista = await especialidadDAO.obtenerEspecialidades();
+    List<Especialidad> lista = await especialidadCRUD.obtenerEspecialidades();
     setState(() {
       especialidades = lista;
     });
@@ -55,16 +54,16 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
 
   // Cargar profesionales filtrados por especialidad
   Future<void> _cargarProfesionales(int idEspecialidad) async {
-    List<Profesional> lista = await profesionalDAO.obtenerProfesionalesPorEspecialidad(idEspecialidad);
+    List<Profesional> lista = await profesionalCRUD.obtenerProfesionalesPorEspecialidad(idEspecialidad);
     setState(() {
       profesionales = lista;
       profesionalSeleccionado = null; // Reinicia selección al cambiar la especialidad
     });
   }
 
-  // Cargar profesionales filtrados por especialidad
+  // Cargar centros médicos filtrados por especialidad
   Future<void> _cargarCentros(int idEspecialidad) async {
-    List<CentroMedico> lista = await centroDAO.obtenerCentrosPorEspecialidad(idEspecialidad);
+    List<CentroMedico> lista = await centroCRUD.obtenerCentrosPorEspecialidad(idEspecialidad);
     setState(() {
       centros = lista;
       profesionalSeleccionado = null; // Reinicia selección al cambiar la especialidad
@@ -102,6 +101,9 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
 
   @override
   Widget build(BuildContext context) {
+    fechaSeleccionada = AppLocalizations.of(context)!.seleccionaFecha; 
+    horaSeleccionada = AppLocalizations.of(context)!.seleccionaHora; 
+    
     return Scaffold(
       backgroundColor: Estilos.dorado,
       body: SingleChildScrollView(
@@ -109,7 +111,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
           padding: const EdgeInsets.all(25),
           child: Column(
             children: [
-              Text("NUEVA CITA", style: Estilos.titulo2),
+              Text(AppLocalizations.of(context)!.nuevaCita, style: Estilos.titulo2), // Usamos el texto traducido
               const Padding(padding: EdgeInsets.all(10)),
               Container(
                 height: 60,
@@ -119,7 +121,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Especialidad>(
                   isExpanded: true,
                   value: especialidadSeleccionada,
-                  hint: const Text("Selecciona una Especialidad"),
+                  hint: Text(AppLocalizations.of(context)!.seleccionaEspecialidad), 
                   onChanged: (Especialidad? nuevaEspecialidad) {
                     setState(() {
                       especialidadSeleccionada = nuevaEspecialidad;
@@ -146,7 +148,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Profesional>(
                   isExpanded: true,
                   value: profesionalSeleccionado,
-                  hint: const Text("Selecciona un Profesional"),
+                  hint: Text(AppLocalizations.of(context)!.seleccionaProfesional), 
                   onChanged: (Profesional? nuevoProfesional) {
                     setState(() {
                       profesionalSeleccionado = nuevoProfesional;
@@ -169,7 +171,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<CentroMedico>(
                   isExpanded: true,
                   value: centroSeleccionado,
-                  hint: const Text("Selecciona un Centro Médico"),
+                  hint: Text(AppLocalizations.of(context)!.seleccionaCentroMedico), 
                   onChanged: (CentroMedico? nuevoCentro) {
                     setState(() {
                       centroSeleccionado = nuevoCentro;
@@ -253,22 +255,22 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                       hora: horaSeleccionada,
                     );
 
-                    //limpiar campos
+                    // Limpiar campos
                     setState(() {
                       especialidadSeleccionada = null;
                       profesionalSeleccionado = null;
                       centroSeleccionado = null;
-                      fechaSeleccionada = 'Selecciona una fecha ';
-                      horaSeleccionada = 'Selecciona una hora ';
+                      fechaSeleccionada = AppLocalizations.of(context)!.seleccionaFecha; 
+                      horaSeleccionada = AppLocalizations.of(context)!.seleccionaHora; 
                     });
 
-                    await citaDAO.crearCita(cita);
+                    await citaCRUD.crearCita(cita);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Cita creada exitosamente")),
+                      SnackBar(content: Text(AppLocalizations.of(context)!.citaCreadaExitosamente)), 
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Error: Usuario no encontrado")),
+                      SnackBar(content: Text(AppLocalizations.of(context)!.errorUsuarioNoEncontrado)), 
                     );
                   }
                 },
@@ -276,8 +278,8 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   height: 60,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(color: Estilos.dorado_claro),
-                  child: const Text(
-                    'Agregar',
+                  child: Text(
+                    AppLocalizations.of(context)!.agregar, 
                     textAlign: TextAlign.center,
                     style: Estilos.texto3,
                   ),

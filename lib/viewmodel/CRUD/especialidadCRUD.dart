@@ -1,8 +1,8 @@
-import 'package:proyecto_final/clases/especialidad.dart';
-import 'package:proyecto_final/db_helper.dart';
+import 'package:proyecto_final/model/especialidad.dart';
+import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
-class EspecialidadDAO {
+class EspecialidadCRUD {
   DBHelper db = DBHelper();
 
   Future<List<Especialidad>> obtenerEspecialidades() async {

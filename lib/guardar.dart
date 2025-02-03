@@ -1,4 +1,4 @@
-import 'clases/usuario.dart';
+import 'model/usuario.dart';
 
 class Guardar {  
   static final Guardar _instance = Guardar._internal();

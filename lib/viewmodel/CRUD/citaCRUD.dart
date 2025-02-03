@@ -1,8 +1,8 @@
-import 'package:proyecto_final/clases/cita.dart';
-import 'package:proyecto_final/db_helper.dart';
+import 'package:proyecto_final/model/cita.dart';
+import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CitaDAO {
+class CitaCRUD {
   DBHelper db = DBHelper();
 
   Future<int> crearCita(Cita cita) async {

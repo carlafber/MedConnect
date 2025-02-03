@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:proyecto_final/DAO/usuarioDAO.dart';
-import 'clases/usuario.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'viewmodel/CRUD/usuarioCRUD.dart';
+import 'model/usuario.dart';
 import 'estilos.dart';
 import 'guardar.dart';
+
 
 class PerfilApp extends StatefulWidget {
   const PerfilApp({super.key});
@@ -14,8 +16,8 @@ class PerfilApp extends StatefulWidget {
 
 class _PerfilApp extends State<PerfilApp> {
   Guardar guardar = Guardar();
-  UsuarioDAO usuarioDAO = UsuarioDAO();
-  
+  UsuarioCRUD usuarioCRUD = UsuarioCRUD();
+
   @override
   Widget build(BuildContext context) {
     Usuario? usuario = guardar.get();
@@ -38,7 +40,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Navigator.pop(context);
                         },
                         backgroundColor: Estilos.dorado_oscuro,
-                        child: const Icon(Icons.arrow_back, color: Colors.white)
+                        child: const Icon(Icons.arrow_back, color: Colors.white),
                       ),
                     ),
                   ],
@@ -55,8 +57,8 @@ class _PerfilApp extends State<PerfilApp> {
                       Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          'DETALLES DEL PERFIL',
+                        child: Text(
+                          AppLocalizations.of(context)!.detallesPerfil, // Usar traducción
                           textAlign: TextAlign.center,
                           style: Estilos.titulo2,
                         ),
@@ -72,7 +74,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.user, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            'Nombre:',
+                            AppLocalizations.of(context)!.nombre, // Usar traducción
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -88,7 +90,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.envelope, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            'Correo:',
+                            AppLocalizations.of(context)!.correo, // Usar traducción
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -104,7 +106,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.creditCard, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            'Número de tarjeta:',
+                            AppLocalizations.of(context)!.numeroTarjeta, // Usar traducción
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -120,7 +122,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.circleCheck, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            'Compañía:',
+                            AppLocalizations.of(context)!.compania, // Usar traducción
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -129,7 +131,7 @@ class _PerfilApp extends State<PerfilApp> {
                             style: Estilos.texto,
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   const Padding(padding: EdgeInsets.all(20)),
@@ -143,29 +145,29 @@ class _PerfilApp extends State<PerfilApp> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Confirmar eliminación"),
-                                content: Text("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer."),
+                                title: Text(AppLocalizations.of(context)!.confirmarEliminacion), // Usar traducción
+                                content: Text(AppLocalizations.of(context)!.confirmacionEliminarCita), // Usar traducción
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop(false); // Cancelar
                                     },
-                                    child: Text("Cancelar", style: Estilos.texto4),
+                                    child: Text(AppLocalizations.of(context)!.cancelar, style: Estilos.texto4), // Usar traducción
                                   ),
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop(true); // Confirmar
                                     },
-                                    child: Text("Eliminar", style: Estilos.texto4),
+                                    child: Text(AppLocalizations.of(context)!.eliminar, style: Estilos.texto4), // Usar traducción
                                   ),
                                 ],
                               );
                             },
                           );
                           if (confirmacion == true) {
-                            await usuarioDAO.eliminarUsuario(usuario.idUsuario as int);
+                            await usuarioCRUD.eliminarUsuario(usuario.idUsuario as int);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Usuario eliminado correctamente")),
+                              SnackBar(content: Text(AppLocalizations.of(context)!.usuarioEliminado)), // Usar traducción
                             );
                             await Navigator.pushNamed(context, '/inicio_sesion');
                           }
@@ -178,8 +180,8 @@ class _PerfilApp extends State<PerfilApp> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: const EdgeInsets.all(15),
-                          child: const Text(
-                            'Eliminar cuenta',
+                          child: Text(
+                            AppLocalizations.of(context)!.eliminarCuenta, // Usar traducción
                             textAlign: TextAlign.center,
                             style: Estilos.texto3,
                           ),
@@ -188,7 +190,7 @@ class _PerfilApp extends State<PerfilApp> {
                       const Padding(padding: EdgeInsets.all(30)),
                       GestureDetector(
                         onTap: () async {
-                          _actualizarContrasena(context, usuario, usuarioDAO);
+                          _actualizarContrasena(context, usuario, usuarioCRUD);
                         },
                         child: Container(
                           height: 75,
@@ -198,8 +200,8 @@ class _PerfilApp extends State<PerfilApp> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: const EdgeInsets.all(15),
-                          child: const Text(
-                            'Actualizar contraseña',
+                          child: Text(
+                            AppLocalizations.of(context)!.actualizarContrasena, // Usar traducción
                             textAlign: TextAlign.center,
                             style: Estilos.texto3,
                           ),
@@ -212,13 +214,12 @@ class _PerfilApp extends State<PerfilApp> {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 
-
   // Función que abre un diálogo actualizar la contraseña
-  void _actualizarContrasena(BuildContext context, Usuario usuario, UsuarioDAO usuarioDAO) {
+  void _actualizarContrasena(BuildContext context, Usuario usuario, UsuarioCRUD usuarioCRUD) {
     final formulario = GlobalKey<FormState>();
     final TextEditingController contrasenaActual = TextEditingController();
     final TextEditingController contrasenaNueva1 = TextEditingController();
@@ -228,7 +229,7 @@ class _PerfilApp extends State<PerfilApp> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Actualiza la contraseña", style: Estilos.texto5),
+          title: Text(AppLocalizations.of(context)!.actualizarContrasena, style: Estilos.texto5), // Usar traducción
           backgroundColor: Estilos.fondo,
           content: SizedBox(
             width: 400,
@@ -243,7 +244,7 @@ class _PerfilApp extends State<PerfilApp> {
                     controller: contrasenaActual,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: "Contraseña actual",
+                      hintText: AppLocalizations.of(context)!.campoObligatorio, // Usar traducción
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -251,15 +252,15 @@ class _PerfilApp extends State<PerfilApp> {
                         ),
                       ),
                     ),
-                    validator: (value){
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Campo obligatorio";
+                        return AppLocalizations.of(context)!.campoObligatorio; // Usar traducción
                       }
                       // Comprobar que la contraseña introducida coincide con la almacenada en la base de datos
-                      if(usuario.contrasena != value){
-                        return "Contraseña incorrecta";
+                      if (usuario.contrasena != value) {
+                        return AppLocalizations.of(context)!.contrasenaIncorrecta; // Usar traducción
                       }
-                      return null; 
+                      return null;
                     }
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
@@ -268,7 +269,7 @@ class _PerfilApp extends State<PerfilApp> {
                     controller: contrasenaNueva1,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: "Nueva contraseña",
+                      hintText: AppLocalizations.of(context)!.debeTenerMinimo6Caracteres, // Usar traducción
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -276,13 +277,13 @@ class _PerfilApp extends State<PerfilApp> {
                         ),
                       ),
                     ),
-                    validator: (value){
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Campo obligatorio";
+                        return AppLocalizations.of(context)!.campoObligatorio; // Usar traducción
                       } else if (value.length < 6) {
-                        return "Debe tener al menos 6 caracteres";
+                        return AppLocalizations.of(context)!.debeTenerMinimo6Caracteres; // Usar traducción
                       }
-                      return null; 
+                      return null;
                     }
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
@@ -290,7 +291,7 @@ class _PerfilApp extends State<PerfilApp> {
                     controller: contrasenaNueva2,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: "Confirmar contraseña",
+                      hintText: AppLocalizations.of(context)!.lasContrasenasNoCoinciden, // Usar traducción
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -298,17 +299,17 @@ class _PerfilApp extends State<PerfilApp> {
                         ),
                       ),
                     ),
-                    validator: (value){
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Campo obligatorio";
+                        return AppLocalizations.of(context)!.campoObligatorio; // Usar traducción
                       } else if (value.length < 6) {
-                        return "Debe tener al menos 6 caracteres";
+                        return AppLocalizations.of(context)!.debeTenerMinimo6Caracteres; // Usar traducción
                       }
                       // Comprobar que las dos contraseñas nuevas introducidas coinciden
-                      if(contrasenaNueva1 != contrasenaNueva2){
-                        return "Las contraseñas no coinciden";
+                      if (contrasenaNueva1 != contrasenaNueva2) {
+                        return AppLocalizations.of(context)!.lasContrasenasNoCoinciden; // Usar traducción
                       }
-                      return null; 
+                      return null;
                     }
                   ),
                 ],
@@ -318,17 +319,16 @@ class _PerfilApp extends State<PerfilApp> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("Cancelar", style: Estilos.texto4),
+              child: Text(AppLocalizations.of(context)!.cancelar, style: Estilos.texto4), // Usar traducción
             ),
             ElevatedButton(
               onPressed: () {
-                // Si todas las validaciones son corectas, se actualiza la contraseña en la base de datos
                 if (formulario.currentState!.validate()) {
-                  usuarioDAO.actualizarContrasena(usuario.idUsuario, contrasenaNueva1);
+                  usuarioCRUD.actualizarContrasena(usuario.idUsuario, contrasenaNueva1);
                   Navigator.pop(context);
                 }
               },
-              child: Text("Guardar", style: Estilos.texto4),
+              child: Text(AppLocalizations.of(context)!.eliminar, style: Estilos.texto4), // Usar traducción
             ),
           ],
         );

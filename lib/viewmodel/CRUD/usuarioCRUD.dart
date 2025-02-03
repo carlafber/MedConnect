@@ -1,9 +1,9 @@
 import 'package:flutter/src/widgets/editable_text.dart';
-import 'package:proyecto_final/clases/usuario.dart';
-import 'package:proyecto_final/db_helper.dart';
+import 'package:proyecto_final/model/usuario.dart';
+import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
-class UsuarioDAO {
+class UsuarioCRUD {
   DBHelper db = DBHelper();
   
   Future<List<Usuario>> obtenerUsuarios() async {
