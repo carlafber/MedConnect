@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:proyecto_final/model/cita.dart';
 import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
@@ -34,6 +35,25 @@ class CitaCRUD {
       'cita',
       where: 'id_usuario = ?', // Filtro por id_especialidad
       whereArgs: [idUsuario],   // Argumento para el filtro
+    );
+    print("citas: $mapas");
+    // Convierte el resultado en una lista de objetos Profesional
+    return List.generate(mapas.length, (i) {
+      return Cita.fromMap(mapas[i]);
+    });
+  }
+
+  Future<List<Cita>> obtenerCitasProximasUsuario(int idUsuario) async {
+    Database database = await db.abrirBD();
+
+    final DateTime hoy = DateTime.now();
+    final String fechaHoy = DateFormat('yyyy-MM-dd').format(hoy); // Formato yyyy-MM-dd
+    
+    // Realiza una consulta con filtro por id_especialidad
+    final List<Map<String, dynamic>> mapas = await database.query(
+      'cita',
+      where: 'id_usuario = ? AND fecha >= ?', // Filtro por id_usuario y fecha
+      whereArgs: [idUsuario, fechaHoy],   // Argumentos para el filtro
     );
     print("citas: $mapas");
     // Convierte el resultado en una lista de objetos Profesional

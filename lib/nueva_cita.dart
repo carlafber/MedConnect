@@ -70,23 +70,25 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
     });
   }
 
+  // Función para seleccionar la fecha
   Future<void> _seleccionarFecha(BuildContext context) async {
     final DateTime? d = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2025),
+      firstDate: DateTime.now(),  // Para que no se puedan seleccionar fechas anteriores a la actual
       lastDate: DateTime(2030),
-      locale: Locale('es', 'ES'), // Establece el idioma del DatePicker a español
+      locale: Locale('es', 'ES'),  // Establece el idioma del DatePicker a español
     );
     if (d != null) {
       setState(() {
-        fechaSeleccionada = DateFormat.yMMMMd("es_ES").format(d); // Formato de fecha en español  
+        // Actualizar la variable fechaSeleccionada con la fecha seleccionada
+        fechaSeleccionada = DateFormat.yMMMMd("es_ES").format(d); // Formato de fecha en español
       });
     }
   }
 
+  // Función para seleccionar la hora
   Future<void> _seleccionarHora(BuildContext context) async {
-    // Muestra el TimePicker
     final TimeOfDay? t = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -101,9 +103,6 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
 
   @override
   Widget build(BuildContext context) {
-    fechaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.fecha}";
-    horaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.hora}";
-    
     return Scaffold(
       backgroundColor: Estilos.dorado,
       body: SingleChildScrollView(
@@ -113,6 +112,8 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
             children: [
               Text(AppLocalizations.of(context)!.nuevaCita, style: Estilos.titulo2), // Usamos el texto traducido
               const Padding(padding: EdgeInsets.all(10)),
+              
+              // Dropdown para seleccionar especialidad
               Container(
                 height: 60,
                 alignment: Alignment.center,
@@ -121,7 +122,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Especialidad>(
                   isExpanded: true,
                   value: especialidadSeleccionada,
-                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.especialidad}"), 
+                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.especialidad}"),
                   onChanged: (Especialidad? nuevaEspecialidad) {
                     setState(() {
                       especialidadSeleccionada = nuevaEspecialidad;
@@ -139,7 +140,10 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   }).toList(),
                 ),
               ),
+              
               const Padding(padding: EdgeInsets.all(15)),
+              
+              // Dropdown para seleccionar profesional
               Container(
                 height: 60,
                 alignment: Alignment.center,
@@ -162,7 +166,10 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   }).toList(),
                 ),
               ),
+              
               const Padding(padding: EdgeInsets.all(15)),
+              
+              // Dropdown para seleccionar centro médico
               Container(
                 height: 60,
                 alignment: Alignment.center,
@@ -185,7 +192,10 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   }).toList(),
                 ),
               ),
+              
               const Padding(padding: EdgeInsets.all(15)),
+              
+              // Mostrar y seleccionar fecha
               Container(
                 height: 60,
                 alignment: Alignment.center,
@@ -195,11 +205,13 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   children: <Widget>[
                     InkWell(
                       child: Text(
-                        fechaSeleccionada,
+                        fechaSeleccionada.isEmpty 
+                          ? "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.fecha}"
+                          : fechaSeleccionada,  // Muestra la fecha seleccionada
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black)
+                        style: TextStyle(color: Colors.black),
                       ),
-                      onTap: (){
+                      onTap: () {
                         _seleccionarFecha(context);
                       },
                     ),
@@ -209,10 +221,13 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                         _seleccionarFecha(context);
                       },
                     ),
-                  ]
-                )
+                  ],
+                ),
               ),
+              
               const Padding(padding: EdgeInsets.all(15)),
+              
+              // Mostrar y seleccionar hora
               Container(
                 height: 60,
                 alignment: Alignment.center,
@@ -222,11 +237,13 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   children: <Widget>[
                     InkWell(
                       child: Text(
-                        horaSeleccionada,
+                        horaSeleccionada.isEmpty 
+                          ? "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.hora}"
+                          : horaSeleccionada,  // Muestra la hora seleccionada
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black)
+                        style: TextStyle(color: Colors.black),
                       ),
-                      onTap: (){
+                      onTap: () {
                         _seleccionarHora(context);
                       },
                     ),
@@ -236,42 +253,61 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                         _seleccionarHora(context);
                       },
                     ),
-                  ]
-                )
+                  ],
+                ),
               ),
+              
               const Padding(padding: EdgeInsets.all(15)),
+              
+              // Botón para agregar la cita
               GestureDetector(
                 onTap: () async {
-                  Usuario? usuario = guardar.get();
-                  if (usuario != null) {
-                    // Convertir la fecha seleccionada a formato yyyy-MM-dd antes de guardarla
-                    String fechaFormatoGuardar = DateFormat('yyyy-MM-dd').format(DateFormat.yMMMMd("es_ES").parse(fechaSeleccionada));
-
-                    Cita cita = Cita(
-                      idUsuario: usuario.idUsuario as int,
-                      idProfesional: profesionalSeleccionado!.idProfesional as int,
-                      idCentro: centroSeleccionado!.idCentro as int,
-                      fecha: fechaFormatoGuardar, // Guardar en formato yyyy-MM-dd
-                      hora: horaSeleccionada,
-                    );
-
-                    // Limpiar campos
-                    setState(() {
-                      especialidadSeleccionada = null;
-                      profesionalSeleccionado = null;
-                      centroSeleccionado = null;
-                      fechaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.fecha}";
-                      horaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.hora}";
-                    });
-
-                    await citaCRUD.crearCita(cita);
+                  // Verificar si hay campos vacíos
+                  if (especialidadSeleccionada == null ||
+                      profesionalSeleccionado == null ||
+                      centroSeleccionado == null ||
+                      fechaSeleccionada.isEmpty ||
+                      horaSeleccionada.isEmpty) {
+                    
+                    // Mostrar un Snackbar con el mensaje de error
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(AppLocalizations.of(context)!.citaCreadaExitosamente)), 
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.todosLosCampos)
+                      ),
                     );
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(AppLocalizations.of(context)!.errorUsuarioNoEncontrado)), 
-                    );
+                    // Obtener el usuario
+                    Usuario? usuario = guardar.get();
+                    if (usuario != null) {
+                      // Convertir la fecha seleccionada a formato yyyy-MM-dd antes de guardarla
+                      String fechaFormatoGuardar = DateFormat('yyyy-MM-dd').format(DateFormat.yMMMMd("es_ES").parse(fechaSeleccionada));
+
+                      Cita cita = Cita(
+                        idUsuario: usuario.idUsuario as int,
+                        idProfesional: profesionalSeleccionado!.idProfesional as int,
+                        idCentro: centroSeleccionado!.idCentro as int,
+                        fecha: fechaFormatoGuardar, // Guardar en formato yyyy-MM-dd
+                        hora: horaSeleccionada,
+                      );
+
+                      // Limpiar campos
+                      setState(() {
+                        especialidadSeleccionada = null;
+                        profesionalSeleccionado = null;
+                        centroSeleccionado = null;
+                        fechaSeleccionada = 'Selecciona una fecha';  // Resetear la fecha
+                        horaSeleccionada = 'Selecciona una hora';  // Resetear la hora
+                      });
+
+                      await citaCRUD.crearCita(cita);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(AppLocalizations.of(context)!.citaCreadaExitosamente)),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(AppLocalizations.of(context)!.errorUsuarioNoEncontrado)),
+                      );
+                    }
                   }
                 },
                 child: Container(
@@ -288,7 +324,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }

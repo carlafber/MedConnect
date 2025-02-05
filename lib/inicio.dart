@@ -47,7 +47,7 @@ class _InicioApp extends State<InicioApp> {
   }
 
   Future<void> _cargarCitas(int idUsuario) async {
-    List<Cita> lista = await citaCRUD.obtenerCitasUsuario(idUsuario);
+    List<Cita> lista = await citaCRUD.obtenerCitasProximasUsuario(idUsuario);
     setState(() {
       citas = lista;
     });
