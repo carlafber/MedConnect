@@ -101,8 +101,8 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
 
   @override
   Widget build(BuildContext context) {
-    fechaSeleccionada = AppLocalizations.of(context)!.seleccionaFecha; 
-    horaSeleccionada = AppLocalizations.of(context)!.seleccionaHora; 
+    fechaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.fecha}";
+    horaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.hora}";
     
     return Scaffold(
       backgroundColor: Estilos.dorado,
@@ -121,7 +121,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Especialidad>(
                   isExpanded: true,
                   value: especialidadSeleccionada,
-                  hint: Text(AppLocalizations.of(context)!.seleccionaEspecialidad), 
+                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.especialidad}"), 
                   onChanged: (Especialidad? nuevaEspecialidad) {
                     setState(() {
                       especialidadSeleccionada = nuevaEspecialidad;
@@ -148,7 +148,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Profesional>(
                   isExpanded: true,
                   value: profesionalSeleccionado,
-                  hint: Text(AppLocalizations.of(context)!.seleccionaProfesional), 
+                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.profesional}"),
                   onChanged: (Profesional? nuevoProfesional) {
                     setState(() {
                       profesionalSeleccionado = nuevoProfesional;
@@ -171,7 +171,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<CentroMedico>(
                   isExpanded: true,
                   value: centroSeleccionado,
-                  hint: Text(AppLocalizations.of(context)!.seleccionaCentroMedico), 
+                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.centroMedico}"),
                   onChanged: (CentroMedico? nuevoCentro) {
                     setState(() {
                       centroSeleccionado = nuevoCentro;
@@ -260,8 +260,8 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                       especialidadSeleccionada = null;
                       profesionalSeleccionado = null;
                       centroSeleccionado = null;
-                      fechaSeleccionada = AppLocalizations.of(context)!.seleccionaFecha; 
-                      horaSeleccionada = AppLocalizations.of(context)!.seleccionaHora; 
+                      fechaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.fecha}";
+                      horaSeleccionada = "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.hora}";
                     });
 
                     await citaCRUD.crearCita(cita);

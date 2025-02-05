@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'inicio.dart';
 import 'estadisticas.dart';
 import 'calendario.dart';
@@ -47,28 +48,28 @@ class _MainBnBAppState extends State<MainBnBApp> {
               FontAwesomeIcons.house,
               color: _indiceSeleccionado == 0 ? Estilos.dorado_oscuro : Colors.black,
             ),
-            label: 'Inicio',
+            label: AppLocalizations.of(context)!.labelInicio,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               FontAwesomeIcons.circlePlus,
               color: _indiceSeleccionado == 1 ? Estilos.dorado_oscuro : Colors.black,
             ),
-            label: 'Nueva',
+            label: AppLocalizations.of(context)!.labelNueva,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               FontAwesomeIcons.chartSimple,
               color: _indiceSeleccionado == 2 ? Estilos.dorado_oscuro : Colors.black,
             ),
-            label: 'Estadísticas',
+            label: AppLocalizations.of(context)!.labelEstadisticas,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               FontAwesomeIcons.solidCalendarDays,
               color: _indiceSeleccionado == 3 ? Estilos.dorado_oscuro : Colors.black,
             ),
-            label: 'Calendario',
+            label: AppLocalizations.of(context)!.labelCalendario,
           ),
         ],
         currentIndex: _indiceSeleccionado,

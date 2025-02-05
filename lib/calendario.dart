@@ -6,6 +6,7 @@ import 'model/cita.dart';
 import 'model/usuario.dart';
 import 'estilos.dart';
 import 'guardar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalendarioApp extends StatefulWidget {
   const CalendarioApp({super.key});
@@ -83,7 +84,7 @@ class _CalendarioApp extends State<CalendarioApp> {
         padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            Text("CALENDARIO", style: Estilos.titulo2),
+            Text(AppLocalizations.of(context)!.calendario, style: Estilos.titulo2), // Usar la traducción
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(
               child: Container(

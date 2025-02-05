@@ -58,19 +58,19 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(color: Estilos.fondo),
                   padding: const EdgeInsets.all(10),
-                  child: const Column(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'MedConnect',
                         textAlign: TextAlign.center,
                         style: Estilos.titulo,
                       ),
-                      Padding(padding: EdgeInsets.all(1)),
+                      const Padding(padding: EdgeInsets.all(1)),
                       Text(
-                        'gestor de citas',
+                        AppLocalizations.of(context)!.gestorDeCitas,
                         textAlign: TextAlign.center,
                         style: Estilos.texto,
                       ),
