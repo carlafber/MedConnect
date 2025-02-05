@@ -3,3 +3,4 @@
 - revisar comentarios
 - documentacion
 - test
+- poner bien los nombres de los archivos
