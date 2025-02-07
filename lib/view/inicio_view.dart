@@ -12,7 +12,6 @@ import '../viewmodel/CRUD/profesional_viewmodel.dart';
 import '../model/cita_model.dart';
 import '../viewmodel/estilos__viewmodel.dart';
 import '../viewmodel/guardar_usuario_viewmodel.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
 import '../viewmodel/provider_idioma_viewmodel.dart';
 
 class InicioApp extends StatefulWidget {
@@ -187,6 +186,13 @@ class _InicioApp extends State<InicioApp> {
                     backgroundColor: Estilos.dorado_oscuro,
                     child: const Icon(Icons.close, color: Colors.white),
                   ),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context)!.tituloProximasCitas, 
+                      style: Estilos.titulo2,
+                      textAlign: TextAlign.center,  // Centra el texto
+                    ),
+                  ),
                   Builder(
                     builder: (BuildContext context) {
                       return FloatingActionButton(
@@ -202,10 +208,7 @@ class _InicioApp extends State<InicioApp> {
                 ],
               ),
             ),
-            Text(
-              AppLocalizations.of(context)!.tituloProximasCitas, 
-              style: Estilos.titulo2,
-            ),
+            
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(
               child: Container(

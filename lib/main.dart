@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'viewmodel/provider_idioma_viewmodel.dart';
@@ -14,7 +16,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
+  
+  if(Platform.isWindows || Platform.isMacOS){
+    databaseFactory = databaseFactoryFfi;
+  } else {
+    databaseFactory = databaseFactory;
+  }
   //await DBHelper().eliminarBD();
 
   await DBHelper().abrirBD();
