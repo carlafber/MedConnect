@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:proyecto_final/model/cita.dart';
+import 'package:proyecto_final/model/cita_model.dart';
 import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'viewmodel/provider_idioma.dart';
+import 'viewmodel/provider_idioma_viewmodel.dart';
 import 'inicio_sesion.dart';
 import 'main_bnb.dart';
 import 'ver_cita.dart';
-import 'perfil.dart';
+import 'view/perfil_view.dart';
 import 'services/db_helper.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 
 void main() async {
@@ -23,6 +22,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => ProviderIdioma(),
+        ),
         ChangeNotifierProvider(
           create: (context) => ProviderIdioma(),
         )

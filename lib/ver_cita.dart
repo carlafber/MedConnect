@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'viewmodel/CRUD/citaCRUD.dart';
-import 'viewmodel/CRUD/centro_medicoCRUD.dart';
-import 'viewmodel/CRUD/especialidadCRUD.dart';
-import 'viewmodel/CRUD/profesionalCRUD.dart';
-import 'model/centro_medico.dart';
-import 'model/cita.dart';
-import 'model/especialidad.dart';
-import 'model/profesional.dart';
+import 'viewmodel/CRUD/cita_viewmodel.dart';
+import 'viewmodel/CRUD/centro_medico_viewmodel.dart';
+import 'viewmodel/CRUD/especialidad_viewmodel.dart';
+import 'viewmodel/CRUD/profesional_viewmodel.dart';
+import 'model/centro_medico_model.dart';
+import 'model/cita_model.dart';
+import 'model/especialidad_model.dart';
+import 'model/profesional_model.dart';
 import 'services/db_helper.dart';
 import 'estilos.dart';
 
@@ -86,7 +86,7 @@ class _VerCitaApp extends State<VerCitaApp> {
     final DateTime? d = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2025),
+      firstDate: DateTime.now(),  // Para que no se puedan seleccionar fechas anteriores a la actual
       lastDate: DateTime(2030),
       locale: Locale('es', 'ES'), // Establece el idioma del DatePicker a español
     );
@@ -138,7 +138,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                       ),
                     ),
                   ),
-                  Text(AppLocalizations.of(context)!.detallesCita, style: Estilos.titulo2),
+                  Text(AppLocalizations.of(context)!.tituloDetallesCita, style: Estilos.titulo2),
                   const Padding(padding: EdgeInsets.all(10)),
                   Container(
                     height: 60,
@@ -146,7 +146,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                     decoration: const BoxDecoration(color: Estilos.fondo),
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "${AppLocalizations.of(context)!.especialidad}: ${especialidadCita!.nombreEspecialidad}",
+                      "${AppLocalizations.of(context)!.textoEspecialidad}: ${especialidadCita!.nombreEspecialidad}",
                       style: Estilos.texto6,
                     ),
                   ),
@@ -157,7 +157,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                     decoration: const BoxDecoration(color: Estilos.fondo),
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "${AppLocalizations.of(context)!.profesional}: ${profesionalCita!.nombreProfesional}",
+                      "${AppLocalizations.of(context)!.textoProfesional}: ${profesionalCita!.nombreProfesional}",
                       style: Estilos.texto6,
                     ),
                   ),
@@ -168,7 +168,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                     decoration: const BoxDecoration(color: Estilos.fondo),
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      "${AppLocalizations.of(context)!.centroMedico}: ${centroCita!.nombreCentro}",
+                      "${AppLocalizations.of(context)!.textoCentroMedico}: ${centroCita!.nombreCentro}",
                       style: Estilos.texto6,
                     ),
                   ),
@@ -182,7 +182,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                       children: <Widget>[
                         InkWell(
                           child: Text(
-                            '${AppLocalizations.of(context)!.fecha}: $fechaFormateada',
+                            '${AppLocalizations.of(context)!.textoFecha}: $fechaFormateada',
                             textAlign: TextAlign.center,
                             style: Estilos.texto6,
                           ),
@@ -209,7 +209,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                       children: <Widget>[
                         InkWell(
                           child: Text(
-                            '${AppLocalizations.of(context)!.hora}: $horaCita',
+                            '${AppLocalizations.of(context)!.textoHora}: $horaCita',
                             textAlign: TextAlign.center,
                             style: Estilos.texto6,
                           ),
@@ -238,7 +238,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                               // Actualizar fecha y hora de cita
                               await citaCRUD.actualizarCita(cita.idCita, fechaCita, horaCita);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(AppLocalizations.of(context)!.citaActualizada)),
+                                SnackBar(content: Text(AppLocalizations.of(context)!.exitoCitaActualizada)),
                               );
                               // Esperar 3 segundos antes de volver
                               await Future.delayed(const Duration(seconds: 2));
@@ -252,7 +252,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                               ),
                               padding: const EdgeInsets.all(10),
                               child: Text(
-                                AppLocalizations.of(context)!.actualizar,
+                                AppLocalizations.of(context)!.botonActualizar,
                                 textAlign: TextAlign.center,
                                 style: Estilos.texto3,
                               ),
@@ -268,20 +268,20 @@ class _VerCitaApp extends State<VerCitaApp> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text(AppLocalizations.of(context)!.confirmarEliminacion),
-                                    content: Text(AppLocalizations.of(context)!.confirmacionEliminarCuenta),
+                                    title: Text(AppLocalizations.of(context)!.mensajeConfirmarEliminacion),
+                                    content: Text(AppLocalizations.of(context)!.mensajeEliminarCuenta),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop(false); // Cancelar
                                         },
-                                        child: Text(AppLocalizations.of(context)!.cancelar, style: Estilos.texto4),
+                                        child: Text(AppLocalizations.of(context)!.botonCancelar, style: Estilos.texto4),
                                       ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop(true); // Confirmar
                                         },
-                                        child: Text(AppLocalizations.of(context)!.eliminar, style: Estilos.texto4),
+                                        child: Text(AppLocalizations.of(context)!.botonEliminar, style: Estilos.texto4),
                                       ),
                                     ],
                                   );
@@ -290,7 +290,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                               if (confirmacion == true) {
                                 await citaCRUD.eliminarCita(cita.idCita as int);
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(AppLocalizations.of(context)!.citaEliminada)),
+                                  SnackBar(content: Text(AppLocalizations.of(context)!.exitoCitaEliminada)),
                                 );
                                 await Navigator.pushNamed(context, '/inicio');
                               }
@@ -303,7 +303,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                               ),
                               padding: const EdgeInsets.all(10),
                               child: Text(
-                                AppLocalizations.of(context)!.eliminar,
+                                AppLocalizations.of(context)!.botonEliminar,
                                 textAlign: TextAlign.center,
                                 style: Estilos.texto3,
                               ),

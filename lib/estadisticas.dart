@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'model/especialidad.dart';
-import 'model/profesional.dart';
-import 'model/usuario.dart';
+import 'package:provider/provider.dart';
+import 'model/especialidad_model.dart';
+import 'model/profesional_model.dart';
 import 'estilos.dart';
-import 'viewmodel/CRUD/citaCRUD.dart';
-import 'viewmodel/CRUD/profesionalCRUD.dart';
-import 'model/cita.dart';
-import 'guardar.dart';
+import 'viewmodel/CRUD/cita_viewmodel.dart';
+import 'viewmodel/CRUD/profesional_viewmodel.dart';
+import 'model/cita_model.dart';
+import 'viewmodel/provider_usuario_viewmodel.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,7 +20,6 @@ class EstadisticasApp extends StatefulWidget {
 class _EstadisticasApp extends State<EstadisticasApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
-  Guardar guardar = Guardar();
 
   List<Cita> citas = [];
   Map<int, Especialidad> especialidades = {};
@@ -29,7 +28,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
   @override
   void initState() {
     super.initState();
-    Usuario? usuario = guardar.get();
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
     if (usuario != null) {
       _cargarCitas(usuario.idUsuario as int);
     }
@@ -67,7 +66,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
 
     // Contar la cantidad de citas por especialidad
     for (var cita in citas) {
-      String especialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? AppLocalizations.of(context)!.desconocida; // Usar la traducción
+      String especialidad = especialidades[cita.idProfesional]?.nombreEspecialidad ?? AppLocalizations.of(context)!.textoDesconocida; // Usar la traducción
       if (especialidadesCount.containsKey(especialidad)) {
         especialidadesCount[especialidad] = especialidadesCount[especialidad]! + 1;
       } else {
@@ -144,7 +143,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context)!.estadisticas, style: Estilos.titulo2), // Usar la traducción
+            Text(AppLocalizations.of(context)!.tituloEstadisticas, style: Estilos.titulo2), // Usar la traducción
             const Padding(padding: EdgeInsets.all(10)),
             // Contenedor con el gráfico y la leyenda
             Expanded(

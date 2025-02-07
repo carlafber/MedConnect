@@ -1,4 +1,4 @@
-import 'package:proyecto_final/model/especialidad.dart';
+import 'package:proyecto_final/model/especialidad_model.dart';
 import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 

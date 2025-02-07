@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'viewmodel/CRUD/usuarioCRUD.dart';
-import 'model/usuario.dart';
-import 'guardar.dart';
+import 'package:provider/provider.dart';
+import 'viewmodel/CRUD/usuario_viewmodel.dart';
+import 'model/usuario_model.dart';
+import 'viewmodel/provider_usuario_viewmodel.dart';
 import 'estilos.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,24 +19,29 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];
   String? companiaSeleccionada;
   UsuarioCRUD usuarioCRUD = UsuarioCRUD();
-  Guardar guardar = Guardar();
   Usuario? usuario;
 
   // Función para verificar si el número de tarjeta es válido
   Future<String?> _validarTarjeta(String value) async {
+    double valor = double.tryParse(value) ?? 0.0;
+
     if (value.isEmpty) {
-      return AppLocalizations.of(context)!.completeCampos; // Usar la clave de traducción
+      return AppLocalizations.of(context)!.errorComplete;
+    }
+
+    if(valor == 0){
+      return AppLocalizations.of(context)!.errorTarjeta;
     }
 
     // Esperamos la respuesta de la base de datos
     usuario = await usuarioCRUD.existeUsuario(value);
 
     if (usuario == null) {
-      return AppLocalizations.of(context)!.usuarioNoExiste; // Usar la clave de traducción
+      return AppLocalizations.of(context)!.errorUsuario;
     }
 
     if (usuario?.compania != companiaSeleccionada) {
-      return AppLocalizations.of(context)!.companiaInvalida; // Usar la clave de traducción
+      return AppLocalizations.of(context)!.errorCompania;
     }
 
     return null; // Si todo es válido
@@ -70,7 +76,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                       ),
                       const Padding(padding: EdgeInsets.all(1)),
                       Text(
-                        AppLocalizations.of(context)!.gestorDeCitas,
+                        AppLocalizations.of(context)!.textoGestor,
                         textAlign: TextAlign.center,
                         style: Estilos.texto,
                       ),
@@ -100,7 +106,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                               child: DropdownButton<String>(
                                 isExpanded: true,
                                 value: companiaSeleccionada,
-                                hint: Text(AppLocalizations.of(context)!.seleccioneCompania), // Usar la clave de traducción
+                                hint: Text(AppLocalizations.of(context)!.campoCompania),
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     companiaSeleccionada = newValue;
@@ -129,7 +135,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                               Icons.credit_card,
                               color: Estilos.dorado_oscuro,
                             ),
-                            hintText: AppLocalizations.of(context)!.numeroTarjeta, // Usar la clave de traducción
+                            hintText: AppLocalizations.of(context)!.campoTarjeta,
                             border: const OutlineInputBorder(),
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
@@ -146,7 +152,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           String? tarjeta = _numTarjeta.text;
                           if (tarjeta.isEmpty || companiaSeleccionada == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(AppLocalizations.of(context)!.completeCampos)), // Usar la clave de traducción
+                              SnackBar(content: Text(AppLocalizations.of(context)!.errorComplete)),
                             );
                             return;
                           }
@@ -159,7 +165,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                             );
                           } else {
                             // Si la validación fue exitosa, guardar el usuario y navegamos
-                            guardar.set(usuario!);
+                            Provider.of<UsuarioProvider>(context, listen: false).setUsuario(usuario!);
                             Navigator.pushNamed(context, '/main_bnb');
                           }
                         },
@@ -168,7 +174,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                           decoration: const BoxDecoration(color: Estilos.dorado_claro),
                           padding: const EdgeInsets.all(20),
                           child: Text(
-                            AppLocalizations.of(context)!.acceder, // Usar la clave de traducción
+                            AppLocalizations.of(context)!.botonAcceder,
                             textAlign: TextAlign.center,
                             style: Estilos.texto2,
                           ),

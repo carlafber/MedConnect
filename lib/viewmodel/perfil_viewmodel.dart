@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '/model/usuario.dart';
+import '../model/usuario_model.dart';
 import '/estilos.dart';
-import 'CRUD/usuarioCRUD.dart';
+import 'CRUD/usuario_viewmodel.dart';
 
-class Funciones{
+class PerfilViewModel {
   // Función que abre un diálogo actualizar la contraseña
   void actualizarContrasena(BuildContext context, Usuario usuario, UsuarioCRUD usuarioCRUD) {
     final formulario = GlobalKey<FormState>();
@@ -16,7 +16,7 @@ class Funciones{
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.actualizarContrasena, style: Estilos.texto5),
+          title: Text(AppLocalizations.of(context)!.botonActualizarContrasena, style: Estilos.texto5),
           backgroundColor: Estilos.fondo,
           content: SizedBox(
             width: 400,
@@ -31,7 +31,7 @@ class Funciones{
                     controller: contrasenaActual,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.contrasenaActual,
+                      hintText: AppLocalizations.of(context)!.campoContrasenaActual,
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -41,11 +41,11 @@ class Funciones{
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.campoObligatorio;
+                        return AppLocalizations.of(context)!.errorCampoObligatorio;
                       }
                       // Comprobar que la contraseña introducida coincide con la almacenada en la base de datos
                       if (usuario.contrasena != value) {
-                        return AppLocalizations.of(context)!.contrasenaIncorrecta;
+                        return AppLocalizations.of(context)!.errorContrasenaIncorrecta;
                       }
                       return null;
                     }
@@ -56,7 +56,7 @@ class Funciones{
                     controller: contrasenaNueva1,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.nuevaContrasena,
+                      hintText: AppLocalizations.of(context)!.campoNuevaContrasena,
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -66,9 +66,9 @@ class Funciones{
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.campoObligatorio;
+                        return AppLocalizations.of(context)!.errorCampoObligatorio;
                       } else if (value.length < 6) {
-                        return AppLocalizations.of(context)!.debeTenerMinimo6Caracteres;
+                        return AppLocalizations.of(context)!.errorCaracteres;
                       }
                       return null;
                     }
@@ -78,7 +78,7 @@ class Funciones{
                     controller: contrasenaNueva2,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.confirmarContrasena,
+                      hintText: AppLocalizations.of(context)!.campoConfirmarContrasena,
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -88,13 +88,13 @@ class Funciones{
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.campoObligatorio;
+                        return AppLocalizations.of(context)!.errorCampoObligatorio;
                       } else if (value.length < 6) {
-                        return AppLocalizations.of(context)!.debeTenerMinimo6Caracteres;
+                        return AppLocalizations.of(context)!.errorCaracteres;
                       }
                       // Comprobar que las dos contraseñas nuevas introducidas coinciden
                       if (contrasenaNueva1 != contrasenaNueva2) {
-                        return AppLocalizations.of(context)!.lasContrasenasNoCoinciden;
+                        return AppLocalizations.of(context)!.errorCoincidencia;
                       }
                       return null;
                     }
@@ -106,16 +106,16 @@ class Funciones{
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(AppLocalizations.of(context)!.cancelar, style: Estilos.texto4),
+              child: Text(AppLocalizations.of(context)!.botonCancelar, style: Estilos.texto4),
             ),
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 if (formulario.currentState!.validate()) {
                   usuarioCRUD.actualizarContrasena(usuario.idUsuario, contrasenaNueva1);
                   Navigator.pop(context);
                 }
               },
-              child: Text(AppLocalizations.of(context)!.eliminar, style: Estilos.texto4),
+              child: Text(AppLocalizations.of(context)!.botonEliminar, style: Estilos.texto4),
             ),
           ],
         );

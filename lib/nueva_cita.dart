@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_final/model/usuario.dart';
-import 'guardar.dart';
-import 'viewmodel/CRUD/centro_medicoCRUD.dart';
-import 'viewmodel/CRUD/citaCRUD.dart';
-import 'viewmodel/CRUD/especialidadCRUD.dart';
-import 'viewmodel/CRUD/profesionalCRUD.dart';
-import 'model/centro_medico.dart';
-import 'model/cita.dart';
+import 'package:provider/provider.dart';
+import 'viewmodel/provider_usuario_viewmodel.dart';
+import 'viewmodel/CRUD/centro_medico_viewmodel.dart';
+import 'viewmodel/CRUD/cita_viewmodel.dart';
+import 'viewmodel/CRUD/especialidad_viewmodel.dart';
+import 'viewmodel/CRUD/profesional_viewmodel.dart';
+import 'model/centro_medico_model.dart';
+import 'model/cita_model.dart';
 import 'estilos.dart';
-import 'model/especialidad.dart';
-import 'model/profesional.dart';
+import 'model/especialidad_model.dart';
+import 'model/profesional_model.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Agregado para la localización
 
@@ -25,7 +25,6 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CentroMedicoCRUD centroCRUD = CentroMedicoCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
-  Guardar guardar = Guardar();
 
   List<Especialidad> especialidades = [];
   List<Profesional> profesionales = [];
@@ -110,7 +109,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
           padding: const EdgeInsets.all(25),
           child: Column(
             children: [
-              Text(AppLocalizations.of(context)!.nuevaCita, style: Estilos.titulo2), // Usamos el texto traducido
+              Text(AppLocalizations.of(context)!.tituloNuevaCita, style: Estilos.titulo2), // Usamos el texto traducido
               const Padding(padding: EdgeInsets.all(10)),
               
               // Dropdown para seleccionar especialidad
@@ -122,7 +121,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Especialidad>(
                   isExpanded: true,
                   value: especialidadSeleccionada,
-                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.especialidad}"),
+                  hint: Text("${AppLocalizations.of(context)!.textoSelecciona} ${AppLocalizations.of(context)!.textoEspecialidad}"),
                   onChanged: (Especialidad? nuevaEspecialidad) {
                     setState(() {
                       especialidadSeleccionada = nuevaEspecialidad;
@@ -152,7 +151,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<Profesional>(
                   isExpanded: true,
                   value: profesionalSeleccionado,
-                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.profesional}"),
+                  hint: Text("${AppLocalizations.of(context)!.textoSelecciona} ${AppLocalizations.of(context)!.textoProfesional}"),
                   onChanged: (Profesional? nuevoProfesional) {
                     setState(() {
                       profesionalSeleccionado = nuevoProfesional;
@@ -178,7 +177,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                 child: DropdownButton<CentroMedico>(
                   isExpanded: true,
                   value: centroSeleccionado,
-                  hint: Text("${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.centroMedico}"),
+                  hint: Text("${AppLocalizations.of(context)!.textoSelecciona} ${AppLocalizations.of(context)!.textoCentroMedico}"),
                   onChanged: (CentroMedico? nuevoCentro) {
                     setState(() {
                       centroSeleccionado = nuevoCentro;
@@ -206,7 +205,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                     InkWell(
                       child: Text(
                         fechaSeleccionada.isEmpty 
-                          ? "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.fecha}"
+                          ? "${AppLocalizations.of(context)!.textoSelecciona} ${AppLocalizations.of(context)!.textoFecha}"
                           : fechaSeleccionada,  // Muestra la fecha seleccionada
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black),
@@ -238,7 +237,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                     InkWell(
                       child: Text(
                         horaSeleccionada.isEmpty 
-                          ? "${AppLocalizations.of(context)!.selecciona} ${AppLocalizations.of(context)!.hora}"
+                          ? "${AppLocalizations.of(context)!.textoSelecciona} ${AppLocalizations.of(context)!.textoHora}"
                           : horaSeleccionada,  // Muestra la hora seleccionada
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black),
@@ -272,12 +271,12 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                     // Mostrar un Snackbar con el mensaje de error
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(AppLocalizations.of(context)!.todosLosCampos)
+                        content: Text(AppLocalizations.of(context)!.errorComplete)
                       ),
                     );
                   } else {
                     // Obtener el usuario
-                    Usuario? usuario = guardar.get();
+                    final usuario = Provider.of<UsuarioProvider>(context).usuario;
                     if (usuario != null) {
                       // Convertir la fecha seleccionada a formato yyyy-MM-dd antes de guardarla
                       String fechaFormatoGuardar = DateFormat('yyyy-MM-dd').format(DateFormat.yMMMMd("es_ES").parse(fechaSeleccionada));
@@ -301,11 +300,11 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
 
                       await citaCRUD.crearCita(cita);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(AppLocalizations.of(context)!.citaCreadaExitosamente)),
+                        SnackBar(content: Text(AppLocalizations.of(context)!.exitoCitaCreada)),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(AppLocalizations.of(context)!.errorUsuarioNoEncontrado)),
+                        SnackBar(content: Text(AppLocalizations.of(context)!.mensajeUsuarioNoEncontrado)),
                       );
                     }
                   }
@@ -315,7 +314,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(color: Estilos.dorado_claro),
                   child: Text(
-                    AppLocalizations.of(context)!.agregar, 
+                    AppLocalizations.of(context)!.botonAgregar, 
                     textAlign: TextAlign.center,
                     style: Estilos.texto3,
                   ),

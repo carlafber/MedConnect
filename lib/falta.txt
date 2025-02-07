@@ -1,6 +1,7 @@
 - que no salga la pantalla en rojo mientras cargan los detalles de la cita -> con try - catch
 - quitar los prints
 - revisar comentarios
-- documentacion
-- test
-- poner bien los nombres de los archivos
+- documentación
+- test (2 unitarios, 2 de widget, 1 unitario)
+- poner bien los nombres de los archivos (no mayúsculas)
+- semantics en perfil

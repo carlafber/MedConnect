@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'viewmodel/CRUD/citaCRUD.dart';
-import 'model/cita.dart';
-import 'model/usuario.dart';
+import 'viewmodel/CRUD/cita_viewmodel.dart';
+import 'model/cita_model.dart';
+import 'model/usuario_model.dart';
 import 'estilos.dart';
-import 'guardar.dart';
+import 'viewmodel/provider_usuario_viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalendarioApp extends StatefulWidget {
@@ -20,12 +21,11 @@ class _CalendarioApp extends State<CalendarioApp> {
   late Map<DateTime, List<Cita>> _citas;
   late DateTime _selectedDate;
   late CalendarFormat _calendarFormat;
-  Guardar guardar = Guardar();
 
   @override
   void initState() {
     super.initState();
-    Usuario? usuario = guardar.get();
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
     _calendarFormat = CalendarFormat.month;
     _citas = {};
     _selectedDate = DateTime.now();
@@ -84,7 +84,7 @@ class _CalendarioApp extends State<CalendarioApp> {
         padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            Text(AppLocalizations.of(context)!.calendario, style: Estilos.titulo2), // Usar la traducción
+            Text(AppLocalizations.of(context)!.tituloCalendario, style: Estilos.titulo2), // Usar la traducción
             const Padding(padding: EdgeInsets.all(10)),
             Expanded(
               child: Container(

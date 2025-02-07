@@ -1,5 +1,5 @@
-import 'package:flutter/src/widgets/editable_text.dart';
-import 'package:proyecto_final/model/usuario.dart';
+import 'package:flutter/material.dart';
+import 'package:proyecto_final/model/usuario_model.dart';
 import 'package:proyecto_final/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 

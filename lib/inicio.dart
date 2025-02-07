@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
-import 'model/especialidad.dart';
-import 'model/profesional.dart';
-import 'viewmodel/CRUD/citaCRUD.dart';
-import 'viewmodel/CRUD/profesionalCRUD.dart';
-import 'model/cita.dart';
-import 'model/usuario.dart';
+import 'package:proyecto_final/viewmodel/inicio_viewmodel.dart';
+import 'model/especialidad_model.dart';
+import 'model/profesional_model.dart';
+import 'viewmodel/CRUD/cita_viewmodel.dart';
+import 'viewmodel/CRUD/profesional_viewmodel.dart';
+import 'model/cita_model.dart';
 import 'estilos.dart';
-import 'guardar.dart';
-import 'viewmodel/provider_idioma.dart';
+import 'viewmodel/provider_usuario_viewmodel.dart';
+import 'viewmodel/provider_idioma_viewmodel.dart';
 
 class InicioApp extends StatefulWidget {
   const InicioApp({super.key});
@@ -24,23 +23,18 @@ class InicioApp extends StatefulWidget {
 class _InicioApp extends State<InicioApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
-  Guardar guardar = Guardar();
+  InicioViewModel iniciovm = InicioViewModel();
 
   List<Cita> citas = [];
   Map<int, Especialidad> especialidades = {};
   Map<int, String> nombresProfesionales = {};
   String color = "";
 
-  Map<String, String> cuadrosMedicos = {
-    'Asisa': 'https://www.asisa.es/empresas/icava/Cuadro_Medico_Valladolid_2011.pdf',
-    'Adeslas': 'https://adeslas.numero1salud.es/wp-content/uploads/2024/04/Valladolid-Cuadro-Medico-General.pdf',
-    'Caser': 'https://cuadromedico.de/web/viewer.html?file=/Cuadro%20m%C3%A9dico%20Caser%20Valladolid.pdf',
-  };
 
   @override
   void initState() {
     super.initState();
-    Usuario? usuario = guardar.get();
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
     if (usuario != null) {
       _cargarCitas(usuario.idUsuario as int);
     }
@@ -78,17 +72,6 @@ class _InicioApp extends State<InicioApp> {
     });
   }
 
-  //Abrir el pdf
-  void abrirPDF(String compania) async{
-    String? url = cuadrosMedicos[compania];
-
-    if (url != null && await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('No se pudo abrir el PDF para $compania');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final idiomaProvider = Provider.of<ProviderIdioma>(context);
@@ -117,7 +100,7 @@ class _InicioApp extends State<InicioApp> {
                       const Icon(Icons.person, color: Colors.white, size: 30),
                       const Padding(padding: EdgeInsets.only(right: 20)),
                       Text(
-                        AppLocalizations.of(context)!.perfil, 
+                        AppLocalizations.of(context)!.menuPerfil, 
                         style: Estilos.texto3,
                       ),
                     ],
@@ -127,8 +110,8 @@ class _InicioApp extends State<InicioApp> {
               Padding (padding: const EdgeInsets.all(60)),
               GestureDetector(
                 onTap: () {
-                  Usuario? u = guardar.get();
-                  abrirPDF(u!.compania);
+                  final u = Provider.of<UsuarioProvider>(context).usuario;
+                  iniciovm.abrirPDF(context, u!.compania);
                 },
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -140,7 +123,7 @@ class _InicioApp extends State<InicioApp> {
                       const Icon(FontAwesomeIcons.bookOpen, color: Colors.white),
                       const Padding(padding: EdgeInsets.only(left: 20)),
                       Text(
-                        AppLocalizations.of(context)!.cuadroMedico, 
+                        AppLocalizations.of(context)!.menuCuadroMedico, 
                         style: Estilos.texto3,
                       ),
                     ],
@@ -217,7 +200,7 @@ class _InicioApp extends State<InicioApp> {
               ),
             ),
             Text(
-              AppLocalizations.of(context)!.proximasCitas, 
+              AppLocalizations.of(context)!.tituloProximasCitas, 
               style: Estilos.titulo2,
             ),
             const Padding(padding: EdgeInsets.all(10)),
@@ -256,7 +239,7 @@ class _InicioApp extends State<InicioApp> {
                             const SizedBox(width: 15),
                             Expanded(
                               child: Text(
-                                '${AppLocalizations.of(context)!.citaDe} $nombreEspecialidad ${AppLocalizations.of(context)!.con} $nombreProfesional. ${AppLocalizations.of(context)!.el} $fechaFormateada ${AppLocalizations.of(context)!.aLas} ${cita.hora}',
+                                '${AppLocalizations.of(context)!.textoCita} $nombreEspecialidad ${AppLocalizations.of(context)!.textoCitaCon} $nombreProfesional. ${AppLocalizations.of(context)!.textoCitaEl} $fechaFormateada ${AppLocalizations.of(context)!.textoCitaALas} ${cita.hora}',
                                 style: TextStyle(color: Colors.black),
                               ),
                             ),

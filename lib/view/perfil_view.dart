@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'viewmodel/CRUD/usuarioCRUD.dart';
-import 'model/usuario.dart';
-import 'estilos.dart';
-import 'guardar.dart';
-import 'viewmodel/funciones.dart';
+import 'package:provider/provider.dart';
+import '/viewmodel/perfil_viewmodel.dart';
+import '/viewmodel/CRUD/usuario_viewmodel.dart';
+import '/model/usuario_model.dart';
+import '/estilos.dart';
+import '../viewmodel/provider_usuario_viewmodel.dart';
 
 
 class PerfilApp extends StatefulWidget {
@@ -16,13 +17,12 @@ class PerfilApp extends StatefulWidget {
 }
 
 class _PerfilApp extends State<PerfilApp> {
-  Guardar guardar = Guardar();
   UsuarioCRUD usuarioCRUD = UsuarioCRUD();
-  Funciones funciones = Funciones();
+  PerfilViewModel perfilvm = PerfilViewModel();
 
   @override
   Widget build(BuildContext context) {
-    Usuario? usuario = guardar.get();
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
 
     return Scaffold(
       backgroundColor: Estilos.dorado,
@@ -60,7 +60,7 @@ class _PerfilApp extends State<PerfilApp> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          AppLocalizations.of(context)!.detallesPerfil,
+                          AppLocalizations.of(context)!.tituloDetallesPerfil,
                           textAlign: TextAlign.center,
                           style: Estilos.titulo2,
                         ),
@@ -76,7 +76,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.user, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            AppLocalizations.of(context)!.nombre,
+                            AppLocalizations.of(context)!.textoNombre,
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -92,7 +92,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.envelope, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            AppLocalizations.of(context)!.correo,
+                            AppLocalizations.of(context)!.textoCorreo,
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -108,7 +108,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.creditCard, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            "${AppLocalizations.of(context)!.numeroTarjeta}:",
+                            "${AppLocalizations.of(context)!.campoTarjeta}:",
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -124,7 +124,7 @@ class _PerfilApp extends State<PerfilApp> {
                           Icon(FontAwesomeIcons.circleCheck, color: Colors.black),
                           const Padding(padding: EdgeInsets.all(10)),
                           Text(
-                            AppLocalizations.of(context)!.compania,
+                            AppLocalizations.of(context)!.textoCompania,
                             style: Estilos.texto,
                           ),
                           const Padding(padding: EdgeInsets.all(5)),
@@ -147,20 +147,20 @@ class _PerfilApp extends State<PerfilApp> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text(AppLocalizations.of(context)!.confirmarEliminacion),
-                                content: Text(AppLocalizations.of(context)!.confirmacionEliminarCita),
+                                title: Text(AppLocalizations.of(context)!.mensajeConfirmarEliminacion),
+                                content: Text(AppLocalizations.of(context)!.mensajeEliminarCuenta),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop(false); // Cancelar
                                     },
-                                    child: Text(AppLocalizations.of(context)!.cancelar, style: Estilos.texto4),
+                                    child: Text(AppLocalizations.of(context)!.botonCancelar, style: Estilos.texto4),
                                   ),
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop(true); // Confirmar
                                     },
-                                    child: Text(AppLocalizations.of(context)!.eliminar, style: Estilos.texto4),
+                                    child: Text(AppLocalizations.of(context)!.botonEliminar, style: Estilos.texto4),
                                   ),
                                 ],
                               );
@@ -169,7 +169,7 @@ class _PerfilApp extends State<PerfilApp> {
                           if (confirmacion == true) {
                             await usuarioCRUD.eliminarUsuario(usuario.idUsuario as int);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(AppLocalizations.of(context)!.usuarioEliminado)),
+                              SnackBar(content: Text(AppLocalizations.of(context)!.exitoCuentaEliminada)),
                             );
                             await Navigator.pushNamed(context, '/inicio_sesion');
                           }
@@ -183,7 +183,7 @@ class _PerfilApp extends State<PerfilApp> {
                           ),
                           padding: const EdgeInsets.all(15),
                           child: Text(
-                            AppLocalizations.of(context)!.eliminarCuenta,
+                            AppLocalizations.of(context)!.botonEliminarCuenta,
                             textAlign: TextAlign.center,
                             style: Estilos.texto3,
                           ),
@@ -192,7 +192,7 @@ class _PerfilApp extends State<PerfilApp> {
                       const Padding(padding: EdgeInsets.all(30)),
                       GestureDetector(
                         onTap: () async {
-                          funciones.actualizarContrasena(context, usuario, usuarioCRUD);
+                          perfilvm.actualizarContrasena(context, usuario, usuarioCRUD);
                         },
                         child: Container(
                           height: 75,
@@ -203,7 +203,7 @@ class _PerfilApp extends State<PerfilApp> {
                           ),
                           padding: const EdgeInsets.all(15),
                           child: Text(
-                            AppLocalizations.of(context)!.actualizarContrasena,
+                            AppLocalizations.of(context)!.botonActualizarContrasena,
                             textAlign: TextAlign.center,
                             style: Estilos.texto3,
                           ),
@@ -219,6 +219,4 @@ class _PerfilApp extends State<PerfilApp> {
       ),
     );
   }
-
-  
 }
