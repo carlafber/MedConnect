@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../model/usuario_model.dart';
-import '/estilos.dart';
+import 'estilos__viewmodel.dart';
 import 'CRUD/usuario_viewmodel.dart';
 
 class PerfilViewModel {

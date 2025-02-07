@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'viewmodel/provider_idioma_viewmodel.dart';
-import 'inicio_sesion.dart';
-import 'main_bnb.dart';
-import 'ver_cita.dart';
+import 'view/inicio_sesion_view.dart';
+import 'view/main_bnb_view.dart';
+import 'view/ver_cita_view.dart';
 import 'view/perfil_view.dart';
 import 'services/db_helper.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -22,9 +22,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ProviderIdioma(),
-        ),
         ChangeNotifierProvider(
           create: (context) => ProviderIdioma(),
         )

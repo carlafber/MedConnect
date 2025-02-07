@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'model/especialidad_model.dart';
-import 'model/profesional_model.dart';
-import 'estilos.dart';
-import 'viewmodel/CRUD/cita_viewmodel.dart';
-import 'viewmodel/CRUD/profesional_viewmodel.dart';
-import 'model/cita_model.dart';
-import 'viewmodel/provider_usuario_viewmodel.dart';
+import '../model/especialidad_model.dart';
+import '../model/profesional_model.dart';
+import '../viewmodel/estilos__viewmodel.dart';
+import '../model/usuario_model.dart';
+import '../viewmodel/CRUD/cita_viewmodel.dart';
+import '../viewmodel/CRUD/profesional_viewmodel.dart';
+import '../model/cita_model.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,6 +22,7 @@ class EstadisticasApp extends StatefulWidget {
 class _EstadisticasApp extends State<EstadisticasApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
+  Guardar guardar = Guardar();
 
   List<Cita> citas = [];
   Map<int, Especialidad> especialidades = {};
@@ -28,7 +31,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
   @override
   void initState() {
     super.initState();
-    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    Usuario? usuario = guardar.get();
     if (usuario != null) {
       _cargarCitas(usuario.idUsuario as int);
     }

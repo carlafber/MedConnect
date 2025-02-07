@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'viewmodel/provider_usuario_viewmodel.dart';
-import 'viewmodel/CRUD/centro_medico_viewmodel.dart';
-import 'viewmodel/CRUD/cita_viewmodel.dart';
-import 'viewmodel/CRUD/especialidad_viewmodel.dart';
-import 'viewmodel/CRUD/profesional_viewmodel.dart';
-import 'model/centro_medico_model.dart';
-import 'model/cita_model.dart';
-import 'estilos.dart';
-import 'model/especialidad_model.dart';
-import 'model/profesional_model.dart';
+import '../model/usuario_model.dart';
+import '../viewmodel/CRUD/centro_medico_viewmodel.dart';
+import '../viewmodel/CRUD/cita_viewmodel.dart';
+import '../viewmodel/CRUD/especialidad_viewmodel.dart';
+import '../viewmodel/CRUD/profesional_viewmodel.dart';
+import '../model/centro_medico_model.dart';
+import '../model/cita_model.dart';
+import '../viewmodel/estilos__viewmodel.dart';
+import '../model/especialidad_model.dart';
+import '../model/profesional_model.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Agregado para la localización
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../viewmodel/guardar_usuario_viewmodel.dart'; // Agregado para la localización
 
 class NuevaCitaApp extends StatefulWidget {
   const NuevaCitaApp({super.key});
@@ -25,6 +27,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CentroMedicoCRUD centroCRUD = CentroMedicoCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
+  Guardar guardar = Guardar();
 
   List<Especialidad> especialidades = [];
   List<Profesional> profesionales = [];
@@ -276,7 +279,7 @@ class _NuevaCitaApp extends State<NuevaCitaApp> {
                     );
                   } else {
                     // Obtener el usuario
-                    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+                    Usuario? usuario = guardar.get();
                     if (usuario != null) {
                       // Convertir la fecha seleccionada a formato yyyy-MM-dd antes de guardarla
                       String fechaFormatoGuardar = DateFormat('yyyy-MM-dd').format(DateFormat.yMMMMd("es_ES").parse(fechaSeleccionada));

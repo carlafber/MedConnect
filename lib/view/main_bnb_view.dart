@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'inicio.dart';
-import 'estadisticas.dart';
-import 'calendario.dart';
-import 'nueva_cita.dart';
-import 'estilos.dart';
+import 'inicio_view.dart';
+import 'estadisticas_view.dart';
+import 'calendario_view.dart';
+import 'nueva_cita_view.dart';
+import '../viewmodel/estilos__viewmodel.dart';
 
 
 class MainBnBApp extends StatefulWidget {

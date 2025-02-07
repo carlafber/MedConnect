@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'viewmodel/CRUD/usuario_viewmodel.dart';
-import 'model/usuario_model.dart';
-import 'viewmodel/provider_usuario_viewmodel.dart';
-import 'estilos.dart';
+import '../viewmodel/CRUD/usuario_viewmodel.dart';
+import '../model/usuario_model.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
+import '../viewmodel/estilos__viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InicioSesionApp extends StatefulWidget {
@@ -20,6 +21,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
   String? companiaSeleccionada;
   UsuarioCRUD usuarioCRUD = UsuarioCRUD();
   Usuario? usuario;
+  Guardar guardar = Guardar();
 
   // Función para verificar si el número de tarjeta es válido
   Future<String?> _validarTarjeta(String value) async {
@@ -165,7 +167,7 @@ class _InicioSesionApp extends State<InicioSesionApp> {
                             );
                           } else {
                             // Si la validación fue exitosa, guardar el usuario y navegamos
-                            Provider.of<UsuarioProvider>(context, listen: false).setUsuario(usuario!);
+                            guardar.set(usuario!);
                             Navigator.pushNamed(context, '/main_bnb');
                           }
                         },

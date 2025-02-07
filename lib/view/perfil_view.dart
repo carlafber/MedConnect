@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 import '/viewmodel/perfil_viewmodel.dart';
 import '/viewmodel/CRUD/usuario_viewmodel.dart';
 import '/model/usuario_model.dart';
-import '/estilos.dart';
-import '../viewmodel/provider_usuario_viewmodel.dart';
+import '../viewmodel/estilos__viewmodel.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
 
 
 class PerfilApp extends StatefulWidget {
@@ -17,12 +16,13 @@ class PerfilApp extends StatefulWidget {
 }
 
 class _PerfilApp extends State<PerfilApp> {
+  Guardar guardar = Guardar();
   UsuarioCRUD usuarioCRUD = UsuarioCRUD();
   PerfilViewModel perfilvm = PerfilViewModel();
 
   @override
   Widget build(BuildContext context) {
-    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    Usuario? usuario = guardar.get();
 
     return Scaffold(
       backgroundColor: Estilos.dorado,

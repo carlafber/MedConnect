@@ -4,14 +4,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:proyecto_final/viewmodel/inicio_viewmodel.dart';
-import 'model/especialidad_model.dart';
-import 'model/profesional_model.dart';
-import 'viewmodel/CRUD/cita_viewmodel.dart';
-import 'viewmodel/CRUD/profesional_viewmodel.dart';
-import 'model/cita_model.dart';
-import 'estilos.dart';
-import 'viewmodel/provider_usuario_viewmodel.dart';
-import 'viewmodel/provider_idioma_viewmodel.dart';
+import '../model/especialidad_model.dart';
+import '../model/profesional_model.dart';
+import '../model/usuario_model.dart';
+import '../viewmodel/CRUD/cita_viewmodel.dart';
+import '../viewmodel/CRUD/profesional_viewmodel.dart';
+import '../model/cita_model.dart';
+import '../viewmodel/estilos__viewmodel.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
+import '../viewmodel/guardar_usuario_viewmodel.dart';
+import '../viewmodel/provider_idioma_viewmodel.dart';
 
 class InicioApp extends StatefulWidget {
   const InicioApp({super.key});
@@ -24,6 +26,7 @@ class _InicioApp extends State<InicioApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
   InicioViewModel iniciovm = InicioViewModel();
+  Guardar guardar = Guardar();
 
   List<Cita> citas = [];
   Map<int, Especialidad> especialidades = {};
@@ -34,7 +37,7 @@ class _InicioApp extends State<InicioApp> {
   @override
   void initState() {
     super.initState();
-    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    Usuario? usuario = guardar.get();
     if (usuario != null) {
       _cargarCitas(usuario.idUsuario as int);
     }
@@ -110,7 +113,7 @@ class _InicioApp extends State<InicioApp> {
               Padding (padding: const EdgeInsets.all(60)),
               GestureDetector(
                 onTap: () {
-                  final u = Provider.of<UsuarioProvider>(context).usuario;
+                  Usuario? u = guardar.get();
                   iniciovm.abrirPDF(context, u!.compania);
                 },
                 child: Container(
