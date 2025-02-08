@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '/model/usuario_model.dart';
 import '/viewmodel/perfil_viewmodel.dart';
 import '/viewmodel/CRUD/usuario_viewmodel.dart';
 import '/viewmodel/estilos_viewmodel.dart';
 import '/viewmodel/guardar_usuario_viewmodel.dart';
-import '/model/usuario_model.dart';
 
 
 class PerfilApp extends StatefulWidget {
