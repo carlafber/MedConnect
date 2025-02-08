@@ -19,6 +19,7 @@ class ProviderIdioma extends ChangeNotifier{
   /// @returns Un objeto `Locale` que representa el idioma actual.
   Locale get idioma => _idioma;
 
+
   /// **Método** que cambia el idioma de la aplicación.
   ///
   /// @param codigoIdioma → El código del idioma (por ejemplo, 'es' para español, 'en' para inglés).
@@ -28,6 +29,7 @@ class ProviderIdioma extends ChangeNotifier{
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('idioma', codigoIdioma);
   }
+
 
   /// **Método** que carga las preferencias del idioma desde SharedPreferences.
   ///

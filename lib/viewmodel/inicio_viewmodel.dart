@@ -19,7 +19,6 @@ class InicioViewModel {
   ///
   /// @param context → El contexto de la vista desde la cual se invoca el método.
   /// @param compania → El nombre de la compañía cuyo cuadro médico se quiere abrir.
-
   void abrirPDF(BuildContext context, String compania) async{
     String? url = cuadrosMedicos[compania];
 
