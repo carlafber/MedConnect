@@ -5,7 +5,7 @@ import 'inicio_view.dart';
 import 'estadisticas_view.dart';
 import 'calendario_view.dart';
 import 'nueva_cita_view.dart';
-import '../viewmodel/estilos__viewmodel.dart';
+import '/viewmodel/estilos_viewmodel.dart';
 
 
 class MainBnBApp extends StatefulWidget {

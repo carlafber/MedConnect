@@ -23,6 +23,7 @@
   "textoCitaALas": "a las",
 
   "tituloDetallesPerfil": "DETALLES DEL PERFIL",
+  "semFotoPerfil": "Foto de perfil",
   "textoNombre": "Nombre:",
   "textoCorreo": "Correo:",
   "textoCompania": "Compañía:",
@@ -40,6 +41,8 @@
   "errorCoincidencia": "Las contraseñas no coinciden",
   "botonCancelar": "Cancelar",
   "botonEliminar": "Eliminar",
+  "botonActualizar": "Actualizar",
+  "botonVolver": "Volver",
 
   "tituloDetallesCita": "DETALLES DE LA CITA",
   "textoEspecialidad": "Especialidad",
@@ -47,7 +50,6 @@
   "textoCentroMedico": "Centro médico",
   "textoFecha": "Fecha",
   "textoHora": "Hora",
-  "botonActualizar": "Actualizar",
   "mensajeEliminarCita": "¿Estás seguro de que deseas eliminar la cita? Esta acción no se puede deshacer.",
   "exitoCitaActualizada": "Cita actualizada exitosamente",
   "exitoCitaEliminada": "Cita eliminada correctamente",

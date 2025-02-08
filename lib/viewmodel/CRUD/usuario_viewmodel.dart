@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_final/model/usuario_model.dart';
-import 'package:proyecto_final/services/db_helper.dart';
+import '/model/usuario_model.dart';
+import '/services/db_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UsuarioCRUD {

@@ -10,7 +10,7 @@ import '../model/cita_model.dart';
 import '../model/especialidad_model.dart';
 import '../model/profesional_model.dart';
 import '../services/db_helper.dart';
-import '../viewmodel/estilos__viewmodel.dart';
+import '../viewmodel/estilos_viewmodel.dart';
 
 class VerCitaApp extends StatefulWidget {
   const VerCitaApp({super.key});
@@ -281,7 +281,7 @@ class _VerCitaApp extends State<VerCitaApp> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text(AppLocalizations.of(context)!.mensajeConfirmarEliminacion),
-                                content: Text(AppLocalizations.of(context)!.mensajeEliminarCuenta),
+                                content: Text(AppLocalizations.of(context)!.mensajeEliminarCita),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {

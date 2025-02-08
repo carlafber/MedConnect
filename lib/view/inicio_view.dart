@@ -3,16 +3,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:proyecto_final/viewmodel/inicio_viewmodel.dart';
-import '../model/especialidad_model.dart';
-import '../model/profesional_model.dart';
-import '../model/usuario_model.dart';
-import '../viewmodel/CRUD/cita_viewmodel.dart';
-import '../viewmodel/CRUD/profesional_viewmodel.dart';
-import '../model/cita_model.dart';
-import '../viewmodel/estilos__viewmodel.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
-import '../viewmodel/provider_idioma_viewmodel.dart';
+import '/viewmodel/inicio_viewmodel.dart';
+import '/model/especialidad_model.dart';
+import '/model/profesional_model.dart';
+import '/model/usuario_model.dart';
+import '/viewmodel/CRUD/cita_viewmodel.dart';
+import '/viewmodel/CRUD/profesional_viewmodel.dart';
+import '/model/cita_model.dart';
+import '/viewmodel/estilos_viewmodel.dart';
+import '/viewmodel/guardar_usuario_viewmodel.dart';
+import '/viewmodel/provider_idioma_viewmodel.dart';
 
 class InicioApp extends StatefulWidget {
   const InicioApp({super.key});

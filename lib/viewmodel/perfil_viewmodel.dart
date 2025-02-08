@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../model/usuario_model.dart';
-import 'estilos__viewmodel.dart';
+import '/model/usuario_model.dart';
+import 'estilos_viewmodel.dart';
 import 'CRUD/usuario_viewmodel.dart';
 
+/// **Proveedor de funciones relacionadas con el perfil de usuario.**
+///
+/// Gestiona la operación de actualización de contraseña de un usuario, proporcionando
+/// una interfaz para que el usuario pueda cambiar su contraseña mediante un diálogo.
 class PerfilViewModel {
-  // Función que abre un diálogo actualizar la contraseña
+  /// **Método** que abre un diálogo para actualizar la contraseña, permitiendo al usuario
+  /// cambiar su contraseña introduciendo la contraseña actual y luego la nueva dos veces.
+  ///
+  /// @param context → El contexto de la vista donde se abrirá el diálogo.
+  /// @param usuario → El objeto `Usuario` cuya contraseña será actualizada.
+  /// @param usuarioCRUD → El objeto `UsuarioCRUD` que maneja las operaciones CRUD en la base de datos.
   void actualizarContrasena(BuildContext context, Usuario usuario, UsuarioCRUD usuarioCRUD) {
     final formulario = GlobalKey<FormState>();
     final TextEditingController contrasenaActual = TextEditingController();
-    final TextEditingController contrasenaNueva1 = TextEditingController();
-    final TextEditingController contrasenaNueva2 = TextEditingController();
+    final TextEditingController contrasenaNueva = TextEditingController();
+    final TextEditingController contrasenaNuevaConf = TextEditingController();
 
+    // Se muestra un diálogo para la actualización de la contraseña.
     showDialog(
       context: context,
       builder: (context) {
@@ -26,7 +36,7 @@ class PerfilViewModel {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Padding(padding: EdgeInsets.all(5)),
-                  // Introducir la contraseña actual
+                  /// Campo para introducir la contraseña actual.
                   TextFormField(
                     controller: contrasenaActual,
                     obscureText: true,
@@ -43,7 +53,7 @@ class PerfilViewModel {
                       if (value == null || value.isEmpty) {
                         return AppLocalizations.of(context)!.errorCampoObligatorio;
                       }
-                      // Comprobar que la contraseña introducida coincide con la almacenada en la base de datos
+                      // Se comprueba que la contraseña introducida coincide con la almacenada en la base de datos
                       if (usuario.contrasena != value) {
                         return AppLocalizations.of(context)!.errorContrasenaIncorrecta;
                       }
@@ -51,9 +61,9 @@ class PerfilViewModel {
                     }
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
-                  // Introducir la nueva contraseña dos veces
+                  /// Campo para introducir la nueva contraseña.
                   TextFormField(
-                    controller: contrasenaNueva1,
+                    controller: contrasenaNueva,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)!.campoNuevaContrasena,
@@ -67,15 +77,18 @@ class PerfilViewModel {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return AppLocalizations.of(context)!.errorCampoObligatorio;
-                      } else if (value.length < 6) {
+                      }
+                      // Se comprueba que la contraseña introducida tenga al menos 6 caracteres
+                      if (value.length < 6) {
                         return AppLocalizations.of(context)!.errorCaracteres;
                       }
                       return null;
                     }
                   ),
                   const Padding(padding: EdgeInsets.all(10)),
+                  /// Campo para confirmar la nueva contraseña.
                   TextFormField(
-                    controller: contrasenaNueva2,
+                    controller: contrasenaNuevaConf,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)!.campoConfirmarContrasena,
@@ -89,11 +102,13 @@ class PerfilViewModel {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return AppLocalizations.of(context)!.errorCampoObligatorio;
-                      } else if (value.length < 6) {
+                      }
+                      // Se comprueba que la contraseña introducida tenga al menos 6 caracteres
+                      if (value.length < 6) {
                         return AppLocalizations.of(context)!.errorCaracteres;
                       }
                       // Comprobar que las dos contraseñas nuevas introducidas coinciden
-                      if (contrasenaNueva1 != contrasenaNueva2) {
+                      if (contrasenaNueva != contrasenaNuevaConf) {
                         return AppLocalizations.of(context)!.errorCoincidencia;
                       }
                       return null;
@@ -104,18 +119,20 @@ class PerfilViewModel {
             ),
           ),
           actions: [
+            // Botón para cancelar la acción
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(AppLocalizations.of(context)!.botonCancelar, style: Estilos.texto4),
             ),
+            // Botón para confirmar y actualizar la contraseña
             TextButton(
               onPressed: () {
                 if (formulario.currentState!.validate()) {
-                  usuarioCRUD.actualizarContrasena(usuario.idUsuario, contrasenaNueva1);
+                  usuarioCRUD.actualizarContrasena(usuario.idUsuario, contrasenaNueva);
                   Navigator.pop(context);
                 }
               },
-              child: Text(AppLocalizations.of(context)!.botonEliminar, style: Estilos.texto4),
+              child: Text(AppLocalizations.of(context)!.botonActualizar, style: Estilos.texto4),
             ),
           ],
         );

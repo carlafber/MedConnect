@@ -23,6 +23,7 @@
   "textoCitaALas": "at",
   
   "tituloDetallesPerfil": "PROFILE DETAILS",
+  "semFotoPerfil": "Profile picture",
   "textoNombre": "Name:",
   "textoCorreo": "Email:",
   "textoCompania": "Company:",
@@ -40,6 +41,8 @@
   "errorCoincidencia": "Passwords do not match",
   "botonCancelar": "Cancel",
   "botonEliminar": "Delete",
+  "botonActualizar": "Update",
+  "botonVolver": "Back",
 
   "tituloDetallesCita": "APPOINTMENT DETAILS",
   "textoEspecialidad": "Specialty",
@@ -47,7 +50,6 @@
   "textoCentroMedico": "Medical Center",
   "textoFecha": "Date",
   "textoHora": "Time",
-  "botonActualizar": "Update",
   "mensajeEliminarCita": "Are you sure you want to delete this appointment? This action cannot be undone.",
   "exitoCitaActualizada": "Appointment updated successfully",
   "exitoCitaEliminada": "Appointment deleted successfully",

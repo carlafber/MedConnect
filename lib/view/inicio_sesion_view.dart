@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../viewmodel/CRUD/usuario_viewmodel.dart';
-import '../model/usuario_model.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
-import '../viewmodel/estilos__viewmodel.dart';
+import '/viewmodel/CRUD/usuario_viewmodel.dart';
+import '/model/usuario_model.dart';
+import '/viewmodel/guardar_usuario_viewmodel.dart';
+import '/viewmodel/estilos_viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InicioSesionApp extends StatefulWidget {
