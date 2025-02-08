@@ -34,28 +34,37 @@ class _PerfilApp extends State<PerfilApp> {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Alineamos todo a la izquierda
                   children: [
-                    // Botón de flecha alineado a la izquierda
-                    FloatingActionButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      backgroundColor: Estilos.dorado_oscuro,
-                      child: const Icon(Icons.arrow_back, color: Colors.white),
-                    ),
-                    Image.asset('assets/perfil.png', width: 100, height: 100),
-                    // Expansión del texto para centrarlo
-                    Text(
-                        AppLocalizations.of(context)!.tituloDetallesPerfil,
-                        textAlign: TextAlign.center,  // Centra el texto
-                        style: Estilos.titulo2,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        backgroundColor: Estilos.dorado_oscuro,
+                        child: const Icon(Icons.arrow_back, color: Colors.white),
                       ),
+                    ),
                   ],
                 ),
               ),
+              const Padding(padding: EdgeInsets.all(10)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/perfil.png', width: 100, height: 100),
+                  const Padding(padding: EdgeInsets.all(10)),
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context)!.tituloDetallesPerfil,
+                      textAlign: TextAlign.center,
+                      style: Estilos.titulo2,
+                    ),
+                  ),
+                ],
+              ),
               const Padding(padding: EdgeInsets.all(30)),
-                Column(
+              Column(
                 children: [
                   Row(
                     children: [
@@ -122,87 +131,86 @@ class _PerfilApp extends State<PerfilApp> {
                   ),
                 ],
               ),
-                  const Padding(padding: EdgeInsets.all(20)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
-                            // Pedir confirmación
-                            bool? confirmacion = await showDialog<bool>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text(AppLocalizations.of(context)!.mensajeConfirmarEliminacion),
-                                  content: Text(AppLocalizations.of(context)!.mensajeEliminarCuenta),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop(false); // Cancelar
-                                      },
-                                      child: Text(AppLocalizations.of(context)!.botonCancelar, style: Estilos.texto4),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop(true); // Confirmar
-                                      },
-                                      child: Text(AppLocalizations.of(context)!.botonEliminar, style: Estilos.texto4),
-                                    ),
-                                  ],
-                                );
-                              },
+              const Padding(padding: EdgeInsets.all(20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        // Pedir confirmación
+                        bool? confirmacion = await showDialog<bool>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(AppLocalizations.of(context)!.mensajeConfirmarEliminacion),
+                              content: Text(AppLocalizations.of(context)!.mensajeEliminarCuenta),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false); // Cancelar
+                                  },
+                                  child: Text(AppLocalizations.of(context)!.botonCancelar, style: Estilos.texto4),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true); // Confirmar
+                                  },
+                                  child: Text(AppLocalizations.of(context)!.botonEliminar, style: Estilos.texto4),
+                                ),
+                              ],
                             );
-                            if (confirmacion == true) {
-                              await usuarioCRUD.eliminarUsuario(usuario.idUsuario as int);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(AppLocalizations.of(context)!.exitoCuentaEliminada)),
-                              );
-                              await Navigator.pushNamed(context, '/inicio_sesion');
-                            }
                           },
-                          child: Container(
-                            height: 75,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Estilos.dorado_claro,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: const EdgeInsets.all(15),
-                            child: Text(
-                              AppLocalizations.of(context)!.botonEliminarCuenta,
-                              textAlign: TextAlign.center,
-                              style: Estilos.texto3,
-                            ),
-                          ),
+                        );
+                        if (confirmacion == true) {
+                          await usuarioCRUD.eliminarUsuario(usuario.idUsuario as int);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(AppLocalizations.of(context)!.exitoCuentaEliminada)),
+                          );
+                          await Navigator.pushNamed(context, '/inicio_sesion');
+                        }
+                      },
+                      child: Container(
+                        height: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Estilos.dorado_claro,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          AppLocalizations.of(context)!.botonEliminarCuenta,
+                          textAlign: TextAlign.center,
+                          style: Estilos.texto3,
                         ),
                       ),
-                      const SizedBox(width: 20), // Espacio entre los botones
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
-                            perfilvm.actualizarContrasena(context, usuario, usuarioCRUD);
-                          },
-                          child: Container(
-                            height: 75,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Estilos.dorado_claro,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: const EdgeInsets.all(15),
-                            child: Text(
-                              AppLocalizations.of(context)!.botonActualizarContrasena,
-                              textAlign: TextAlign.center,
-                              style: Estilos.texto3,
-                            ),
-                          ),
+                    ),
+                  ),
+                  const SizedBox(width: 20), // Espacio entre los botones
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        perfilvm.actualizarContrasena(context, usuario, usuarioCRUD);
+                      },
+                      child: Container(
+                        height: 75,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Estilos.dorado_claro,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          AppLocalizations.of(context)!.botonActualizarContrasena,
+                          textAlign: TextAlign.center,
+                          style: Estilos.texto3,
                         ),
                       ),
-                    ],
-                  )
+                    ),
+                  ),
                 ],
-
+              )
+            ],
           ),
         ),
       ),

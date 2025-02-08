@@ -88,7 +88,7 @@ class _EstadisticasApp extends State<EstadisticasApp> {
       return PieChartSectionData(
         value: entry.value.toDouble(),
         title: "${percentaje.toStringAsFixed(1)}%", // Mostrar el porcentaje
-        radius: 200, // Tamaño del gráfico
+        radius: 180, // Tamaño del gráfico
         color: Color(int.parse(colorHex)).withOpacity(0.5), // Hacer el color sea opaco
         titleStyle: TextStyle(
           fontSize: 14,
