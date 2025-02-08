@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'viewmodel/provider_idioma_viewmodel.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'services/db_helper.dart';
 import 'view/inicio_sesion_view.dart';
 import 'view/main_bnb_view.dart';
 import 'view/ver_cita_view.dart';
 import 'view/perfil_view.dart';
-import 'services/db_helper.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'viewmodel/provider_idioma_viewmodel.dart';
 
 
 /// Entrada a la aplicación.
@@ -58,11 +58,11 @@ class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
-  State<MainApp> createState() => _MainAppState();
+  State<MainApp> createState() => MainAppState();
 }
 
 
-class _MainAppState extends State<MainApp> {
+class MainAppState extends State<MainApp> {
  @override
   Widget build(BuildContext context) {
     return Consumer<ProviderIdioma>(

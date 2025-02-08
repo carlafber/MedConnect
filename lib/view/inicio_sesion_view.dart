@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '/viewmodel/CRUD/usuario_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '/model/usuario_model.dart';
+import '/viewmodel/CRUD/usuario_viewmodel.dart';
 import '/viewmodel/guardar_usuario_viewmodel.dart';
 import '/viewmodel/estilos_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InicioSesionApp extends StatefulWidget {
   const InicioSesionApp({super.key});
 
   @override
-  State<InicioSesionApp> createState() => _InicioSesionApp();
+  State<InicioSesionApp> createState() => InicioSesion();
 }
 
-class _InicioSesionApp extends State<InicioSesionApp> {
+class InicioSesion extends State<InicioSesionApp> {
   final _formulario = GlobalKey<FormState>();
   final _numTarjeta = TextEditingController();
   final List<String> companias = ['Asisa', 'Adeslas', 'Caser'];

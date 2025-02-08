@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import '/viewmodel/CRUD/cita_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '/model/cita_model.dart';
 import '/model/usuario_model.dart';
+import '/viewmodel/CRUD/cita_viewmodel.dart';
 import '/viewmodel/estilos_viewmodel.dart';
 import '/viewmodel/guardar_usuario_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalendarioApp extends StatefulWidget {
   const CalendarioApp({super.key});
 
   @override
-  State<CalendarioApp> createState() => _CalendarioApp();
+  State<CalendarioApp> createState() => Calendario();
 }
 
-class _CalendarioApp extends State<CalendarioApp> {
+class Calendario extends State<CalendarioApp> {
   final CitaCRUD citaCRUD = CitaCRUD();
   late Map<DateTime, List<Cita>> _citas;
   late DateTime _selectedDate;

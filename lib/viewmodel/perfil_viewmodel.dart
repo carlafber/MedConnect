@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '/model/usuario_model.dart';
 import 'estilos_viewmodel.dart';
 import 'CRUD/usuario_viewmodel.dart';
+import '/model/usuario_model.dart';
 
 /// **Proveedor de funciones relacionadas con el perfil de usuario.**
 ///

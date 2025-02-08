@@ -3,19 +3,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '/viewmodel/perfil_viewmodel.dart';
 import '/viewmodel/CRUD/usuario_viewmodel.dart';
+import '/viewmodel/estilos_viewmodel.dart';
+import '/viewmodel/guardar_usuario_viewmodel.dart';
 import '/model/usuario_model.dart';
-import '../viewmodel/estilos_viewmodel.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
 
 
 class PerfilApp extends StatefulWidget {
   const PerfilApp({super.key});
 
   @override
-  State<PerfilApp> createState() => _PerfilApp();
+  State<PerfilApp> createState() => Perfil();
 }
 
-class _PerfilApp extends State<PerfilApp> {
+class Perfil extends State<PerfilApp> {
   Guardar guardar = Guardar();
   UsuarioCRUD usuarioCRUD = UsuarioCRUD();
   PerfilViewModel perfilvm = PerfilViewModel();

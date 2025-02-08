@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '/viewmodel/estilos_viewmodel.dart';
 import 'inicio_view.dart';
 import 'estadisticas_view.dart';
 import 'calendario_view.dart';
 import 'nueva_cita_view.dart';
-import '/viewmodel/estilos_viewmodel.dart';
 
 
 class MainBnBApp extends StatefulWidget {
   const MainBnBApp({super.key});
 
   @override
-  State<MainBnBApp> createState() => _MainBnBAppState();
+  State<MainBnBApp> createState() => MainBnB();
 }
 
 
-class _MainBnBAppState extends State<MainBnBApp> {
+class MainBnB extends State<MainBnBApp> {
   int _indiceSeleccionado = 0;
 
   static const List<Widget> _clases = <Widget>[

@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../model/especialidad_model.dart';
-import '../model/profesional_model.dart';
-import '../viewmodel/estilos_viewmodel.dart';
-import '../model/usuario_model.dart';
-import '../viewmodel/CRUD/cita_viewmodel.dart';
-import '../viewmodel/CRUD/profesional_viewmodel.dart';
-import '../model/cita_model.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
-import '../viewmodel/guardar_usuario_viewmodel.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fl_chart/fl_chart.dart';
+import '/model/especialidad_model.dart';
+import '/model/profesional_model.dart';
+import '/model/usuario_model.dart';
+import '/model/cita_model.dart';
+import '/viewmodel/estilos_viewmodel.dart';
+import '/viewmodel/CRUD/cita_viewmodel.dart';
+import '/viewmodel/CRUD/profesional_viewmodel.dart';
+import '/viewmodel/guardar_usuario_viewmodel.dart';
 
 class EstadisticasApp extends StatefulWidget {
   const EstadisticasApp({super.key});
 
   @override
-  State<EstadisticasApp> createState() => _EstadisticasApp();
+  State<EstadisticasApp> createState() => Estadisticas();
 }
 
-class _EstadisticasApp extends State<EstadisticasApp> {
+class Estadisticas extends State<EstadisticasApp> {
   ProfesionalCRUD profesionalCRUD = ProfesionalCRUD();
   CitaCRUD citaCRUD = CitaCRUD();
   Guardar guardar = Guardar();
